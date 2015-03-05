@@ -1,6 +1,6 @@
 package chess;
 
-import gui.MainWindow;
+import chess.gui.MainWindow;
 
 public class Main {
 
