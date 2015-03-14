@@ -1,4 +1,4 @@
-package chess.gui;
+package chess.view;
 
 import java.awt.Dimension;
 
