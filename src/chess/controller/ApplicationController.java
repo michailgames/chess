@@ -19,4 +19,8 @@ public class ApplicationController {
 	public void createView() {
 		view = new MainWindow();
 	}
+	
+	public void refreshView() {
+		view.repaint();
+	}
 }

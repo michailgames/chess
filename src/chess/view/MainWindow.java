@@ -13,6 +13,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import chess.controller.ApplicationController;
 import chess.controller.GameController;
 
 public class MainWindow extends JFrame {
@@ -20,7 +21,7 @@ public class MainWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	public MainWindow() {
-		super("Chess");
+		super("Szachy");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		initUI();
 		pack();
@@ -38,8 +39,8 @@ public class MainWindow extends JFrame {
 	
 	private void initMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
-		JMenu menu = new JMenu("Game");
-		JMenuItem item = new JMenuItem("Start a new game...");
+		JMenu menu = new JMenu("Gra");
+		JMenuItem item = new JMenuItem("Rozpocznij now¹ grê...");
 		item.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -52,18 +53,18 @@ public class MainWindow extends JFrame {
 	}
 	
 	private void showNewGameDialog() {
-		final JDialog dialog = new JDialog(this, "Start a new game", true);
+		final JDialog dialog = new JDialog(this, "Rozpocznij now¹ grê", true);
 		dialog.setLayout(new BorderLayout());
 		JPanel dialogPanel = new JPanel();
 		dialog.add(dialogPanel, BorderLayout.CENTER); 
 		dialogPanel.setLayout(new GridLayout(1, 2));
 		final PlayerControllerSelectionPanel whiteSelectionPanel =
-				new PlayerControllerSelectionPanel("White");
+				new PlayerControllerSelectionPanel("Bia³e");
 		final PlayerControllerSelectionPanel blackSelectionPanel =
-				new PlayerControllerSelectionPanel("Black");
+				new PlayerControllerSelectionPanel("Czarne");
 		dialogPanel.add(whiteSelectionPanel);
 		dialogPanel.add(blackSelectionPanel);
-		JButton startButton = new JButton("Start");
+		JButton startButton = new JButton("Rozpocznij");
 		startButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -79,6 +80,6 @@ public class MainWindow extends JFrame {
 	
 	private void startNewGame(String whiteChoice, String blackchoice) {
 		GameController.getInstance().startNewGame();
-		repaint();
+		ApplicationController.getInstance().refreshView();
 	}
 }
