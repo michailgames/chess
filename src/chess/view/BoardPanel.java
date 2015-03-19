@@ -19,8 +19,10 @@ public class BoardPanel extends JPanel {
 	
 	private final Color BACKGROUND_COLOR = new Color(255, 255, 255);
 	private final Color BLACK_FIELD_COLOR = new Color(192, 192, 192);
-	private final Color SELECTION_COLOR = new Color(13, 210, 198, 130);
 	private final Color WHITE_FIELD_COLOR = new Color(255, 255, 255);
+	private final Color SELECTION_COLOR = new Color(13, 210, 198, 130);
+	private final Color WHITE_PIECES_COLOR = new Color(0, 97, 197);
+	private final Color BLACK_PIECES_COLOR = new Color(167, 3, 3);
 	private final Color GRID_COLOR = new Color(0, 0, 0);
 	private final int MARGIN_SIZE = 10;
 	
@@ -82,6 +84,8 @@ public class BoardPanel extends JPanel {
 				int y2 = calculateOffset(j + 1);
 				Piece piece = board.getPiece(i, j); 
 				if(piece != null) {
+					g.setColor((piece.getColor() == chess.model.Color.WHITE) ?
+							WHITE_PIECES_COLOR : BLACK_PIECES_COLOR);
 					g.setFont(g.getFont().deriveFont(1f * fieldSize));
 					g.drawString(piece.getUnicodeString(), x1, y2 - margin);
 				}

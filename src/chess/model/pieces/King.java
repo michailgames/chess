@@ -15,12 +15,7 @@ public class King extends Piece {
 	}
 
 	@Override
-	protected String getWhiteUnicodeString() {
-		return "\u2654";
-	}
-
-	@Override
-	protected String getBlackUnicodeString() {
+	public String getUnicodeString() {
 		return "\u265a";
 	}
 
@@ -40,5 +35,10 @@ public class King extends Piece {
 			}
 		}
 		return possibleMoves;
+	}
+	
+	@Override
+	public Piece copy() {
+		return new King(getColor(), getX(), getY());
 	}
 }

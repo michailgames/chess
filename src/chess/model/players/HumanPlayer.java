@@ -1,6 +1,5 @@
 package chess.model.players;
 
-import chess.controller.GameController;
 import chess.model.Board;
 import chess.model.Color;
 import chess.model.Field;

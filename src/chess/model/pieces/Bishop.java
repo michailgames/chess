@@ -1,31 +1,33 @@
 package chess.model.pieces;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import chess.model.Board;
 import chess.model.Color;
-import chess.model.Field;
 import chess.model.Piece;
 
-public class Bishop extends Piece {
+public class Bishop extends AbstractStraightMovingPiece {
+	
+	private static final Direction[] availableDirections = {
+		new Direction(-1, -1),
+		new Direction(1, -1),
+		new Direction(-1, 1),
+		new Direction(1, 1)
+	};
 
 	public Bishop(Color color, int x, int y) {
 		super(color, x, y);
 	}
 
 	@Override
-	protected String getWhiteUnicodeString() {
-		return "\u2657";
-	}
-
-	@Override
-	protected String getBlackUnicodeString() {
+	public String getUnicodeString() {
 		return "\u265d";
 	}
-
+	
 	@Override
-	protected List<Field> getAllPossibleMoves(Board board) {
-		return new ArrayList<Field>();
+	protected Direction[] getAvailableDirections() {
+		return availableDirections;
+	}
+	
+	@Override
+	public Piece copy() {
+		return new Bishop(getColor(), getX(), getY());
 	}
 }

@@ -15,12 +15,7 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	protected String getWhiteUnicodeString() {
-		return "\u2659";
-	}
-
-	@Override
-	protected String getBlackUnicodeString() {
+	public String getUnicodeString() {
 		return "\u265f";
 	}
 
@@ -30,7 +25,27 @@ public class Pawn extends Piece {
 		int direction = (getColor() == Color.WHITE) ? -1 : 1;
 		if(board.getPiece(getX(), getY() + direction) == null) {
 			movesList.add(new Field(getX(), getY() + direction));
+			boolean isAtStartPosition =
+				(getColor() == Color.WHITE && getY() == 6) ||
+				(getColor() == Color.BLACK && getY() == 1);
+			if(isAtStartPosition &&
+					board.getPiece(getX(), getY() +  2 * direction) == null) {
+				movesList.add(new Field(getX(), getY() + 2 * direction));
+			}
+		}
+		for(int i = -1; i <= 1; i += 2) {
+			if(isPositionInsideTheBoard(getX() + i, getY() + direction)) {
+				Piece piece = board.getPiece(getX() + i, getY() + direction);
+				if(piece != null && piece.getColor() != getColor()) {
+					movesList.add(new Field(getX() + i, getY() + direction));
+				}
+			}
 		}
 		return movesList;
+	}
+	
+	@Override
+	public Piece copy() {
+		return new Pawn(getColor(), getX(), getY());
 	}
 }
