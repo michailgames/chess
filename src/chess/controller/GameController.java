@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.model.Board;
 import chess.model.Color;
+import chess.model.Field;
 import chess.model.Piece;
 import chess.model.Player;
 import chess.model.players.HumanPlayer;
@@ -45,7 +46,13 @@ public class GameController {
 		return currentPlayer.getSelectedPiece();
 	}
 
-	public void reportNewMove(Piece piece, int x, int y) {
+	public void reportNewMove(Piece piece, int x, int y)
+			throws IllegalMoveException {
+		Field field = new Field(x, y);
+		if(piece == null || piece.getColor() != currentPlayer.getColor() || 
+				piece.getAllLegalMoves(board).contains(field) == false) {
+			throw new IllegalMoveException();
+		}
 		board.movePiece(piece, x, y);
 		nextTurn();
 		ApplicationController.getInstance().refreshView();
@@ -54,5 +61,9 @@ public class GameController {
 	private void nextTurn() {
 		currentPlayer = (currentPlayer == whitePlayer) ?
 				blackPlayer : whitePlayer;
+	}
+	
+	public class IllegalMoveException extends Exception {
+		private static final long serialVersionUID = 1L;	
 	}
 }

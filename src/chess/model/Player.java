@@ -1,6 +1,7 @@
 package chess.model;
 
 import chess.controller.GameController;
+import chess.controller.GameController.IllegalMoveException;
 
 public abstract class Player {
 	
@@ -14,7 +15,8 @@ public abstract class Player {
 		return color;
 	}
 	
-	public final void makeMove(Piece selectedPiece, int x, int y) {
+	public final void makeMove(Piece selectedPiece, int x, int y)
+			throws IllegalMoveException{
 		GameController.getInstance().reportNewMove(selectedPiece, x, y);
 	}
 	
