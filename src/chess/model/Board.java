@@ -1,5 +1,8 @@
 package chess.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import chess.model.pieces.Bishop;
 import chess.model.pieces.King;
 import chess.model.pieces.Knight;
@@ -73,5 +76,18 @@ public class Board {
 	
 	public King getKing(Color color) {
 		return (color == Color.WHITE) ? whiteKing : blackKing;
+	}
+	
+	public List<Piece> getAllPieces(Color color) {
+		List<Piece> foundPieces = new ArrayList<Piece>();
+		for(int x = 0; x < BOARD_SIZE; x++) {
+			for(int y = 0; y < BOARD_SIZE; y++) {
+				Piece piece = fields[x][y];
+				if(piece != null && piece.getColor() == color) {
+					foundPieces.add(piece);
+				}
+			}
+		}
+		return foundPieces;
 	}
 }

@@ -21,6 +21,10 @@ public abstract class Piece {
 		return color;
 	}
 	
+	public final Color getOppositeColor() {
+		return color.getOppositeColor();
+	}
+	
 	public abstract String getUnicodeString();
 	
 	public final int getX() {
@@ -51,15 +55,10 @@ public abstract class Piece {
 		King king = boardCopy.getKing(getColor());
 		Field kingField = new Field(king.getX(), king.getY());
 		
-		for(int x = 0; x < Board.BOARD_SIZE; x++) {
-			for(int y = 0; y < Board.BOARD_SIZE; y++) {
-				Piece piece = board.getPiece(x, y);
-				if(piece != null && piece.getColor() != getColor()) {
-					if(piece.getAllPossibleMoves(boardCopy)
-							.contains(kingField)) {
-						return false;
-					}
-				}
+		for(Piece piece : boardCopy.getAllPieces(getOppositeColor())) {
+			if(piece.getAllPossibleMoves(boardCopy)
+					.contains(kingField)) {
+				return false;
 			}
 		}
 		return true;
@@ -67,7 +66,7 @@ public abstract class Piece {
 
 	protected abstract List<Field> getAllPossibleMoves(Board board);
 
-	public final Piece move(int x, int y) {
+	public Piece move(int x, int y) {
 		this.x = x;
 		this.y = y;
 		return this;

@@ -48,4 +48,13 @@ public class Pawn extends Piece {
 	public Piece copy() {
 		return new Pawn(getColor(), getX(), getY());
 	}
+	
+	@Override
+	public Piece move(int x, int y) {
+		if((getColor() == Color.WHITE && y == 0) ||
+				(getColor() == Color.BLACK && y == Board.BOARD_SIZE - 1)) {
+			return new Queen(getColor(), x, y);
+		}
+		return super.move(x, y);
+	}
 }

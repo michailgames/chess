@@ -84,13 +84,17 @@ public class BoardPanel extends JPanel {
 				int y2 = calculateOffset(j + 1);
 				Piece piece = board.getPiece(i, j); 
 				if(piece != null) {
-					g.setColor((piece.getColor() == chess.model.Color.WHITE) ?
-							WHITE_PIECES_COLOR : BLACK_PIECES_COLOR);
+					g.setColor(getDisplayColor(piece.getColor()));
 					g.setFont(g.getFont().deriveFont(1f * fieldSize));
 					g.drawString(piece.getUnicodeString(), x1, y2 - margin);
 				}
 			}
 		}
+	}
+
+	private Color getDisplayColor(chess.model.Color color) {
+		return (color == chess.model.Color.WHITE) ?
+				WHITE_PIECES_COLOR : BLACK_PIECES_COLOR;
 	}
 	
 	private void paintSelection(Graphics g) {
