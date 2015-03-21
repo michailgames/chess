@@ -35,27 +35,40 @@ public class GameController {
 	}
 	
 	public Board getBoard() {
-		return board;
+		return new Board(board);
 	}
 	
-	public void clickField(int x, int y) {
-		currentPlayer.fieldClicked(x, y, board);
+	public void clickField(Field field) {
+		currentPlayer.fieldClicked(field, board);
 	}
 	
 	public Piece getSelectedPiece() {
 		return currentPlayer.getSelectedPiece();
 	}
 
-	public void reportNewMove(Piece piece, int x, int y)
-			throws IllegalMoveException {
-		Field field = new Field(x, y);
-		if(piece == null || piece.getColor() != currentPlayer.getColor() || 
-				piece.getAllLegalMoves(board).contains(field) == false) {
+	public void reportNewMove(Player player, Field sourceField,
+			Field targetField) throws IllegalMoveException {
+		if(player != currentPlayer) {
+			throw new UnauthorizedMoveException();
+		}
+		
+		Piece piece = board.getPiece(sourceField);
+		if(isMoveLegal(piece, targetField) == false) {
 			throw new IllegalMoveException();
 		}
-		board.movePiece(piece, x, y);
+		
+		movePiece(piece, targetField);
+	}
+
+	private void movePiece(Piece piece, Field field) {
+		board.movePiece(piece, field);
 		nextTurn();
 		ApplicationController.getInstance().refreshView();
+	}
+
+	private boolean isMoveLegal(Piece piece, Field field) {
+		return piece != null && piece.getColor() == currentPlayer.getColor() && 
+				piece.getAllLegalMoves(board).contains(field);
 	}
 
 	private void nextTurn() {
@@ -64,6 +77,10 @@ public class GameController {
 	}
 	
 	public class IllegalMoveException extends Exception {
+		private static final long serialVersionUID = 1L;	
+	}
+	
+	public class UnauthorizedMoveException extends RuntimeException {
 		private static final long serialVersionUID = 1L;	
 	}
 }

@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import chess.controller.ApplicationController;
 import chess.controller.GameController;
 import chess.model.Board;
+import chess.model.Field;
 import chess.model.Piece;
 
 public class BoardPanel extends JPanel {
@@ -123,20 +124,20 @@ public class BoardPanel extends JPanel {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			int fieldX = -1;
-			int fieldY = -1;
+			int x = -1;
+			int y = -1;
 			for(int i = 0; i < Board.BOARD_SIZE; i++) {
 				if(calculateOffset(i) <= e.getX() &&
 						e.getX() < calculateOffset(i+1)) {
-					fieldX = i;
+					x = i;
 				}
 				if(calculateOffset(i) <= e.getY() &&
 						e.getY() < calculateOffset(i+1)) {
-					fieldY = i;
+					y = i;
 				}
 			}
-			if(fieldX != -1 && fieldY != -1) {
-				GameController.getInstance().clickField(fieldX, fieldY);
+			if(x != -1 && y != -1) {
+				GameController.getInstance().clickField(new Field(x, y));
 				ApplicationController.getInstance().refreshView();
 			}
 		}

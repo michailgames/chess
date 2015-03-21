@@ -15,11 +15,12 @@ public abstract class Player {
 		return color;
 	}
 	
-	public final void makeMove(Piece selectedPiece, int x, int y)
+	public final void makeMove(Field sourceField, Field targetField)
 			throws IllegalMoveException{
-		GameController.getInstance().reportNewMove(selectedPiece, x, y);
+		GameController.getInstance().reportNewMove(this, sourceField,
+				targetField);
 	}
 	
-	public abstract void fieldClicked(int x, int y, Board board);
+	public abstract void fieldClicked(Field field, Board board);
 	public abstract Piece getSelectedPiece();
 }

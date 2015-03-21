@@ -1,6 +1,5 @@
 package chess.model;
 
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
 public class Field {
 	

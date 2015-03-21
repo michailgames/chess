@@ -20,11 +20,11 @@ public class Board {
 	
 	public Board() { }
 	
-	public Board(Board previousBoard, Field pieceField, Field targetField) {
+	public Board(Board board) {
 		fields = new Piece[BOARD_SIZE][BOARD_SIZE];
 		for(int x = 0; x < BOARD_SIZE; x++) {
 			for(int y = 0; y < BOARD_SIZE; y++) {
-				Piece oldPiece = previousBoard.fields[x][y];
+				Piece oldPiece = board.fields[x][y];
 				if(oldPiece != null) {
 					Piece newPiece = oldPiece.copy();
 					fields[x][y] = newPiece;
@@ -38,10 +38,14 @@ public class Board {
 				}
 			}
 		}
+	}
+	
+	public Board(Board previousBoard, Field pieceField, Field targetField) {
+		this(previousBoard);
 		movePiece(fields[pieceField.getX()][pieceField.getY()],
 				targetField.getX(), targetField.getY());
 	}
-	
+
 	public void setup() {
 		fields = new Piece[BOARD_SIZE][BOARD_SIZE];
 		for(int x = 0; x < BOARD_SIZE; x++) {
@@ -68,10 +72,18 @@ public class Board {
 	public Piece getPiece(int x, int y) {
 		return fields[x][y];
 	}
+	
+	public Piece getPiece(Field field) {
+		return getPiece(field.getX(), field.getY());
+	}
 
 	public void movePiece(Piece piece, int x, int y) {
 		fields[piece.getX()][piece.getY()] = null;
 		fields[x][y] = piece.move(x, y);
+	}
+	
+	public void movePiece(Piece piece, Field field) {
+		movePiece(piece, field.getX(), field.getY());
 	}
 	
 	public King getKing(Color color) {

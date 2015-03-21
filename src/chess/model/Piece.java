@@ -35,7 +35,11 @@ public abstract class Piece {
 		return y;
 	}
 	
-	protected boolean isPositionInsideTheBoard(int x, int y) {
+	public final Field getField() {
+		return new Field(x, y);
+	}
+	
+	protected final boolean isPositionInsideTheBoard(int x, int y) {
 		return x >= 0 && x < Board.BOARD_SIZE && y >= 0 && y < Board.BOARD_SIZE;
 	}
 	
