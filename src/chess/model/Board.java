@@ -26,15 +26,16 @@ public class Board {
 		for(int x = 0; x < BOARD_SIZE; x++) {
 			for(int y = 0; y < BOARD_SIZE; y++) {
 				Piece oldPiece = original.fields[x][y];
-				if(oldPiece != null) {
-					Piece newPiece = oldPiece.copy();
-					fields[x][y] = newPiece;
-					if(newPiece instanceof King) {
-						if(newPiece.getColor() == Color.WHITE) {
-							whiteKing = (King) newPiece;
-						} else {
-							blackKing = (King) newPiece;
-						}
+				if(oldPiece == null) {
+					continue;
+				}
+				Piece newPiece = oldPiece.copy();
+				fields[x][y] = newPiece;
+				if(newPiece instanceof King) {
+					if(newPiece.getColor() == Color.WHITE) {
+						whiteKing = (King) newPiece;
+					} else {
+						blackKing = (King) newPiece;
 					}
 				}
 			}

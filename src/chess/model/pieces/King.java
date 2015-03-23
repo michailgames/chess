@@ -43,27 +43,42 @@ public class King extends Piece {
 	}
 	
 	private void addCastlingMoves(Board board, List<Field> possibleMoves) {
-		if(canParticipateInCastling() == false ||
-				moveIsSafeForKing(getField(), board) == false) {
+		if(canParticipateInCastling() == false || isUnderAttack(board)) {
 			return;
 		}
 		
-		Piece rook = board.getPiece(getX() + 3, getY());
-		if(rook != null && canPassThroughField(board, getX() + 1, getY()) &&
-				board.getPiece(getX() + 2, getY()) == null) {
-			if(rook != null && rook.canParticipateInCastling()) {
-				possibleMoves.add(new Field(getX() + 2, getY()));
-			}
+		if(isRookSideCastlingPossible(board)) {
+			possibleMoves.add(new Field(getX() + 2, getY()));
 		}
 		
-		rook = board.getPiece(getX() - 4, getY());
+		if(isQueenSideCastlingPossible(board)) {
+			possibleMoves.add(new Field(getX() - 2, getY()));
+		}
+	}
+
+	public boolean isQueenSideCastlingPossible(Board board) {
+		Piece rook = board.getPiece(getX() - 4, getY());
 		if(rook != null && canPassThroughField(board, getX() - 1, getY()) &&
 				board.getPiece(getX() - 2, getY()) == null &&
-				board.getPiece(getX() - 3, getY()) == null) {
-			if(rook.canParticipateInCastling()) {
-				possibleMoves.add(new Field(getX() - 2, getY()));
-			}
+				board.getPiece(getX() - 3, getY()) == null &&
+				rook.canParticipateInCastling()) {
+			return true;
 		}
+		return false;
+	}
+	
+	private boolean isRookSideCastlingPossible(Board board) {
+		Piece rook = board.getPiece(getX() + 3, getY());
+		if(rook != null && canPassThroughField(board, getX() + 1, getY()) &&
+				board.getPiece(getX() + 2, getY()) == null &&
+				rook.canParticipateInCastling()) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean isUnderAttack(Board board) {
+		return moveIsSafeForKing(getField(), board) == false;
 	}
 	
 	private boolean canPassThroughField(Board board, int x, int y) {
