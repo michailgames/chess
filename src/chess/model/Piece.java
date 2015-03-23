@@ -55,7 +55,7 @@ public abstract class Piece {
 		return legalMoves;
 	}
 	
-	private boolean moveIsSafeForKing(Field move, Board board) {
+	protected boolean moveIsSafeForKing(Field move, Board board) {
 		Board boardCopy = new Board(board, new Field(getX(), getY()), move);
 		King king = boardCopy.getKing(getColor());
 		Field kingField = new Field(king.getX(), king.getY());
