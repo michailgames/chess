@@ -22,6 +22,12 @@ public class King extends Piece {
 	@Override
 	protected List<Field> getAllPossibleMoves(Board board) {
 		List<Field> possibleMoves = new ArrayList<Field>(10);
+		addNormalMoves(board, possibleMoves);
+		addCastlingMoves(board, possibleMoves);
+		return possibleMoves;
+	}
+
+	private void addNormalMoves(Board board, List<Field> possibleMoves) {
 		for(int i = -1; i <= 1; i++) {
 			for(int j = -1; j <= 1; j++) {
 				int x = getX() + i;
@@ -34,11 +40,45 @@ public class King extends Piece {
 				}
 			}
 		}
-		return possibleMoves;
+	}
+	
+	private void addCastlingMoves(Board board, List<Field> possibleMoves) {
+		if(canParticipateInCastling() == false) {
+			return;
+		}
+		if(board.getPiece(getX() + 1, getY()) == null &&
+				board.getPiece(getX() + 2, getY()) == null) {
+			Piece rook = board.getPiece(getX() + 3, getY());
+			if(rook != null && rook.canParticipateInCastling()) {
+				possibleMoves.add(new Field(getX() + 2, getY()));
+			}
+		}
+		if(board.getPiece(getX() - 1, getY()) == null &&
+				board.getPiece(getX() - 2, getY()) == null &&
+				board.getPiece(getX() - 3, getY()) == null) {
+			Piece rook = board.getPiece(getX() - 4, getY());
+			if(rook != null && rook.canParticipateInCastling()) {
+				possibleMoves.add(new Field(getX() - 2, getY()));
+			}
+		}
+	}
+	
+	@Override
+	public Piece move(Board board, int x, int y) {
+		if(x == getX() + 2) {
+			Piece rook = board.getPiece(getX() + 3, getY());
+			board.movePiece(rook, getX() + 1, getY());
+		}
+		else if(x == getX() - 2) {
+			Piece rook = board.getPiece(getX() - 4, getY());
+			board.movePiece(rook, getX() - 1, getY());
+		}
+		return super.move(board, x, y);
 	}
 	
 	@Override
 	public Piece copy() {
-		return new King(getColor(), getX(), getY());
-	}
+		return new King(getColor(), getX(), getY())
+				.allowedToPerformCastling(canParticipateInCastling());
+	}	
 }

@@ -59,14 +59,14 @@ public class Board {
 	}
 	
 	private void setupFigures(int y, Color color) {
-		fields[0][y] = new Rook(color, 0, y);
+		fields[0][y] = new Rook(color, 0, y).allowedToPerformCastling();
 		fields[1][y] = new Knight(color, 1, y);
 		fields[2][y] = new Bishop(color, 2, y);
 		fields[3][y] = new Queen(color, 3, y);
-		fields[4][y] = new King(color, 4, y);
+		fields[4][y] = new King(color, 4, y).allowedToPerformCastling();
 		fields[5][y] = new Bishop(color, 5, y);
 		fields[6][y] = new Knight(color, 6, y);
-		fields[7][y] = new Rook(color, 7, y);
+		fields[7][y] = new Rook(color, 7, y).allowedToPerformCastling();
 	}
 	
 	public Piece getPiece(int x, int y) {
@@ -79,7 +79,7 @@ public class Board {
 
 	public void movePiece(Piece piece, int x, int y) {
 		fields[piece.getX()][piece.getY()] = null;
-		fields[x][y] = piece.move(x, y);
+		fields[x][y] = piece.move(this, x, y);
 	}
 	
 	public void movePiece(Piece piece, Field field) {

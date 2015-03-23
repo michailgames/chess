@@ -48,6 +48,7 @@ public class Knight extends Piece {
 	
 	@Override
 	public Piece copy() {
-		return new Knight(getColor(), getX(), getY());
+		return new Knight(getColor(), getX(), getY())
+				.allowedToPerformCastling(canParticipateInCastling());
 	}
 }

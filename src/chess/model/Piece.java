@@ -10,6 +10,7 @@ public abstract class Piece {
 	private final Color color;
 	private int x;
 	private int y;
+	private boolean canPerformCastling = false;
 	
 	public Piece(Color color, int x, int y) {
 		this.color = color;
@@ -70,9 +71,26 @@ public abstract class Piece {
 
 	protected abstract List<Field> getAllPossibleMoves(Board board);
 
-	public Piece move(int x, int y) {
+	public Piece move(Board board, int x, int y) {
+		canPerformCastling = false;
 		this.x = x;
 		this.y = y;
+		return this;
+	}
+	
+	public boolean canParticipateInCastling() {
+		return canPerformCastling;
+	}
+	
+	public Piece allowedToPerformCastling() {
+		canPerformCastling  = true;
+		return this;
+	}
+	
+	protected Piece allowedToPerformCastling(boolean allowed) {
+		if(allowed) {
+			return allowedToPerformCastling();
+		}
 		return this;
 	}
 

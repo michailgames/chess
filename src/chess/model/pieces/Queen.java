@@ -32,6 +32,7 @@ public class Queen extends AbstractStraightMovingPiece {
 	
 	@Override
 	public Piece copy() {
-		return new Queen(getColor(), getX(), getY());
+		return new Queen(getColor(), getX(), getY())
+				.allowedToPerformCastling(canParticipateInCastling());
 	}
 }

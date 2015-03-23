@@ -28,6 +28,7 @@ public class Rook extends AbstractStraightMovingPiece {
 	
 	@Override
 	public Piece copy() {
-		return new Rook(getColor(), getX(), getY());
+		return new Rook(getColor(), getX(), getY())
+				.allowedToPerformCastling(canParticipateInCastling());
 	}
 }

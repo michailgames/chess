@@ -28,6 +28,7 @@ public class Bishop extends AbstractStraightMovingPiece {
 	
 	@Override
 	public Piece copy() {
-		return new Bishop(getColor(), getX(), getY());
+		return new Bishop(getColor(), getX(), getY())
+				.allowedToPerformCastling(canParticipateInCastling());
 	}
 }
