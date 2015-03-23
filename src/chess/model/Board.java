@@ -17,14 +17,15 @@ public class Board {
 	private Piece[][] fields = new Piece[BOARD_SIZE][BOARD_SIZE];
 	private King whiteKing;
 	private King blackKing;
+	private Pawn pawnThatJustMovedTwoSquares = null;
 	
 	public Board() { }
 	
-	public Board(Board board) {
+	public Board(Board original) {
 		fields = new Piece[BOARD_SIZE][BOARD_SIZE];
 		for(int x = 0; x < BOARD_SIZE; x++) {
 			for(int y = 0; y < BOARD_SIZE; y++) {
-				Piece oldPiece = board.fields[x][y];
+				Piece oldPiece = original.fields[x][y];
 				if(oldPiece != null) {
 					Piece newPiece = oldPiece.copy();
 					fields[x][y] = newPiece;
@@ -37,6 +38,11 @@ public class Board {
 					}
 				}
 			}
+		}
+		if(original.pawnThatJustMovedTwoSquares != null) {
+			int x = original.pawnThatJustMovedTwoSquares.getX();
+			int y = original.pawnThatJustMovedTwoSquares.getY();
+			pawnThatJustMovedTwoSquares = (Pawn) fields[x][y];
 		}
 	}
 	
@@ -78,6 +84,10 @@ public class Board {
 	}
 
 	public void movePiece(Piece piece, int x, int y) {
+		pawnThatJustMovedTwoSquares = null;
+		if(piece instanceof Pawn && Math.abs(piece.getY() - y) == 2) {
+			pawnThatJustMovedTwoSquares = (Pawn) piece;
+		}
 		fields[piece.getX()][piece.getY()] = null;
 		fields[x][y] = piece.move(this, x, y);
 	}
@@ -101,5 +111,12 @@ public class Board {
 			}
 		}
 		return foundPieces;
+	}
+	
+	public boolean canPawnBeTakenEnPassant(Pawn pawn) {
+		if(pawnThatJustMovedTwoSquares == null) {
+			return false;
+		}
+		return pawn == pawnThatJustMovedTwoSquares;
 	}
 }

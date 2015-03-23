@@ -23,6 +23,45 @@ public class Pawn extends Piece {
 	protected List<Field> getAllPossibleMoves(Board board) {
 		List<Field> movesList = new ArrayList<Field>(4);
 		int direction = (getColor() == Color.WHITE) ? -1 : 1;
+		addStraightMoves(board, movesList, direction);
+		addDiagonalMoves(board, movesList, direction);
+		addEnPassantMoves(board, movesList, direction);
+		return movesList;
+	}
+
+	private void addEnPassantMoves(Board board, List<Field> movesList,
+			int direction) {
+		for(int i = -1; i <= 1; i += 2) {
+			if(isPositionInsideTheBoard(getX() + i, getY()) == false) {
+				continue;
+			}
+			Piece piece = board.getPiece(getX() + i, getY());
+			if(piece instanceof Pawn) {
+				if(((Pawn) piece).canBeTakenEnPassant(board)) {
+					movesList.add(new Field(getX() + i, getY() + direction));
+				}
+			}
+		}
+	}
+	
+	private boolean canBeTakenEnPassant(Board board) {
+		return board.canPawnBeTakenEnPassant(this);
+	}
+
+	private void addDiagonalMoves(Board board, List<Field> movesList,
+			int direction) {
+		for(int i = -1; i <= 1; i += 2) {
+			if(isPositionInsideTheBoard(getX() + i, getY() + direction)) {
+				Piece piece = board.getPiece(getX() + i, getY() + direction);
+				if(piece != null && piece.getColor() != getColor()) {
+					movesList.add(new Field(getX() + i, getY() + direction));
+				}
+			}
+		}
+	}
+
+	private void addStraightMoves(Board board, List<Field> movesList,
+			int direction) {
 		if(board.getPiece(getX(), getY() + direction) == null) {
 			movesList.add(new Field(getX(), getY() + direction));
 			boolean isAtStartPosition =
@@ -33,15 +72,6 @@ public class Pawn extends Piece {
 				movesList.add(new Field(getX(), getY() + 2 * direction));
 			}
 		}
-		for(int i = -1; i <= 1; i += 2) {
-			if(isPositionInsideTheBoard(getX() + i, getY() + direction)) {
-				Piece piece = board.getPiece(getX() + i, getY() + direction);
-				if(piece != null && piece.getColor() != getColor()) {
-					movesList.add(new Field(getX() + i, getY() + direction));
-				}
-			}
-		}
-		return movesList;
 	}
 	
 	@Override
@@ -56,6 +86,14 @@ public class Pawn extends Piece {
 				(getColor() == Color.BLACK && y == Board.BOARD_SIZE - 1)) {
 			return new Queen(getColor(), x, y);
 		}
+		if(getX() != x && board.getPiece(x, y) == null) {
+			makeEnPassantMagic(board, x, y);
+		}
 		return super.move(board, x, y);
+	}
+
+	private void makeEnPassantMagic(Board board, int x, int y) {
+		Pawn pawn = (Pawn) board.getPiece(x, getY());
+		board.movePiece(pawn, x, y);
 	}
 }
