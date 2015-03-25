@@ -55,7 +55,7 @@ public abstract class Piece {
 		return legalMoves;
 	}
 	
-	protected boolean moveIsSafeForKing(Field move, Board board) {
+	protected final boolean moveIsSafeForKing(Field move, Board board) {
 		Board boardCopy = new Board(board, new Field(getX(), getY()), move);
 		King king = boardCopy.getKing(getColor());
 		Field kingField = new Field(king.getX(), king.getY());
@@ -78,16 +78,16 @@ public abstract class Piece {
 		return this;
 	}
 	
-	public boolean canParticipateInCastling() {
+	public final boolean canParticipateInCastling() {
 		return canPerformCastling;
 	}
 	
-	public Piece allowedToPerformCastling() {
+	public final Piece allowedToPerformCastling() {
 		canPerformCastling  = true;
 		return this;
 	}
 	
-	protected Piece allowedToPerformCastling(boolean allowed) {
+	protected final Piece allowedToPerformCastling(boolean allowed) {
 		if(allowed) {
 			return allowedToPerformCastling();
 		}
