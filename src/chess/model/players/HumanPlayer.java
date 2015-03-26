@@ -1,5 +1,12 @@
 package chess.model.players;
 
+/**
+ * Projekt: Szachy
+ * Klasa reprezentuj¹ca gracza kontrolowanego przez cz³owieka
+ * Micha³ Rapacz
+ * 2015-03-26
+ */
+
 import chess.controller.GameController.IllegalMoveException;
 import chess.model.Board;
 import chess.model.Color;

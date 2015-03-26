@@ -1,5 +1,12 @@
 package chess.model.pieces;
 
+/**
+ * Projekt: Szachy
+ * Test klasy skoczka
+ * Micha³ Rapacz
+ * 2015-03-26
+ */
+
 import static org.junit.Assert.*;
 
 import java.util.List;

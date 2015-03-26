@@ -1,5 +1,12 @@
 package chess.model;
 
+/**
+ * Projekt: Szachy
+ * Abstrakcyjna klasa bazowa rozszerzana przez wszystkie implementacje graczy
+ * Micha³ Rapacz
+ * 2015-03-26
+ */
+
 import chess.controller.GameController;
 import chess.controller.GameController.IllegalMoveException;
 

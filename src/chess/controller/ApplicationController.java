@@ -1,5 +1,12 @@
 package chess.controller;
 
+/**
+ * Projekt: Szachy
+ * G³ówny kontroler aplikacji
+ * Micha³ Rapacz
+ * 2015-03-26
+ */
+
 import chess.view.MainWindow;
 
 public class ApplicationController {

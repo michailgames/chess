@@ -1,5 +1,12 @@
 package chess.controller;
 
+/**
+ * Projekt: Szachy
+ * Kontroler bie¿¹cej rozgrywki
+ * Micha³ Rapacz
+ * 2015-03-26
+ */
+
 import chess.model.Board;
 import chess.model.Color;
 import chess.model.Field;

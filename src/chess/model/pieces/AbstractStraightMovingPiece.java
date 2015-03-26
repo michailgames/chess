@@ -1,5 +1,12 @@
 package chess.model.pieces;
 
+/**
+ * Projekt: Szachy
+ * Abstrakcyjna klasa reprezentuj¹ca figurê poruszaj¹c¹ siê po liniach prostych
+ * Micha³ Rapacz
+ * 2015-03-26
+ */
+
 import java.util.ArrayList;
 import java.util.List;
 

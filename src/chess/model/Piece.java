@@ -1,5 +1,12 @@
 package chess.model;
 
+/**
+ * Projekt: Szachy
+ * Abstrakcyjna klasa bazowa dla wszystkich figur szachowych
+ * Micha³ Rapacz
+ * 2015-03-26
+ */
+
 import java.util.ArrayList;
 import java.util.List;
 

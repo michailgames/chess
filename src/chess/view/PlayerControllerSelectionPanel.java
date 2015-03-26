@@ -1,5 +1,12 @@
 package chess.view;
 
+/**
+ * Projekt: Szachy
+ * Panel wyboru gracza kontroluj¹cego stronê
+ * Micha³ Rapacz
+ * 2015-03-26
+ */
+
 import java.awt.Dimension;
 import java.awt.GridLayout;
 

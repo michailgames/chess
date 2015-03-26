@@ -1,5 +1,12 @@
 package chess.model;
 
+/**
+ * Projekt: Szachy
+ * Test abstrakcyjnej klasy figury
+ * Micha³ Rapacz
+ * 2015-03-26
+ */
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 

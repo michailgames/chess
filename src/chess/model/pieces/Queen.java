@@ -1,5 +1,12 @@
 package chess.model.pieces;
 
+/**
+ * Projekt: Szachy
+ * Reprezentacja królowej
+ * Micha³ Rapacz
+ * 2015-03-26
+ */
+
 import chess.model.Color;
 import chess.model.Piece;
 

@@ -1,5 +1,12 @@
 package chess.view;
 
+/**
+ * Projekt: Szachy
+ * Panel odpowiadaj¹cy za widok planszy
+ * Micha³ Rapacz
+ * 2015-03-26
+ */
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;

@@ -1,5 +1,12 @@
 package chess.model;
 
+/**
+ * Projekt: Szachy
+ * Klasa pomocnicza reprezentuj¹ca wspó³rzêdne pola
+ * Micha³ Rapacz
+ * 2015-03-26
+ */
+
 
 public class Field {
 	

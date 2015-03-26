@@ -1,5 +1,12 @@
 package chess.model.pieces;
 
+/**
+ * Projekt: Szachy
+ * Reprezentcaja króla
+ * Micha³ Rapacz
+ * 2015-03-26
+ */
+
 import java.util.ArrayList;
 import java.util.List;
 

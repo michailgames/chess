@@ -1,5 +1,12 @@
 package chess;
 
+/**
+ * Projekt: Szachy
+ * Klasa uruchamiaj¹ca program
+ * Micha³ Rapacz
+ * 2016-03-26
+ */
+
 import chess.controller.ApplicationController;
 
 public class Main {

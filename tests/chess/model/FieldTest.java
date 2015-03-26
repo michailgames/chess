@@ -1,5 +1,12 @@
 package chess.model;
 
+/**
+ * Projekt: Szachy
+ * Test klasy pola
+ * Micha³ Rapacz
+ * 2015-03-26
+ */
+
 import static org.junit.Assert.*;
 
 import org.junit.Test;
