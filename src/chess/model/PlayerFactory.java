@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import chess.model.players.HumanPlayer;
 import chess.model.players.NonPlayingPlayer;
 
 public class PlayerFactory {
@@ -13,13 +12,8 @@ public class PlayerFactory {
 	private Map<String, PlayerMaker> playerMakers =
 			new HashMap<String, PlayerFactory.PlayerMaker>();
 	
-	public PlayerFactory() {
-		playerMakers.put("Cz³owiek", new PlayerMaker() {
-			@Override
-			public Player makePlayer(Color color) {
-				return new HumanPlayer(color);
-			}
-		});
+	public void registerPlayerMaker(String name, PlayerMaker maker) {
+		playerMakers.put(name, maker);
 	}
 	
 	public List<String> getAvailablePlayers() {
@@ -34,7 +28,7 @@ public class PlayerFactory {
 		return new NonPlayingPlayer(color);
 	}
 	
-	private abstract class PlayerMaker {
+	public static abstract class PlayerMaker {
 		public abstract Player makePlayer(Color color);
 	}
 }
