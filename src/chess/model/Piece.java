@@ -52,7 +52,7 @@ public abstract class Piece {
 	}
 	
 	public final List<Field> getAllLegalMoves(Board board) {
-		List<Field> possibleMoves = getAllPossibleMoves(board);
+		List<Field> possibleMoves = getAllPotentialMoves(board);
 		List<Field> legalMoves = new ArrayList<Field>(possibleMoves.size());
 		for(Field move : possibleMoves) {
 			if(moveIsSafeForKing(move, board)) {
@@ -68,7 +68,7 @@ public abstract class Piece {
 		Field kingField = new Field(king.getX(), king.getY());
 		
 		for(Piece piece : boardCopy.getAllPieces(getOppositeColor())) {
-			if(piece.getAllPossibleMoves(boardCopy)
+			if(piece.getAllPotentialMoves(boardCopy)
 					.contains(kingField)) {
 				return false;
 			}
@@ -76,7 +76,7 @@ public abstract class Piece {
 		return true;
 	}
 
-	protected abstract List<Field> getAllPossibleMoves(Board board);
+	protected abstract List<Field> getAllPotentialMoves(Board board);
 
 	public Piece move(Board board, int x, int y) {
 		canPerformCastling = false;

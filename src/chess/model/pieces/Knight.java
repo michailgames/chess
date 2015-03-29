@@ -38,7 +38,7 @@ public class Knight extends Piece {
 	}
 	
 	@Override
-	protected List<Field> getAllPossibleMoves(Board board) {
+	protected List<Field> getAllPotentialMoves(Board board) {
 		List<Field> movesList = new ArrayList<Field>();
 		for(Field move : moveOptions) {
 			int x = getX() + move.getX();

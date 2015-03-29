@@ -22,7 +22,7 @@ public abstract class AbstractStraightMovingPiece extends Piece {
 	}
 
 	@Override
-	protected List<Field> getAllPossibleMoves(Board board) {
+	protected List<Field> getAllPotentialMoves(Board board) {
 		List<Field> movesList = new ArrayList<Field>();
 		for(Direction direction : getAvailableDirections()) {
 			boolean canMoveFurther = true;

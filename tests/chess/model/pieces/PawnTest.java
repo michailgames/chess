@@ -13,7 +13,7 @@ import chess.model.Piece;
 
 /**
  * Projekt: Szachy
- * Test królowej
+ * Test piona
  * Micha³ Rapacz
  * 2015-03-26
  */

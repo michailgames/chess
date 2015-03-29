@@ -96,13 +96,12 @@ public class PieceTest {
 			}
 			
 			@Override
-			protected List<Field> getAllPossibleMoves(Board board) {
+			protected List<Field> getAllPotentialMoves(Board board) {
 				return null;
 			}
 			
 			@Override
 			public Piece copy() {
-				// TODO Auto-generated method stub
 				return null;
 			}
 		};
