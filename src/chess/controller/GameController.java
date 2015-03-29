@@ -12,7 +12,6 @@ import chess.model.Color;
 import chess.model.Field;
 import chess.model.Piece;
 import chess.model.Player;
-import chess.model.players.HumanPlayer;
 import chess.model.players.NonPlayingPlayer;
 
 public class GameController {
@@ -33,11 +32,13 @@ public class GameController {
 		return instance;
 	}
 	
-	public void startNewGame() {
+	public void startNewGame(String white, String black) {
 		board = new Board();
 		board.setup();
-		whitePlayer = new HumanPlayer(Color.WHITE);
-		blackPlayer = new HumanPlayer(Color.BLACK);
+		whitePlayer = PlayerController.getInstance()
+				.makePlayer(white, Color.WHITE);
+		blackPlayer = PlayerController.getInstance()
+				.makePlayer(black, Color.BLACK);
 		currentPlayer = whitePlayer;
 	}
 	

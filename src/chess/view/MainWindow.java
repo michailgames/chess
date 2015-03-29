@@ -86,7 +86,7 @@ public class MainWindow extends JFrame {
 	}
 	
 	private void startNewGame(String whiteChoice, String blackchoice) {
-		GameController.getInstance().startNewGame();
+		GameController.getInstance().startNewGame(whiteChoice, blackchoice);
 		ApplicationController.getInstance().refreshView();
 	}
 }
