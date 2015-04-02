@@ -12,7 +12,9 @@ import chess.model.Color;
 import chess.model.Field;
 import chess.model.Piece;
 import chess.model.Player;
+import chess.model.interfaces.MoveListener;
 import chess.model.players.NonPlayingPlayer;
+import chess.utils.MoveUtils;
 
 public class GameController {
 
@@ -25,37 +27,40 @@ public class GameController {
 	
 	private GameController() { }
 	
-	public static GameController getInstance() {
+	public synchronized static GameController getInstance() {
 		if(instance == null) {
 			instance = new GameController();
 		}
 		return instance;
 	}
 	
-	public void startNewGame(String white, String black) {
+	public synchronized void startNewGame(String white, String black) {
 		board = new Board();
 		board.setup();
 		whitePlayer = PlayerController.getInstance()
 				.makePlayer(white, Color.WHITE);
+		whitePlayer.registerMoveListener(getMoveListener());
 		blackPlayer = PlayerController.getInstance()
 				.makePlayer(black, Color.BLACK);
+		blackPlayer.registerMoveListener(getMoveListener());
 		currentPlayer = whitePlayer;
+		currentPlayer.startCalculatingNextMove(getBoard());
 	}
 	
-	public Board getBoard() {
+	public synchronized Board getBoard() {
 		return new Board(board);
 	}
 	
-	public void clickField(Field field) {
+	public synchronized void clickField(Field field) {
 		currentPlayer.fieldClicked(field, board);
 	}
 	
-	public Piece getSelectedPiece() {
+	public synchronized Piece getSelectedPiece() {
 		return currentPlayer.getSelectedPiece();
 	}
 
-	public void reportNewMove(Player player, Field sourceField,
-			Field targetField) throws IllegalMoveException {
+	public synchronized void reportNewMove(Player player, Field sourceField,
+			Field targetField) throws UnauthorizedMoveException {
 		if(player != currentPlayer) {
 			throw new UnauthorizedMoveException();
 		}
@@ -82,13 +87,30 @@ public class GameController {
 	private void nextTurn() {
 		currentPlayer = (currentPlayer == whitePlayer) ?
 				blackPlayer : whitePlayer;
+		if(MoveUtils.hasAnyLegalMove(getBoard(), currentPlayer.getColor())) {
+			currentPlayer.startCalculatingNextMove(board);
+		} else {
+			whitePlayer = new NonPlayingPlayer(Color.WHITE);
+			blackPlayer = new NonPlayingPlayer(Color.BLACK);
+		}
 	}
 	
-	public class IllegalMoveException extends Exception {
+	public class IllegalMoveException extends RuntimeException {
 		private static final long serialVersionUID = 1L;	
 	}
 	
 	public class UnauthorizedMoveException extends RuntimeException {
 		private static final long serialVersionUID = 1L;	
+	}
+	
+	private MoveListener getMoveListener() {
+		return new MoveListener() {
+			@Override
+			public void reportNewMove(Player player, Field sourceField,
+					Field targetField) throws UnauthorizedMoveException {
+				GameController.getInstance()
+				.reportNewMove(player, sourceField, targetField);
+			}
+		};
 	}
 }

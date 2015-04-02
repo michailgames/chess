@@ -7,12 +7,13 @@ package chess.model;
  * 2015-03-26
  */
 
-import chess.controller.GameController;
-import chess.controller.GameController.IllegalMoveException;
+import chess.controller.GameController.UnauthorizedMoveException;
+import chess.model.interfaces.MoveListener;
 
 public abstract class Player {
 	
 	private final Color color;
+	private MoveListener moveListener;
 
 	public Player(Color color) {
 		this.color = color;
@@ -22,12 +23,19 @@ public abstract class Player {
 		return color;
 	}
 	
-	public final void makeMove(Field sourceField, Field targetField)
-			throws IllegalMoveException{
-		GameController.getInstance().reportNewMove(this, sourceField,
-				targetField);
+	protected synchronized final void makeMove(Field sourceField,
+			Field targetField) {
+		try {
+			moveListener.reportNewMove(this, sourceField,
+					targetField);
+		} catch (UnauthorizedMoveException ex) {};
 	}
 	
+	public void registerMoveListener(MoveListener listener) {
+		this.moveListener = listener;
+	}
+	
+	public abstract void startCalculatingNextMove(Board board);
 	public abstract void fieldClicked(Field field, Board board);
 	public abstract Piece getSelectedPiece();
 }

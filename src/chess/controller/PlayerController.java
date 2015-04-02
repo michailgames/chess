@@ -7,6 +7,7 @@ import chess.model.Player;
 import chess.model.PlayerFactory;
 import chess.model.PlayerFactory.PlayerMaker;
 import chess.model.players.HumanPlayer;
+import chess.model.players.RandomPlayer;
 
 public class PlayerController {
 
@@ -29,6 +30,12 @@ public class PlayerController {
 			@Override
 			public Player makePlayer(Color color) {
 				return new HumanPlayer(color);
+			}
+		});
+		playerFactory.registerPlayerMaker("Komputer - losowy", new PlayerMaker() {
+			@Override
+			public Player makePlayer(Color color) {
+				return new RandomPlayer(color);
 			}
 		});
 	}

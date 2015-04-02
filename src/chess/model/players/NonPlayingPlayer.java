@@ -27,4 +27,7 @@ public class NonPlayingPlayer extends Player {
 		return null;
 	}
 
+	@Override
+	public void startCalculatingNextMove(Board board) { }
+
 }

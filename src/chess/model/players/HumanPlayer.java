@@ -43,4 +43,6 @@ public class HumanPlayer extends Player {
 		return selectedPiece;
 	}
 
+	@Override
+	public void startCalculatingNextMove(Board board) { }
 }
