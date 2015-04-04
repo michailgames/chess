@@ -1,7 +1,7 @@
-package chess.model.interfaces;
+package chess.model.listeners;
 
-import chess.model.Field;
-import chess.model.Player;
+import chess.model.board.Field;
+import chess.model.players.Player;
 
 /**
  * Projekt: Szachy
@@ -10,7 +10,7 @@ import chess.model.Player;
  * 2015-04-02
  */
 
-public interface MoveListener {
+public interface IMoveListener {
 
 	public void reportNewMove(Player player, Field sourceField,
 			Field targetField);

@@ -1,4 +1,4 @@
-package chess.model;
+package chess.model.board;
 
 /**
  * Projekt: Szachy
@@ -12,10 +12,13 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import chess.model.board.Board;
+import chess.model.board.Color;
 import chess.model.pieces.Bishop;
 import chess.model.pieces.King;
 import chess.model.pieces.Knight;
 import chess.model.pieces.Pawn;
+import chess.model.pieces.Piece;
 import chess.model.pieces.Queen;
 import chess.model.pieces.Rook;
 

@@ -1,12 +1,15 @@
-package chess.model;
+package chess.model.players;
 
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import chess.model.PlayerFactory.PlayerMaker;
+import chess.model.board.Color;
 import chess.model.players.NonPlayingPlayer;
+import chess.model.players.Player;
+import chess.model.players.PlayerFactory;
+import chess.model.players.PlayerFactory.PlayerMaker;
 import static org.junit.Assert.*;
 
 public class PlayerFactoryTest {

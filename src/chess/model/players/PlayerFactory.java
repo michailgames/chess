@@ -1,11 +1,11 @@
-package chess.model;
+package chess.model.players;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import chess.model.players.NonPlayingPlayer;
+import chess.model.board.Color;
 
 public class PlayerFactory {
 	

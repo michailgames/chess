@@ -10,10 +10,9 @@ package chess.model.pieces;
 import java.util.ArrayList;
 import java.util.List;
 
-import chess.model.Board;
-import chess.model.Color;
-import chess.model.Field;
-import chess.model.Piece;
+import chess.model.board.Board;
+import chess.model.board.Color;
+import chess.model.board.Field;
 
 public abstract class AbstractStraightMovingPiece extends Piece {
 

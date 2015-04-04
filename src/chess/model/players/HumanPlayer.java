@@ -8,11 +8,10 @@ package chess.model.players;
  */
 
 import chess.controller.GameController.IllegalMoveException;
-import chess.model.Board;
-import chess.model.Color;
-import chess.model.Field;
-import chess.model.Piece;
-import chess.model.Player;
+import chess.model.board.Board;
+import chess.model.board.Color;
+import chess.model.board.Field;
+import chess.model.pieces.Piece;
 
 public class HumanPlayer extends Player {
 	

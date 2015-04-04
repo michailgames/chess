@@ -2,12 +2,14 @@ package chess.controller;
 
 import java.util.List;
 
-import chess.model.Color;
-import chess.model.Player;
-import chess.model.PlayerFactory;
-import chess.model.PlayerFactory.PlayerMaker;
+import chess.model.board.Color;
+import chess.model.players.GreedyPlayer;
 import chess.model.players.HumanPlayer;
+import chess.model.players.Player;
+import chess.model.players.PlayerFactory;
+import chess.model.players.PlayerFactory.PlayerMaker;
 import chess.model.players.RandomPlayer;
+import chess.model.players.strategies.StandardBoardEvaluationStrategy;
 
 public class PlayerController {
 
@@ -32,10 +34,19 @@ public class PlayerController {
 				return new HumanPlayer(color);
 			}
 		});
-		playerFactory.registerPlayerMaker("Komputer - losowy", new PlayerMaker() {
+		playerFactory.registerPlayerMaker("Komputer - losowy",
+				new PlayerMaker() {
 			@Override
 			public Player makePlayer(Color color) {
 				return new RandomPlayer(color);
+			}
+		});
+		playerFactory.registerPlayerMaker("Komputer - zach³anny",
+				new PlayerMaker() {
+			@Override
+			public Player makePlayer(Color color) {
+				return new GreedyPlayer(color,
+						new StandardBoardEvaluationStrategy());
 			}
 		});
 	}

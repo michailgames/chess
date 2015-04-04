@@ -7,13 +7,13 @@ package chess.controller;
  * 2015-03-26
  */
 
-import chess.model.Board;
-import chess.model.Color;
-import chess.model.Field;
-import chess.model.Piece;
-import chess.model.Player;
-import chess.model.interfaces.MoveListener;
+import chess.model.board.Board;
+import chess.model.board.Color;
+import chess.model.board.Field;
+import chess.model.listeners.IMoveListener;
+import chess.model.pieces.Piece;
 import chess.model.players.NonPlayingPlayer;
+import chess.model.players.Player;
 import chess.utils.MoveUtils;
 
 public class GameController {
@@ -103,8 +103,8 @@ public class GameController {
 		private static final long serialVersionUID = 1L;	
 	}
 	
-	private MoveListener getMoveListener() {
-		return new MoveListener() {
+	private IMoveListener getMoveListener() {
+		return new IMoveListener() {
 			@Override
 			public void reportNewMove(Player player, Field sourceField,
 					Field targetField) throws UnauthorizedMoveException {

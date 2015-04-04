@@ -1,4 +1,4 @@
-package chess.model;
+package chess.model.pieces;
 
 /**
  * Projekt: Szachy
@@ -14,7 +14,11 @@ import java.util.List;
 
 import org.junit.Test;
 
+import chess.model.board.Board;
+import chess.model.board.Color;
+import chess.model.board.Field;
 import chess.model.pieces.Pawn;
+import chess.model.pieces.Piece;
 
 public class PieceTest {
 

@@ -1,4 +1,4 @@
-package chess.model;
+package chess.model.players;
 
 /**
  * Projekt: Szachy
@@ -8,12 +8,16 @@ package chess.model;
  */
 
 import chess.controller.GameController.UnauthorizedMoveException;
-import chess.model.interfaces.MoveListener;
+import chess.model.board.Board;
+import chess.model.board.Color;
+import chess.model.board.Field;
+import chess.model.listeners.IMoveListener;
+import chess.model.pieces.Piece;
 
 public abstract class Player {
 	
 	private final Color color;
-	private MoveListener moveListener;
+	private IMoveListener moveListener;
 
 	public Player(Color color) {
 		this.color = color;
@@ -31,7 +35,7 @@ public abstract class Player {
 		} catch (UnauthorizedMoveException ex) {};
 	}
 	
-	public void registerMoveListener(MoveListener listener) {
+	public void registerMoveListener(IMoveListener listener) {
 		this.moveListener = listener;
 	}
 	

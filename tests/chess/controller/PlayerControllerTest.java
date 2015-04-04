@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.junit.Test;
 
-import chess.model.Color;
-import chess.model.Player;
+import chess.model.board.Color;
 import chess.model.players.HumanPlayer;
+import chess.model.players.Player;
 import chess.model.players.RandomPlayer;
 import static org.junit.Assert.*;
 

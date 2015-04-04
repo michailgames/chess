@@ -7,8 +7,7 @@ package chess.model.pieces;
  * 2015-03-26
  */
 
-import chess.model.Color;
-import chess.model.Piece;
+import chess.model.board.Color;
 
 public class Bishop extends AbstractStraightMovingPiece {
 	

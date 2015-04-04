@@ -1,4 +1,4 @@
-package chess.model;
+package chess.model.pieces;
 
 /**
  * Projekt: Szachy
@@ -10,7 +10,9 @@ package chess.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import chess.model.pieces.King;
+import chess.model.board.Board;
+import chess.model.board.Color;
+import chess.model.board.Field;
 
 public abstract class Piece {
 	

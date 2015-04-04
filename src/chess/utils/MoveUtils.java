@@ -3,11 +3,11 @@ package chess.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import chess.model.Board;
-import chess.model.Color;
-import chess.model.Field;
-import chess.model.Move;
-import chess.model.Piece;
+import chess.model.board.Board;
+import chess.model.board.Color;
+import chess.model.board.Field;
+import chess.model.board.Move;
+import chess.model.pieces.Piece;
 
 public class MoveUtils {
 

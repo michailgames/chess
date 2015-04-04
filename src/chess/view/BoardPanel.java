@@ -17,9 +17,9 @@ import javax.swing.JPanel;
 
 import chess.controller.ApplicationController;
 import chess.controller.GameController;
-import chess.model.Board;
-import chess.model.Field;
-import chess.model.Piece;
+import chess.model.board.Board;
+import chess.model.board.Field;
+import chess.model.pieces.Piece;
 
 public class BoardPanel extends JPanel {
 
@@ -100,8 +100,8 @@ public class BoardPanel extends JPanel {
 		}
 	}
 
-	private Color getDisplayColor(chess.model.Color color) {
-		return (color == chess.model.Color.WHITE) ?
+	private Color getDisplayColor(chess.model.board.Color color) {
+		return (color == chess.model.board.Color.WHITE) ?
 				WHITE_PIECES_COLOR : BLACK_PIECES_COLOR;
 	}
 	

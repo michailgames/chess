@@ -1,4 +1,5 @@
-package chess.model;
+package chess.model.board;
+
 
 /**
  * Projekt: Szachy

@@ -1,4 +1,4 @@
-package chess.model;
+package chess.model.board;
 
 /**
  * Projekt: Szachy
@@ -10,6 +10,8 @@ package chess.model;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import chess.model.board.Field;
 
 public class FieldTest {
 
