@@ -5,6 +5,7 @@ import java.util.List;
 import org.junit.Test;
 
 import chess.model.board.Color;
+import chess.model.players.GreedyPlayer;
 import chess.model.players.HumanPlayer;
 import chess.model.players.Player;
 import chess.model.players.RandomPlayer;
@@ -16,9 +17,10 @@ public class PlayerControllerTest {
 	public void availablePlayers() {
 		List<String> availablePlayers = PlayerController.getInstance()
 				.getAvailablePlayers();
-		assertEquals(2, availablePlayers.size());
+		assertEquals(3, availablePlayers.size());
 		assertTrue(availablePlayers.contains("Cz³owiek"));
 		assertTrue(availablePlayers.contains("Komputer - losowy"));
+		assertTrue(availablePlayers.contains("Komputer - zach³anny"));
 	}
 	
 	@Test
@@ -34,6 +36,14 @@ public class PlayerControllerTest {
 		Player player = PlayerController.getInstance()
 				.makePlayer("Komputer - losowy", Color.WHITE);
 		assertTrue(player instanceof RandomPlayer
+				&& player.getColor() == Color.WHITE);
+	}
+	
+	@Test
+	public void creatingGreedyPlayer() {
+		Player player = PlayerController.getInstance()
+				.makePlayer("Komputer - zach³anny", Color.WHITE);
+		assertTrue(player instanceof GreedyPlayer
 				&& player.getColor() == Color.WHITE);
 	}
 

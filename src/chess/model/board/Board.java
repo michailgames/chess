@@ -17,6 +17,7 @@ import chess.model.pieces.Pawn;
 import chess.model.pieces.Piece;
 import chess.model.pieces.Queen;
 import chess.model.pieces.Rook;
+import chess.utils.MoveUtils;
 
 public class Board {
 
@@ -30,6 +31,11 @@ public class Board {
 	public Board() { }
 	
 	public Board(Board original) {
+		copyFields(original);
+		copyState(original);
+	}
+
+	private void copyFields(Board original) {
 		fields = new Piece[BOARD_SIZE][BOARD_SIZE];
 		for(int x = 0; x < BOARD_SIZE; x++) {
 			for(int y = 0; y < BOARD_SIZE; y++) {
@@ -48,6 +54,9 @@ public class Board {
 				}
 			}
 		}
+	}
+	
+	private void copyState(Board original) {
 		if(original.pawnThatJustMovedTwoSquares != null) {
 			int x = original.pawnThatJustMovedTwoSquares.getX();
 			int y = original.pawnThatJustMovedTwoSquares.getY();
@@ -103,6 +112,19 @@ public class Board {
 	
 	public void movePiece(Piece piece, Field field) {
 		movePiece(piece, field.getX(), field.getY());
+	}
+
+	public GameState getGameState(Color nextPlayerColor) {
+		boolean checked = getKing(nextPlayerColor).isUnderAttack(this);
+		boolean hasMoves = MoveUtils.hasAnyLegalMove(this, nextPlayerColor);
+		if(checked && !hasMoves) {
+			return GameState.MATE;
+		} else if(checked) {
+			return GameState.CHECK;
+		} else if(!hasMoves) {
+			return GameState.STALEMATE;
+		}
+		return GameState.OPEN;
 	}
 	
 	public King getKing(Color color) {
