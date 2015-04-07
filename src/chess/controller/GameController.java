@@ -10,6 +10,7 @@ package chess.controller;
 import chess.model.board.Board;
 import chess.model.board.Color;
 import chess.model.board.Field;
+import chess.model.board.GameState;
 import chess.model.listeners.IMoveListener;
 import chess.model.pieces.Piece;
 import chess.model.players.NonPlayingPlayer;
@@ -92,7 +93,17 @@ public class GameController {
 		} else {
 			whitePlayer = new NonPlayingPlayer(Color.WHITE);
 			blackPlayer = new NonPlayingPlayer(Color.BLACK);
+			currentPlayer = (currentPlayer.getColor() == Color.BLACK) ?
+					blackPlayer : whitePlayer;
 		}
+	}
+	
+	public GameState getGameState() {
+		return board.getGameState(currentPlayer.getColor());
+	}
+	
+	public Color getCurrentPlayerColor() {
+		return currentPlayer.getColor();
 	}
 	
 	public class IllegalMoveException extends RuntimeException {

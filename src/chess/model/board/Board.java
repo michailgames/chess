@@ -115,6 +115,9 @@ public class Board {
 	}
 
 	public GameState getGameState(Color nextPlayerColor) {
+		if(whiteKing == null) {
+			return GameState.NONE;
+		}
 		boolean checked = getKing(nextPlayerColor).isUnderAttack(this);
 		boolean hasMoves = MoveUtils.hasAnyLegalMove(this, nextPlayerColor);
 		if(checked && !hasMoves) {
