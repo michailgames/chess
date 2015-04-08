@@ -118,5 +118,43 @@ public class BoardTest {
 		assertFalse(board.canPawnBeTakenEnPassant(blackPawn));
 		assertFalse(board.canPawnBeTakenEnPassant(whitePawn));
 	}
-
+	
+	@Test
+	public void emptyBoardStateIsNone() {
+		board = new Board();
+		assertEquals(GameState.NONE, board.getGameState(Color.WHITE));
+	}
+	
+	@Test
+	public void setupBoardStateIsOpen() {
+		assertEquals(GameState.OPEN, board.getGameState(Color.WHITE));
+	}
+	
+	@Test
+	public void stateIsCheckedWhenOneOfKingsIsChecked() {
+		Knight whiteKnight = (Knight) board.getPiece(1, 7);
+		board.movePiece(whiteKnight, 2, 5);
+		board.movePiece(whiteKnight, 3, 3);
+		board.movePiece(whiteKnight, 2, 1);
+		assertEquals(GameState.CHECK, board.getGameState(Color.BLACK));
+	}
+	
+	@Test
+	public void stateIsMateWhenOneOfKingsIsMated() {
+		board.movePiece(board.getPiece(5, 6), 5, 5);
+		board.movePiece(board.getPiece(4, 1), 4, 2);
+		board.movePiece(board.getPiece(6, 6), 6, 4);
+		board.movePiece(board.getPiece(3, 0), 7, 4);
+		assertEquals(GameState.MATE, board.getGameState(Color.WHITE));
+	}
+	
+	@Test
+	public void stateIsStalemateWhenOneOfKingsIsStalemated() {
+		board = new Board();
+		board.movePiece(new King(Color.WHITE, 7, 7), 7, 7);
+		board.movePiece(new Queen(Color.WHITE, 1, 2), 1, 2);
+		board.movePiece(new King(Color.BLACK, 0, 0), 0, 0);
+		board = new Board(board);
+		assertEquals(GameState.STALEMATE, board.getGameState(Color.BLACK));
+	}
 }

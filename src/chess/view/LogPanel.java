@@ -63,7 +63,7 @@ public class LogPanel extends JPanel {
 		String labelText = currentColor == chess.model.board.Color.WHITE ?
 				"Ruch bia³ych" : "Ruch czarnych";
 		if(state == GameState.NONE) {
-			return "";
+			return "-";
 		} else if(state == GameState.CHECK) {
 			labelText += " [szach]";
 		} else if(state == GameState.STALEMATE) {
