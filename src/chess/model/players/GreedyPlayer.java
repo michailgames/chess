@@ -1,5 +1,6 @@
 package chess.model.players;
 
+import java.util.Collections;
 import java.util.List;
 
 import chess.model.board.Board;
@@ -28,6 +29,11 @@ public class GreedyPlayer extends AbstractAIPlayer {
 	@Override
 	protected Move calculateNextMove(Board board) {
 		List<Move> availableMoves = MoveUtils.allLegalMoves(board, getColor());
+		Collections.shuffle(availableMoves);	
+		return determineBestMove(board, availableMoves);
+	}
+
+	private Move determineBestMove(Board board, List<Move> availableMoves) {
 		Move bestMove = null;
 		int bestScore = Integer.MIN_VALUE;
 		for(Move move : availableMoves) {

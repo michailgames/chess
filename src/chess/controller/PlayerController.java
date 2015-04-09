@@ -46,7 +46,7 @@ public class PlayerController {
 			@Override
 			public Player makePlayer(Color color) {
 				return new GreedyPlayer(color,
-						new StandardBoardEvaluationStrategy());
+						new StandardBoardEvaluationStrategy(color));
 			}
 		});
 	}

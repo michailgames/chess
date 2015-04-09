@@ -1,7 +1,5 @@
 package chess.model.players.strategies;
 
-import java.util.Random;
-
 import chess.model.board.Board;
 import chess.model.board.Color;
 import chess.model.board.GameState;
@@ -22,31 +20,35 @@ import chess.model.pieces.Rook;
 public class StandardBoardEvaluationStrategy implements
 		IBoardEvaluationStrategy {
 	
-	private final static int baseScore = 100;
-	private final static int randomizationRange = 150;
-	private Random random = new Random();
-
-	@Override
-	public int evaluateBoard(Board board, Color color) {
-		GameState gameState = board.getGameState(color.getOppositeColor());
-		if(gameState == GameState.MATE) {
-			return Integer.MAX_VALUE;
-		} else if(gameState == GameState.STALEMATE) {
-			return baseScore;
-		}
-		
-		int score = baseScore;
-		for(Piece piece : board.getAllPieces(color)) {
-			score += getPieceValue(piece);
-		}
-		for(Piece piece : board.getAllPieces(color.getOppositeColor())) {
-			score -= getPieceValue(piece);
-		}
-		return randomize(score);
+	private Color representedColor;
+	
+	public StandardBoardEvaluationStrategy(Color representedColor) {
+		this.representedColor = representedColor;
 	}
 
-	private int randomize(int score) {
-		return score + random.nextInt(randomizationRange);
+	@Override
+	public int evaluateBoard(Board board, Color nextPlayerColor) {
+		GameState gameState = board.getGameState(nextPlayerColor);
+		if(gameState == GameState.MATE) {
+			return nextPlayerColor == representedColor ?
+					Integer.MIN_VALUE : Integer.MAX_VALUE;
+		} else if(gameState == GameState.STALEMATE) {
+			return 0;
+		}
+		
+		return openPositionScore(board);
+	}
+
+	private int openPositionScore(Board board) {
+		int score = 0;
+		for(Piece piece : board.getAllPieces(representedColor)) {
+			score += getPieceValue(piece);
+		}
+		for(Piece piece : board.getAllPieces(representedColor
+				.getOppositeColor())) {
+			score -= getPieceValue(piece);
+		}
+		return score;
 	}
 
 	private int getPieceValue(Piece piece) {

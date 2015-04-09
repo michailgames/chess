@@ -36,14 +36,19 @@ public class GameController {
 	}
 	
 	public synchronized void startNewGame(String white, String black) {
+		startNewGame(PlayerController.getInstance()
+				.makePlayer(white, Color.WHITE),
+				PlayerController.getInstance()
+				.makePlayer(black, Color.BLACK));
+	}
+
+	synchronized void startNewGame(Player white, Player black) {
+		whitePlayer = white;
+		blackPlayer = black;
+		whitePlayer.registerMoveListener(getMoveListener());
+		blackPlayer.registerMoveListener(getMoveListener());
 		board = new Board();
 		board.setup();
-		whitePlayer = PlayerController.getInstance()
-				.makePlayer(white, Color.WHITE);
-		whitePlayer.registerMoveListener(getMoveListener());
-		blackPlayer = PlayerController.getInstance()
-				.makePlayer(black, Color.BLACK);
-		blackPlayer.registerMoveListener(getMoveListener());
 		currentPlayer = whitePlayer;
 		currentPlayer.startCalculatingNextMove(getBoard());
 	}

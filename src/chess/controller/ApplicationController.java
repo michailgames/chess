@@ -28,6 +28,8 @@ public class ApplicationController {
 	}
 	
 	public void refreshView() {
-		view.repaint();
+		if(view != null) {
+			view.repaint();
+		}
 	}
 }

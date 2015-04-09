@@ -11,6 +11,13 @@ import chess.model.players.Player;
 import chess.model.players.RandomPlayer;
 import static org.junit.Assert.*;
 
+/**
+ * Projekt: Szachy
+ * Test kontrolera graczy
+ * Micha³ Rapacz
+ * 2015-04-09
+ */
+
 public class PlayerControllerTest {
 
 	@Test

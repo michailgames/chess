@@ -1,5 +1,12 @@
 package chess.model.players;
 
+/**
+ * Projekt: Szachy
+ * Test fabryki graczy
+ * Micha³ Rapacz
+ * 2015-04-09
+ */
+
 import java.util.List;
 
 import org.junit.Before;
