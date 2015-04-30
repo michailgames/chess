@@ -9,7 +9,6 @@ package chess.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 
 import javax.swing.BorderFactory;
@@ -26,13 +25,12 @@ public class LogPanel extends JPanel {
 	private JLabel gameStateLabel;
 	
 	public LogPanel() {
-		setPreferredSize(new Dimension(200, 600));
 		setLayout(new BorderLayout());
 		JPanel gameStatePanel = new JPanel();
 		gameStatePanel.setBackground(Color.WHITE);
 		gameStatePanel.setBorder(BorderFactory.createEtchedBorder());
 		add(gameStatePanel, BorderLayout.NORTH);
-		gameStateLabel = new JLabel("rrr");
+		gameStateLabel = new JLabel();
 		gameStateLabel.setFont(getFont().deriveFont(18f));
 		gameStatePanel.add(gameStateLabel);
 	}
@@ -73,5 +71,8 @@ public class LogPanel extends JPanel {
 		}
 		return labelText;
 	}
-
+	
+	public int getMinimumWidth() {
+		return 220;
+	}
 }

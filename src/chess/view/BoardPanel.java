@@ -35,11 +35,20 @@ public class BoardPanel extends JPanel {
 	private final int MARGIN_SIZE = 10;
 	
 	private int effectivePaintSize;
+	private int rightMargin;
 	private Board board;
 
-	public BoardPanel() {
+	public BoardPanel(int rightMargin) {
+		this.rightMargin = rightMargin;
 		setPreferredSize(new Dimension(600, 600));
 		addMouseListener(new BoardClickListener());
+	}
+	
+	@Override
+	public Dimension getPreferredSize() {
+		Dimension d = getParent().getSize();
+        int size = (int) Math.min(d.getWidth() - rightMargin, d.getHeight());
+        return new Dimension(size, size);
 	}
 	
 	@Override

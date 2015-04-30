@@ -31,7 +31,7 @@ public class MainWindow extends JFrame {
 		super("Szachy");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		initUI();
-		pack();
+		setSize(880, 700);
 		setVisible(true);
 	}
 	
@@ -40,8 +40,9 @@ public class MainWindow extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		add(panel);
-		panel.add(new BoardPanel(), BorderLayout.CENTER);
-		panel.add(new LogPanel(), BorderLayout.EAST);
+		LogPanel logPanel = new LogPanel();
+		panel.add(new BoardPanel(logPanel.getMinimumWidth()), BorderLayout.WEST);
+		panel.add(logPanel, BorderLayout.CENTER);
 	}
 	
 	private void initMenuBar() {
