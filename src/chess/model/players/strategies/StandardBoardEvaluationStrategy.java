@@ -31,7 +31,7 @@ public class StandardBoardEvaluationStrategy implements
 		GameState gameState = board.getGameState(nextPlayerColor);
 		if(gameState == GameState.MATE) {
 			return nextPlayerColor == representedColor ?
-					Integer.MIN_VALUE : Integer.MAX_VALUE;
+					Integer.MIN_VALUE + 1  : Integer.MAX_VALUE - 1;
 		} else if(gameState == GameState.STALEMATE) {
 			return 0;
 		}

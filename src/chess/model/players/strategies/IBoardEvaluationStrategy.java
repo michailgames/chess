@@ -12,5 +12,5 @@ import chess.model.board.Color;
 
 public interface IBoardEvaluationStrategy {
 
-	public int evaluateBoard(Board board, Color color);
+	public int evaluateBoard(Board board, Color nextPlayerColor);
 }

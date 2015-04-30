@@ -7,6 +7,7 @@ package chess.view;
  * 2015-03-26
  */
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.List;
@@ -15,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.EmptyBorder;
 
 import chess.controller.PlayerController;
 
@@ -26,12 +28,18 @@ public class PlayerControllerSelectionPanel extends JPanel {
 	
 	public PlayerControllerSelectionPanel(String sideName) {
 		setBorder(new BevelBorder(BevelBorder.RAISED));
-		setPreferredSize(new Dimension(160, 120));
-		setLayout(new GridLayout(2, 1));
-		add(new JLabel(sideName));
+		setMinimumSize(new Dimension(160, 80));
+		setLayout(new BorderLayout());
+		add(makeSideLabel(sideName), BorderLayout.NORTH);
 		selection = new JList<String>(getAvailableSelections());
 		selection.setSelectedIndex(0);
-		add(selection);
+		selection.setBorder(new EmptyBorder(5, 5, 5, 5));
+		add(selection, BorderLayout.CENTER);
+	}
+
+	JLabel makeSideLabel(String sideName) {
+		JLabel label =  new JLabel(sideName);
+		return label;
 	}
 	
 	public String getSelection() {

@@ -5,6 +5,7 @@ import java.util.List;
 import chess.model.board.Color;
 import chess.model.players.GreedyPlayer;
 import chess.model.players.HumanPlayer;
+import chess.model.players.MinimaxPlayer;
 import chess.model.players.Player;
 import chess.model.players.PlayerFactory;
 import chess.model.players.PlayerFactory.PlayerMaker;
@@ -47,6 +48,22 @@ public class PlayerController {
 			public Player makePlayer(Color color) {
 				return new GreedyPlayer(color,
 						new StandardBoardEvaluationStrategy(color));
+			}
+		});
+		playerFactory.registerPlayerMaker("Komputer - minimax (3)",
+				new PlayerMaker() {
+			@Override
+			public Player makePlayer(Color color) {
+				return new MinimaxPlayer(color,
+						new StandardBoardEvaluationStrategy(color), 3);
+			}
+		});
+		playerFactory.registerPlayerMaker("Komputer - minimax (4)",
+				new PlayerMaker() {
+			@Override
+			public Player makePlayer(Color color) {
+				return new MinimaxPlayer(color,
+						new StandardBoardEvaluationStrategy(color), 4);
 			}
 		});
 	}

@@ -39,7 +39,8 @@ public class GreedyPlayer extends AbstractAIPlayer {
 		for(Move move : availableMoves) {
 			Board newBoard = new Board(board, move.getSourceField(), 
 					move.getTargetField());
-			int score = evaluationStrategy.evaluateBoard(newBoard, getColor());
+			int score = evaluationStrategy.evaluateBoard(
+					newBoard, getColor().getOppositeColor());
 			if(score > bestScore) {
 				bestMove = move;
 				bestScore = score; 
