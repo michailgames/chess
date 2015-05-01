@@ -3,6 +3,7 @@ package chess.controller;
 import java.util.List;
 
 import chess.model.board.Color;
+import chess.model.players.AlphaBetaPlayer;
 import chess.model.players.GreedyPlayer;
 import chess.model.players.HumanPlayer;
 import chess.model.players.MinimaxPlayer;
@@ -64,6 +65,22 @@ public class PlayerController {
 			public Player makePlayer(Color color) {
 				return new MinimaxPlayer(color,
 						new StandardBoardEvaluationStrategy(color), 4);
+			}
+		});
+		playerFactory.registerPlayerMaker("Komputer - alpha-beta (4)",
+				new PlayerMaker() {
+			@Override
+			public Player makePlayer(Color color) {
+				return new AlphaBetaPlayer(color,
+						new StandardBoardEvaluationStrategy(color), 4);
+			}
+		});
+		playerFactory.registerPlayerMaker("Komputer - alpha-beta (5)",
+				new PlayerMaker() {
+			@Override
+			public Player makePlayer(Color color) {
+				return new AlphaBetaPlayer(color,
+						new StandardBoardEvaluationStrategy(color), 5);
 			}
 		});
 	}
