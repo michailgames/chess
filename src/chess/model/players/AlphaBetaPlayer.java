@@ -54,11 +54,11 @@ public class AlphaBetaPlayer extends AbstractAIPlayer {
 		Move bestMove = null;
 		int bestScore = Integer.MIN_VALUE;
 		for(Move move : availableMoves) {
-			if(moveIsIllegal(board, move)) {
-				continue;
-			}
 			Board newBoard = new Board(board, move.getSourceField(), 
 					move.getTargetField());
+			if(boardIsIllegal(newBoard, move)) {
+				continue;
+			}
 			int score;
 			if(depth == 1 || !MoveUtils.hasAnyLegalMove(newBoard,
 					getColor().getOppositeColor())) {
@@ -91,11 +91,11 @@ public class AlphaBetaPlayer extends AbstractAIPlayer {
 		Move worstMove = null;
 		int worstScore = Integer.MAX_VALUE;
 		for(Move move : availableMoves) {
-			if(moveIsIllegal(board, move)) {
-				continue;
-			}
 			Board newBoard = new Board(board, move.getSourceField(), 
 					move.getTargetField());
+			if(boardIsIllegal(newBoard, move)) {
+				continue;
+			}
 			int score;
 			if(depth == 1 || !MoveUtils.hasAnyLegalMove(newBoard, getColor())) {
 				score = evaluationStrategy.evaluateBoard(newBoard, getColor());
@@ -115,9 +115,9 @@ public class AlphaBetaPlayer extends AbstractAIPlayer {
 		return new EvaluatedMove(worstMove, worstScore);
 	}
 	
-	private boolean moveIsIllegal(Board board, Move move) {
-		Piece piece = board.getPiece(move.getSourceField());
-		return !piece.isMoveSafeForKing(move.getTargetField(), board);
+	private boolean boardIsIllegal(Board newBoard, Move move) {
+		Piece piece = newBoard.getPiece(move.getTargetField());
+		return !piece.isBoardSafeForKing(newBoard);
 	}
 	
 	private List<Move> getOrderedMoves(final Board board, Color color) {

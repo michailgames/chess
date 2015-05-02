@@ -69,11 +69,9 @@ public abstract class Piece {
 		return isBoardSafeForKing(boardCopy);
 	}
 
-	private boolean isBoardSafeForKing(Board board) {
+	public boolean isBoardSafeForKing(Board board) {
 		King king = board.getKing(getColor());
-		if(king == null) {
-			return false;
-		}
+		board.movePiece(king, king.getField());
 		Field kingField = new Field(king.getX(), king.getY());
 		
 		for(Piece piece : board.getAllPieces(getOppositeColor())) {
