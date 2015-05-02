@@ -5,6 +5,7 @@ import java.util.List;
 import org.junit.Test;
 
 import chess.model.board.Color;
+import chess.model.players.AdaptiveAlphaBetaPlayer;
 import chess.model.players.AlphaBetaPlayer;
 import chess.model.players.GreedyPlayer;
 import chess.model.players.HumanPlayer;
@@ -26,7 +27,7 @@ public class PlayerControllerTest {
 	public void availablePlayers() {
 		List<String> availablePlayers = PlayerController.getInstance()
 				.getAvailablePlayers();
-		assertEquals(8, availablePlayers.size());
+		assertEquals(9, availablePlayers.size());
 		assertTrue(availablePlayers.contains("Cz³owiek"));
 		assertTrue(availablePlayers.contains("Komputer - losowy"));
 		assertTrue(availablePlayers.contains("Komputer - zach³anny"));
@@ -35,6 +36,8 @@ public class PlayerControllerTest {
 		assertTrue(availablePlayers.contains("Komputer - alpha-beta (4)"));
 		assertTrue(availablePlayers.contains("Komputer - alpha-beta (5)"));
 		assertTrue(availablePlayers.contains("Komputer - alpha-beta (6)"));
+		assertTrue(availablePlayers.contains(
+				"Komputer - adaptacyjny alpha-beta (3-10s)"));
 	}
 	
 	@Test
@@ -98,6 +101,13 @@ public class PlayerControllerTest {
 		Player player = PlayerController.getInstance()
 				.makePlayer("Komputer - alpha-beta (6)", Color.WHITE);
 		assertTrue(player instanceof AlphaBetaPlayer
+				&& player.getColor() == Color.WHITE);
+	}
+	@Test
+	public void creatingAdaptiveAlphaBeta5to10Player() {
+		Player player = PlayerController.getInstance().makePlayer(
+				"Komputer - adaptacyjny alpha-beta (3-10s)", Color.WHITE);
+		assertTrue(player instanceof AdaptiveAlphaBetaPlayer
 				&& player.getColor() == Color.WHITE);
 	}
 }

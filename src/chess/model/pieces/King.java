@@ -84,12 +84,12 @@ public class King extends Piece {
 	}
 
 	public boolean isUnderAttack(Board board) {
-		return moveIsSafeForKing(getField(), board) == false;
+		return isMoveSafeForKing(getField(), board) == false;
 	}
 	
 	private boolean canPassThroughField(Board board, int x, int y) {
 		return board.getPiece(x, y) == null &&
-				moveIsSafeForKing(new Field(x, y), board);
+				isMoveSafeForKing(new Field(x, y), board);
 	}
 	
 	@Override

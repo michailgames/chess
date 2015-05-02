@@ -16,6 +16,8 @@ import chess.model.pieces.Piece;
 public abstract class AbstractAIPlayer extends Player {
 	
 	private long minimumMoveTime = 1000;
+	private long lastCalculationTime = 0;
+	private boolean firstMoveMade = false;
 
 	public AbstractAIPlayer(Color color) {
 		super(color);
@@ -28,14 +30,14 @@ public abstract class AbstractAIPlayer extends Player {
 			public void run() {
 				long startTime = System.currentTimeMillis();
 				Move move = calculateNextMove(board);
-				long calculationTime = System.currentTimeMillis() - startTime;
-				if(calculationTime < minimumMoveTime) {
-					try {
-						Thread.sleep(minimumMoveTime - calculationTime);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					} 
-				}
+				lastCalculationTime = System.currentTimeMillis() - startTime;
+				try {
+					Thread.sleep(Math.max(
+							minimumMoveTime - lastCalculationTime, 100));
+				} catch (InterruptedException e) {
+					throw new RuntimeException(e);
+				} 
+				firstMoveMade = true;
 				makeMove(move.getSourceField(), move.getTargetField());
 			}
 		});
@@ -50,5 +52,13 @@ public abstract class AbstractAIPlayer extends Player {
 	@Override
 	public Piece getSelectedPiece() {
 		return null;
+	}
+	
+	public long getLastCalculationTime() {
+		return lastCalculationTime;
+	}
+	
+	public boolean hasMadeFirstMove() {
+		return firstMoveMade;
 	}
 }

@@ -3,6 +3,7 @@ package chess.controller;
 import java.util.List;
 
 import chess.model.board.Color;
+import chess.model.players.AdaptiveAlphaBetaPlayer;
 import chess.model.players.AlphaBetaPlayer;
 import chess.model.players.GreedyPlayer;
 import chess.model.players.HumanPlayer;
@@ -89,6 +90,14 @@ public class PlayerController {
 			public Player makePlayer(Color color) {
 				return new AlphaBetaPlayer(color,
 						new StandardBoardEvaluationStrategy(color), 6);
+			}
+		});
+		playerFactory.registerPlayerMaker(
+				"Komputer - adaptacyjny alpha-beta (3-10s)", new PlayerMaker() {
+			@Override
+			public Player makePlayer(Color color) {
+				return new AdaptiveAlphaBetaPlayer(color,
+					new StandardBoardEvaluationStrategy(color), 4, 3000, 10000);
 			}
 		});
 	}

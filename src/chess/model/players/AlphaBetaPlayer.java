@@ -9,6 +9,7 @@ import chess.model.board.Board;
 import chess.model.board.Color;
 import chess.model.board.EvaluatedMove;
 import chess.model.board.Move;
+import chess.model.pieces.Piece;
 import chess.model.players.strategies.IBoardEvaluationStrategy;
 import chess.utils.MoveUtils;
 
@@ -31,6 +32,14 @@ public class AlphaBetaPlayer extends AbstractAIPlayer {
 		this.evaluationStrategy = boardEvaluationStrategy;
 		this.depth = depth;
 	}
+	
+	public void setDepth(int depth) {
+		this.depth = depth;
+	}
+	
+	public int getDepth() {
+		return depth;
+	}
 
 	@Override
 	protected Move calculateNextMove(Board board) {
@@ -45,13 +54,16 @@ public class AlphaBetaPlayer extends AbstractAIPlayer {
 		Move bestMove = null;
 		int bestScore = Integer.MIN_VALUE;
 		for(Move move : availableMoves) {
+			if(moveIsIllegal(board, move)) {
+				continue;
+			}
 			Board newBoard = new Board(board, move.getSourceField(), 
 					move.getTargetField());
 			int score;
 			if(depth == 1 || !MoveUtils.hasAnyLegalMove(newBoard,
 					getColor().getOppositeColor())) {
 				score = evaluationStrategy.evaluateBoard(newBoard,
-						getColor().getOppositeColor());
+						getColor().getOppositeColor()) - depthPenalty(depth);
 			} else {
 				score = min(newBoard, depth - 1,
 						lowerBound, upperBound).getScore();
@@ -67,7 +79,11 @@ public class AlphaBetaPlayer extends AbstractAIPlayer {
 		}
 		return new EvaluatedMove(bestMove, bestScore);
 	}
-	
+
+	private int depthPenalty(int depth) {
+		return this.depth - depth;
+	}
+
 	private EvaluatedMove min(Board board, int depth,
 			int lowerBound, int upperBound) {
 		List<Move> availableMoves = getOrderedMoves(board,
@@ -75,6 +91,9 @@ public class AlphaBetaPlayer extends AbstractAIPlayer {
 		Move worstMove = null;
 		int worstScore = Integer.MAX_VALUE;
 		for(Move move : availableMoves) {
+			if(moveIsIllegal(board, move)) {
+				continue;
+			}
 			Board newBoard = new Board(board, move.getSourceField(), 
 					move.getTargetField());
 			int score;
@@ -94,6 +113,11 @@ public class AlphaBetaPlayer extends AbstractAIPlayer {
 			}
 		}
 		return new EvaluatedMove(worstMove, worstScore);
+	}
+	
+	private boolean moveIsIllegal(Board board, Move move) {
+		Piece piece = board.getPiece(move.getSourceField());
+		return !piece.isMoveSafeForKing(move.getTargetField(), board);
 	}
 	
 	private List<Move> getOrderedMoves(final Board board, Color color) {

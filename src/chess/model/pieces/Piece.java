@@ -57,14 +57,14 @@ public abstract class Piece {
 		List<Field> possibleMoves = getAllPotentialMoves(board);
 		List<Field> legalMoves = new ArrayList<Field>(possibleMoves.size());
 		for(Field move : possibleMoves) {
-			if(moveIsSafeForKing(move, board)) {
+			if(isMoveSafeForKing(move, board)) {
 				legalMoves.add(move);
 			}
 		}
 		return legalMoves;
 	}
 	
-	protected final boolean moveIsSafeForKing(Field move, Board board) {
+	public final boolean isMoveSafeForKing(Field move, Board board) {
 		Board boardCopy = new Board(board, new Field(getX(), getY()), move);
 		return isBoardSafeForKing(boardCopy);
 	}
