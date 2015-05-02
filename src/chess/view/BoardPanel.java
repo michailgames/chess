@@ -29,8 +29,8 @@ public class BoardPanel extends JPanel {
 	private final Color BLACK_FIELD_COLOR = new Color(192, 192, 192);
 	private final Color WHITE_FIELD_COLOR = new Color(255, 255, 255);
 	private final Color SELECTION_COLOR = new Color(13, 210, 198, 130);
-	public final static Color WHITE_PIECES_COLOR = new Color(0, 97, 197);
-	public final static Color BLACK_PIECES_COLOR = new Color(167, 3, 3);
+	public final static Color WHITE_PIECES_COLOR = new Color(135, 73, 0);
+	public final static Color BLACK_PIECES_COLOR = new Color(0, 0, 0);
 	private final Color GRID_COLOR = new Color(0, 0, 0);
 	private final int MARGIN_SIZE = 10;
 	

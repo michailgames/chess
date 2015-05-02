@@ -26,7 +26,7 @@ public class PlayerControllerTest {
 	public void availablePlayers() {
 		List<String> availablePlayers = PlayerController.getInstance()
 				.getAvailablePlayers();
-		assertEquals(7, availablePlayers.size());
+		assertEquals(8, availablePlayers.size());
 		assertTrue(availablePlayers.contains("Cz³owiek"));
 		assertTrue(availablePlayers.contains("Komputer - losowy"));
 		assertTrue(availablePlayers.contains("Komputer - zach³anny"));
@@ -34,6 +34,7 @@ public class PlayerControllerTest {
 		assertTrue(availablePlayers.contains("Komputer - minimax (4)"));
 		assertTrue(availablePlayers.contains("Komputer - alpha-beta (4)"));
 		assertTrue(availablePlayers.contains("Komputer - alpha-beta (5)"));
+		assertTrue(availablePlayers.contains("Komputer - alpha-beta (6)"));
 	}
 	
 	@Test
@@ -88,6 +89,14 @@ public class PlayerControllerTest {
 	public void creatingAlphaBeta5Player() {
 		Player player = PlayerController.getInstance()
 				.makePlayer("Komputer - alpha-beta (5)", Color.WHITE);
+		assertTrue(player instanceof AlphaBetaPlayer
+				&& player.getColor() == Color.WHITE);
+	}
+	
+	@Test
+	public void creatingAlphaBeta6Player() {
+		Player player = PlayerController.getInstance()
+				.makePlayer("Komputer - alpha-beta (6)", Color.WHITE);
 		assertTrue(player instanceof AlphaBetaPlayer
 				&& player.getColor() == Color.WHITE);
 	}

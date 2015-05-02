@@ -83,6 +83,14 @@ public class PlayerController {
 						new StandardBoardEvaluationStrategy(color), 5);
 			}
 		});
+		playerFactory.registerPlayerMaker("Komputer - alpha-beta (6)",
+				new PlayerMaker() {
+			@Override
+			public Player makePlayer(Color color) {
+				return new AlphaBetaPlayer(color,
+						new StandardBoardEvaluationStrategy(color), 6);
+			}
+		});
 	}
 	
 	public List<String> getAvailablePlayers() {

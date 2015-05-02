@@ -26,7 +26,7 @@ public class King extends Piece {
 	}
 
 	@Override
-	protected List<Field> getAllPotentialMoves(Board board) {
+	public List<Field> getAllPotentialMoves(Board board) {
 		List<Field> possibleMoves = new ArrayList<Field>(10);
 		addNormalMoves(board, possibleMoves);
 		addCastlingMoves(board, possibleMoves);

@@ -71,6 +71,9 @@ public abstract class Piece {
 
 	private boolean isBoardSafeForKing(Board board) {
 		King king = board.getKing(getColor());
+		if(king == null) {
+			return false;
+		}
 		Field kingField = new Field(king.getX(), king.getY());
 		
 		for(Piece piece : board.getAllPieces(getOppositeColor())) {
@@ -82,7 +85,7 @@ public abstract class Piece {
 		return true;
 	}
 
-	protected abstract List<Field> getAllPotentialMoves(Board board);
+	public abstract List<Field> getAllPotentialMoves(Board board);
 
 	public Piece move(Board board, int x, int y) {
 		canPerformCastling = false;

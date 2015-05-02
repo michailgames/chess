@@ -26,7 +26,7 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	protected List<Field> getAllPotentialMoves(Board board) {
+	public List<Field> getAllPotentialMoves(Board board) {
 		List<Field> movesList = new ArrayList<Field>(4);
 		int direction = (getColor() == Color.WHITE) ? -1 : 1;
 		addStraightMoves(board, movesList, direction);

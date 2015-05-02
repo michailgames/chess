@@ -4,6 +4,7 @@ import chess.model.board.Board;
 import chess.model.board.Color;
 import chess.model.board.GameState;
 import chess.model.pieces.Bishop;
+import chess.model.pieces.King;
 import chess.model.pieces.Knight;
 import chess.model.pieces.Pawn;
 import chess.model.pieces.Piece;
@@ -31,7 +32,7 @@ public class StandardBoardEvaluationStrategy implements
 		GameState gameState = board.getGameState(nextPlayerColor);
 		if(gameState == GameState.MATE) {
 			return nextPlayerColor == representedColor ?
-					Integer.MIN_VALUE + 1  : Integer.MAX_VALUE - 1;
+					-100000  : 100000;
 		} else if(gameState == GameState.STALEMATE) {
 			return 0;
 		}
@@ -51,7 +52,7 @@ public class StandardBoardEvaluationStrategy implements
 		return score;
 	}
 
-	private int getPieceValue(Piece piece) {
+	public int getPieceValue(Piece piece) {
 		if(piece instanceof Pawn) {
 			return 100;
 		} else if(piece instanceof Knight) {
@@ -62,6 +63,8 @@ public class StandardBoardEvaluationStrategy implements
 			return 500;
 		} else if(piece instanceof Queen) {
 			return 900;
+		} else if(piece instanceof King) {
+			return 10000000;
 		}
 		return 0;
 	}

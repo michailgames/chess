@@ -1,6 +1,8 @@
 package chess.model.players;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import chess.model.board.Board;
@@ -39,8 +41,7 @@ public class AlphaBetaPlayer extends AbstractAIPlayer {
 	
 	private EvaluatedMove max(Board board, int depth,
 			int lowerBound, int upperBound) {
-		List<Move> availableMoves = MoveUtils.allLegalMoves(board, getColor());
-		Collections.shuffle(availableMoves);
+		List<Move> availableMoves = getOrderedMoves(board, getColor());
 		Move bestMove = null;
 		int bestScore = Integer.MIN_VALUE;
 		for(Move move : availableMoves) {
@@ -69,9 +70,8 @@ public class AlphaBetaPlayer extends AbstractAIPlayer {
 	
 	private EvaluatedMove min(Board board, int depth,
 			int lowerBound, int upperBound) {
-		List<Move> availableMoves = MoveUtils.allLegalMoves(board, 
+		List<Move> availableMoves = getOrderedMoves(board,
 				getColor().getOppositeColor());
-		Collections.shuffle(availableMoves);
 		Move worstMove = null;
 		int worstScore = Integer.MAX_VALUE;
 		for(Move move : availableMoves) {
@@ -94,5 +94,74 @@ public class AlphaBetaPlayer extends AbstractAIPlayer {
 			}
 		}
 		return new EvaluatedMove(worstMove, worstScore);
+	}
+	
+	private List<Move> getOrderedMoves(final Board board, Color color) {
+		List<Move> availableMoves = MoveUtils.allPotentialMoves(board, color);
+		Collections.shuffle(availableMoves);
+		List<Move> orderedMoves = new ArrayList<Move>(availableMoves.size());
+		List<Move> capturingMoves = filterCapturingMoves(board, availableMoves);
+		orderedMoves.addAll(capturingMoves);
+		List<Move> nonCapturingMoves = filterNonCapturingMoves(board,
+				availableMoves);
+		orderedMoves.addAll(nonCapturingMoves);
+		return orderedMoves;
+	}
+
+	private void sortMovesIncreasinglyByPieceValue(final Board board, List<Move> availableMoves) {
+		Collections.sort(availableMoves, new Comparator<Move>() {
+
+			@Override
+			public int compare(Move move1, Move move2) {
+				int pieceValue1 = evaluationStrategy.getPieceValue(
+						board.getPiece(move1.getSourceField()));
+				int pieceValue2 = evaluationStrategy.getPieceValue(
+						board.getPiece(move2.getSourceField()));
+				return pieceValue1 - pieceValue2;
+			}
+		});
+	}
+
+	private List<Move> filterNonCapturingMoves(final Board board,
+			List<Move> availableMoves) {
+		List<Move> nonCapturingMoves = new ArrayList<Move>();
+		for(Move move : availableMoves) {
+			if(moveCaptures(board, move) == false) {
+				nonCapturingMoves.add(move);
+			}
+		}
+		return nonCapturingMoves;
+	}
+
+	private List<Move> filterCapturingMoves(final Board board,
+			List<Move> availableMoves) {
+		List<Move> capturingMoves = new ArrayList<Move>();
+		for(Move move : availableMoves) {
+			if(moveCaptures(board, move)) {
+				capturingMoves.add(move);
+			}
+		}
+		sortMovesIncreasinglyByPieceValue(board, capturingMoves);
+		sortMovesDecreasingleByCaptureValue(board, capturingMoves);
+		return capturingMoves;
+	}
+
+	private void sortMovesDecreasingleByCaptureValue(final Board board,
+			List<Move> capturingMoves) {
+		Collections.sort(capturingMoves, new Comparator<Move>() {
+
+			@Override
+			public int compare(Move move1, Move move2) {
+				int captureValue1 = evaluationStrategy.getPieceValue(
+						board.getPiece(move1.getTargetField()));
+				int captureValue2 = evaluationStrategy.getPieceValue(
+						board.getPiece(move2.getTargetField()));
+				return captureValue2 - captureValue1;
+			}
+		});
+	}
+
+	boolean moveCaptures(Board board, Move move) {
+		return board.getPiece(move.getTargetField()) != null;
 	}
 }

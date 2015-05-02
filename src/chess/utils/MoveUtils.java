@@ -23,6 +23,16 @@ public class MoveUtils {
 		return result;
 	}
 	
+	public static List<Move> allPotentialMoves(Board board, Color color) {
+		List<Move> result = new ArrayList<Move>();
+		for(Piece piece : board.getAllPieces(color)) {
+			for(Field targetField : piece.getAllPotentialMoves(board)) {
+				result.add(new Move(piece.getField(), targetField));
+			}
+		}
+		return result;
+	}
+	
 	public static boolean hasAnyLegalMove(Board board, Color color) {
 		for(Piece piece : board.getAllPieces(color)) {
 			if(piece.getAllLegalMoves(board).size() > 0) {

@@ -100,7 +100,7 @@ public class PieceTest {
 			}
 			
 			@Override
-			protected List<Field> getAllPotentialMoves(Board board) {
+			public List<Field> getAllPotentialMoves(Board board) {
 				return null;
 			}
 			
