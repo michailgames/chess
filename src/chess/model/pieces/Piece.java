@@ -71,16 +71,28 @@ public abstract class Piece {
 
 	public boolean isBoardSafeForKing(Board board) {
 		King king = board.getKing(getColor());
-		board.movePiece(king, king.getField());
+		king.move(board, king.getField().getX(), king.getField().getY());
 		Field kingField = new Field(king.getX(), king.getY());
 		
-		for(Piece piece : board.getAllPieces(getOppositeColor())) {
-			if(piece.getAllPotentialMoves(board)
+		List<Field> potentialAttackers = getPotentialAttackers(board, kingField);
+		
+		for(Field field : potentialAttackers) {
+			Piece attacker = board.getPiece(field);
+			if(attacker != null && attacker.getAllPotentialMoves(board)
 					.contains(kingField)) {
 				return false;
 			}
 		}
 		return true;
+	}
+
+	private List<Field> getPotentialAttackers(Board board, Field field) {
+		List<Field> potentialAttackers = new ArrayList<Field>();
+		potentialAttackers.addAll(new Queen(getColor(), field.getX(),
+				field.getY()).getAllPotentialMoves(board));
+		potentialAttackers.addAll(new Knight(getColor(), field.getX(),
+				field.getY()).getAllPotentialMoves(board));
+		return potentialAttackers;
 	}
 
 	public abstract List<Field> getAllPotentialMoves(Board board);
