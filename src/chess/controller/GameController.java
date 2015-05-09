@@ -61,8 +61,8 @@ public class GameController {
 		currentPlayer.fieldClicked(field, board);
 	}
 	
-	public synchronized Piece getSelectedPiece() {
-		return currentPlayer.getSelectedPiece();
+	public synchronized Field getSelectedPiece() {
+		return currentPlayer.getSelectedField();
 	}
 
 	public synchronized void reportNewMove(Player player, Field sourceField,
@@ -71,23 +71,26 @@ public class GameController {
 			throw new UnauthorizedMoveException();
 		}
 		
-		Piece piece = board.getPiece(sourceField);
-		if(isMoveLegal(piece, targetField) == false) {
+		if(isMoveLegal(sourceField, targetField) == false) {
 			throw new IllegalMoveException();
 		}
 		
-		movePiece(piece, targetField);
+		movePiece(sourceField, targetField);
 	}
 
-	private void movePiece(Piece piece, Field field) {
-		board.movePiece(piece, field);
+	private void movePiece(Field sourceField, Field field) {
+		board.movePiece(sourceField, field);
 		nextTurn();
 		ApplicationController.getInstance().refreshView();
 	}
 
-	private boolean isMoveLegal(Piece piece, Field field) {
-		return piece != null && piece.getColor() == currentPlayer.getColor() && 
-				piece.getAllLegalMoves(board).contains(field);
+	private boolean isMoveLegal(Field sourceField, Field targetField) {
+		Piece piece = board.getPiece(sourceField);
+		if(piece == null || piece.getColor() != currentPlayer.getColor()) {
+			return false;
+		}
+		return piece.getAllLegalMoves(board, sourceField.getX(),
+				sourceField.getY()).contains(targetField);
 	}
 
 	private void nextTurn() {

@@ -34,7 +34,7 @@ public class QueenTest {
 		Board board = new Board();
 		board.setup();
 		Queen queen = (Queen) board.getPiece(3, 7);
-		List<Field> allMoves = queen.getAllLegalMoves(board);
+		List<Field> allMoves = queen.getAllLegalMoves(board, 3, 7);
 		assertTrue(allMoves.isEmpty());
 	}
 	
@@ -44,9 +44,9 @@ public class QueenTest {
 		Board board = new Board();
 		board.setup();
 		Queen queen = (Queen) board.getPiece(3, 7);
-		board.movePiece(board.getPiece(4, 6), 4, 5);
-		board.movePiece(queen, 6, 4);
-		List<Field> allMoves = queen.getAllLegalMoves(board);
+		board.movePiece(4, 6, 4, 5);
+		board.movePiece(3, 7, 6, 4);
+		List<Field> allMoves = queen.getAllLegalMoves(board, 6, 4);
 		assertEquals(19, allMoves.size());
 		assertTrue(allMoves.contains(new Field(5, 3)));
 		assertTrue(allMoves.contains(new Field(4, 2)));

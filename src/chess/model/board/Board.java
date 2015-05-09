@@ -24,9 +24,9 @@ public class Board {
 	public static int BOARD_SIZE = 8;
 	
 	private Piece[][] fields = new Piece[BOARD_SIZE][BOARD_SIZE];
-	private King whiteKing;
-	private King blackKing;
-	private Pawn pawnThatJustMovedTwoSquares = null;
+	private Field whiteKingField;
+	private Field blackKingField;
+	private Field pawnThatJustMovedTwoSquaresField = null;
 	
 	public Board() { }
 	
@@ -47,9 +47,9 @@ public class Board {
 				fields[x][y] = newPiece;
 				if(newPiece instanceof King) {
 					if(newPiece.getColor() == Color.WHITE) {
-						whiteKing = (King) newPiece;
+						whiteKingField = new Field(x, y);
 					} else {
-						blackKing = (King) newPiece;
+						blackKingField = new Field(x, y);
 					}
 				}
 			}
@@ -57,17 +57,16 @@ public class Board {
 	}
 	
 	private void copyState(Board original) {
-		if(original.pawnThatJustMovedTwoSquares != null) {
-			int x = original.pawnThatJustMovedTwoSquares.getX();
-			int y = original.pawnThatJustMovedTwoSquares.getY();
-			pawnThatJustMovedTwoSquares = (Pawn) fields[x][y];
+		if(original.pawnThatJustMovedTwoSquaresField != null) {
+			int x = original.pawnThatJustMovedTwoSquaresField.getX();
+			int y = original.pawnThatJustMovedTwoSquaresField.getY();
+			pawnThatJustMovedTwoSquaresField = new Field(x, y);
 		}
 	}
 	
 	public Board(Board previousBoard, Field pieceField, Field targetField) {
 		this(previousBoard);
-		movePiece(fields[pieceField.getX()][pieceField.getY()],
-				targetField.getX(), targetField.getY());
+		movePiece(pieceField, targetField.getX(), targetField.getY());
 	}
 
 	public void setup() {
@@ -78,8 +77,8 @@ public class Board {
 			fields[x][BOARD_SIZE - 2] = new Pawn(Color.WHITE, x, BOARD_SIZE-2);
 			setupFigures(BOARD_SIZE - 1, Color.WHITE);
 		}
-		whiteKing = (King) fields[4][BOARD_SIZE - 1];
-		blackKing = (King) fields[4][0];
+		whiteKingField = new Field(4, BOARD_SIZE - 1);
+		blackKingField = new Field(4, 0);
 	}
 	
 	private void setupFigures(int y, Color color) {
@@ -101,24 +100,44 @@ public class Board {
 		return getPiece(field.getX(), field.getY());
 	}
 
-	public void movePiece(Piece piece, int x, int y) {
-		pawnThatJustMovedTwoSquares = null;
-		if(piece instanceof Pawn && Math.abs(piece.getY() - y) == 2) {
-			pawnThatJustMovedTwoSquares = (Pawn) piece;
+	public void movePiece(Field sourceField, int x, int y) {
+		Piece piece = getPiece(sourceField);
+		pawnThatJustMovedTwoSquaresField = null;
+		if(piece instanceof Pawn && Math.abs(sourceField.getY() - y) == 2) {
+			pawnThatJustMovedTwoSquaresField = new Field(x, y);
+		} else if(piece instanceof King) {
+			if(piece.getColor() == Color.WHITE) {
+				whiteKingField = new Field(x, y);
+			} else {
+				blackKingField = new Field(x, y);
+			}
 		}
-		fields[piece.getX()][piece.getY()] = null;
+		fields[sourceField.getX()][sourceField.getY()] = null;
 		fields[x][y] = piece.move(this, x, y);
 	}
 	
-	public void movePiece(Piece piece, Field field) {
-		movePiece(piece, field.getX(), field.getY());
+	public void movePiece(Field sourceField, Field field) {
+		movePiece(sourceField, field.getX(), field.getY());
+	}
+	
+	public void movePiece(int x1, int y1, int x2, int y2) {
+		movePiece(new Field(x1, y1), x2, y2);
+	}
+	
+	public void clearField(int x, int y) {
+		fields[x][y] = null;
+	}
+	
+	void insertPiece(int x, int y, Piece piece) {
+		fields[x][y] = piece;
 	}
 
 	public GameState getGameState(Color nextPlayerColor) {
-		if(whiteKing == null) {
+		if(whiteKingField == null) {
 			return GameState.NONE;
 		}
-		boolean checked = getKing(nextPlayerColor).isUnderAttack(this);
+		King king = (King) getPiece(getKingField(nextPlayerColor));
+		boolean checked = king.isUnderAttack(this);
 		boolean hasMoves = MoveUtils.hasAnyLegalMove(this, nextPlayerColor);
 		if(checked && !hasMoves) {
 			return GameState.MATE;
@@ -130,8 +149,8 @@ public class Board {
 		return GameState.OPEN;
 	}
 	
-	public King getKing(Color color) {
-		return (color == Color.WHITE) ? whiteKing : blackKing;
+	public Field getKingField(Color color) {
+		return (color == Color.WHITE) ? whiteKingField : blackKingField;
 	}
 	
 	public List<Piece> getAllPieces(Color color) {
@@ -147,10 +166,10 @@ public class Board {
 		return foundPieces;
 	}
 	
-	public boolean canPawnBeTakenEnPassant(Pawn pawn) {
-		if(pawnThatJustMovedTwoSquares == null) {
+	public boolean canPawnBeTakenEnPassant(Field pawnField) {
+		if(pawnThatJustMovedTwoSquaresField == null) {
 			return false;
 		}
-		return pawn == pawnThatJustMovedTwoSquares;
+		return pawnField.equals(pawnThatJustMovedTwoSquaresField);
 	}
 }

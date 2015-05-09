@@ -115,12 +115,12 @@ public class BoardPanel extends JPanel {
 	}
 	
 	private void paintSelection(Graphics g) {
-		Piece selectedPiece = GameController.getInstance().getSelectedPiece();
-		if(selectedPiece != null) {
-			int x1 = calculateOffset(selectedPiece.getX());
-			int x2 = calculateOffset(selectedPiece.getX() + 1);
-			int y1 = calculateOffset(selectedPiece.getY());
-			int y2 = calculateOffset(selectedPiece.getY() + 1);
+		Field selectedField = GameController.getInstance().getSelectedPiece();
+		if(selectedField != null) {
+			int x1 = calculateOffset(selectedField.getX());
+			int x2 = calculateOffset(selectedField.getX() + 1);
+			int y1 = calculateOffset(selectedField.getY());
+			int y2 = calculateOffset(selectedField.getY() + 1);
 			g.setColor(SELECTION_COLOR);
 			g.fillRect(x1, y1, x2 - x1, y2 - y1);
 		}

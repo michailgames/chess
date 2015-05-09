@@ -37,11 +37,12 @@ public class Knight extends Piece {
 	}
 	
 	@Override
-	public List<Field> getAllPotentialMoves(Board board) {
+	public List<Field> getAllPotentialMoves(Board board,
+			int startX, int startY) {
 		List<Field> movesList = new ArrayList<Field>();
 		for(Field move : moveOptions) {
-			int x = getX() + move.getX();
-			int y = getY() + move.getY();
+			int x = startX + move.getX();
+			int y = startY + move.getY();
 			if(isPositionInsideTheBoard(x, y)) {
 				Piece piece = board.getPiece(x, y);
 				if(piece == null || piece.getColor() != getColor()) {

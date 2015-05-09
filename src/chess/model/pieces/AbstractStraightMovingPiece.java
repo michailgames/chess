@@ -21,14 +21,15 @@ public abstract class AbstractStraightMovingPiece extends Piece {
 	}
 
 	@Override
-	public List<Field> getAllPotentialMoves(Board board) {
+	public List<Field> getAllPotentialMoves(Board board,
+			int startX, int startY) {
 		List<Field> movesList = new ArrayList<Field>();
 		for(Direction direction : getAvailableDirections()) {
 			boolean canMoveFurther = true;
 			int i = 1;
 			while(canMoveFurther) {
-				int x = getX() + i * direction.getX();
-				int y = getY() + i * direction.getY();
+				int x = startX + i * direction.getX();
+				int y = startY + i * direction.getY();
 				if(!isPositionInsideTheBoard(x, y)) {
 					canMoveFurther = false;
 				} else {

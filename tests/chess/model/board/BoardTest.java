@@ -76,18 +76,18 @@ public class BoardTest {
 	@Test
 	public void testMovingPiece() {
 		Piece pawn = board.getPiece(5, 6);
-		board.movePiece(pawn, 5, 5);
+		board.movePiece(5, 6, 5, 5);
 		assertTrue(board.getPiece(5, 6) == null);
 		assertTrue(board.getPiece(5, 5) == pawn);
 	}
 	
 	@Test
 	public void testBlackPieceIsTakenDuringMove() {
-		board.movePiece(board.getPiece(6, 6), 6, 5);
-		board.movePiece(board.getPiece(1, 1), 1, 2);
-		board.movePiece(board.getPiece(5, 7), 6, 6);
-		board.movePiece(board.getPiece(2, 0), 1, 1);
-		board.movePiece(board.getPiece(6, 6), 1, 1);
+		board.movePiece(6, 6, 6, 5);
+		board.movePiece(1, 1, 1, 2);
+		board.movePiece(5, 7, 6, 6);
+		board.movePiece(2, 0, 1, 1);
+		board.movePiece(6, 6, 1, 1);
 		assertTrue(board.getAllPieces(Color.BLACK).size() == 15);
 		assertTrue(board.getAllPieces(Color.WHITE).size() == 16);
 	}
@@ -107,16 +107,13 @@ public class BoardTest {
 	
 	@Test
 	public void testRecordingPawnThatCanBeTakenEnPassant() {
-		Pawn whitePawn = (Pawn) board.getPiece(5, 6);
-		Pawn blackPawn = (Pawn) board.getPiece(4, 1);
-		Pawn blackPawnToBeTakenEnPassant = (Pawn) board.getPiece(6, 1);
-		board.movePiece(whitePawn, 5, 4);
-		board.movePiece(blackPawn, 4, 3);
-		board.movePiece(whitePawn, 5, 3);
-		board.movePiece(blackPawnToBeTakenEnPassant, 6, 3);
-		assertTrue(board.canPawnBeTakenEnPassant(blackPawnToBeTakenEnPassant));
-		assertFalse(board.canPawnBeTakenEnPassant(blackPawn));
-		assertFalse(board.canPawnBeTakenEnPassant(whitePawn));
+		board.movePiece(5, 6, 5, 4);
+		board.movePiece(4, 1, 4, 3);
+		board.movePiece(5, 4, 5, 3);
+		board.movePiece(6, 1, 6, 3);
+		assertTrue(board.canPawnBeTakenEnPassant(new Field(6, 3)));
+		assertFalse(board.canPawnBeTakenEnPassant(new Field(4, 3)));
+		assertFalse(board.canPawnBeTakenEnPassant(new Field(5, 3)));
 	}
 	
 	@Test
@@ -132,28 +129,27 @@ public class BoardTest {
 	
 	@Test
 	public void stateIsCheckedWhenOneOfKingsIsChecked() {
-		Knight whiteKnight = (Knight) board.getPiece(1, 7);
-		board.movePiece(whiteKnight, 2, 5);
-		board.movePiece(whiteKnight, 3, 3);
-		board.movePiece(whiteKnight, 2, 1);
+		board.movePiece(1, 7, 2, 5);
+		board.movePiece(2, 5, 3, 3);
+		board.movePiece(3, 3, 2, 1);
 		assertEquals(GameState.CHECK, board.getGameState(Color.BLACK));
 	}
 	
 	@Test
 	public void stateIsMateWhenOneOfKingsIsMated() {
-		board.movePiece(board.getPiece(5, 6), 5, 5);
-		board.movePiece(board.getPiece(4, 1), 4, 2);
-		board.movePiece(board.getPiece(6, 6), 6, 4);
-		board.movePiece(board.getPiece(3, 0), 7, 4);
+		board.movePiece(5, 6, 5, 5);
+		board.movePiece(4, 1, 4, 2);
+		board.movePiece(6, 6, 6, 4);
+		board.movePiece(3, 0, 7, 4);
 		assertEquals(GameState.MATE, board.getGameState(Color.WHITE));
 	}
 	
 	@Test
 	public void stateIsStalemateWhenOneOfKingsIsStalemated() {
 		board = new Board();
-		board.movePiece(new King(Color.WHITE, 7, 7), 7, 7);
-		board.movePiece(new Queen(Color.WHITE, 1, 2), 1, 2);
-		board.movePiece(new King(Color.BLACK, 0, 0), 0, 0);
+		board.insertPiece(7, 7, new King(Color.WHITE, 7, 7));
+		board.insertPiece(1, 2, new Queen(Color.WHITE, 1, 2));
+		board.insertPiece(0, 0, new King(Color.BLACK, 0, 0));
 		board = new Board(board);
 		assertEquals(GameState.STALEMATE, board.getGameState(Color.BLACK));
 	}

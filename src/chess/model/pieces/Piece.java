@@ -53,8 +53,9 @@ public abstract class Piece {
 		return x >= 0 && x < Board.BOARD_SIZE && y >= 0 && y < Board.BOARD_SIZE;
 	}
 	
-	public final List<Field> getAllLegalMoves(Board board) {
-		List<Field> possibleMoves = getAllPotentialMoves(board);
+	public final List<Field> getAllLegalMoves(Board board, int startX,
+			int startY) {
+		List<Field> possibleMoves = getAllPotentialMoves(board, startX, startY);
 		List<Field> legalMoves = new ArrayList<Field>(possibleMoves.size());
 		for(Field move : possibleMoves) {
 			if(isMoveSafeForKing(move, board)) {
@@ -70,16 +71,15 @@ public abstract class Piece {
 	}
 
 	public boolean isBoardSafeForKing(Board board) {
-		King king = board.getKing(getColor());
-		king.move(board, king.getField().getX(), king.getField().getY());
-		Field kingField = new Field(king.getX(), king.getY());
+		Field kingField = board.getKingField(color);
+		board.movePiece(kingField, kingField);
 		
 		List<Field> potentialAttackers = getPotentialAttackers(board, kingField);
 		
 		for(Field field : potentialAttackers) {
 			Piece attacker = board.getPiece(field);
-			if(attacker != null && attacker.getAllPotentialMoves(board)
-					.contains(kingField)) {
+			if(attacker != null && attacker.getAllPotentialMoves(board,
+					field.getX(), field.getY()).contains(kingField)) {
 				return false;
 			}
 		}
@@ -89,13 +89,16 @@ public abstract class Piece {
 	private List<Field> getPotentialAttackers(Board board, Field field) {
 		List<Field> potentialAttackers = new ArrayList<Field>();
 		potentialAttackers.addAll(new Queen(getColor(), field.getX(),
-				field.getY()).getAllPotentialMoves(board));
+				field.getY()).getAllPotentialMoves(board, field.getX(),
+						field.getY()));
 		potentialAttackers.addAll(new Knight(getColor(), field.getX(),
-				field.getY()).getAllPotentialMoves(board));
+				field.getY()).getAllPotentialMoves(board, field.getX(),
+						field.getY()));
 		return potentialAttackers;
 	}
 
-	public abstract List<Field> getAllPotentialMoves(Board board);
+	public abstract List<Field> getAllPotentialMoves(Board board,
+			int startX, int startY);
 
 	public Piece move(Board board, int x, int y) {
 		canPerformCastling = false;

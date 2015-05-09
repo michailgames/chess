@@ -33,7 +33,7 @@ public class KingTest {
 		Board board = new Board();
 		board.setup();
 		King king = (King) board.getPiece(4, 0);
-		List<Field> allMoves = king.getAllLegalMoves(board);
+		List<Field> allMoves = king.getAllLegalMoves(board, 4, 0);
 		assertTrue(allMoves.isEmpty());
 	}
 	
@@ -42,12 +42,12 @@ public class KingTest {
 		Board board = new Board();
 		board.setup();
 		King king = (King) board.getPiece(4, 0);
-		board.movePiece(board.getPiece(4, 6), 4, 4);
-		board.movePiece(board.getPiece(5, 1), 5, 2);
-		board.movePiece(king, 5, 1);
-		board.movePiece(king, 4, 2);
-		board.movePiece(king, 4, 3);
-		List<Field> allMoves = king.getAllPotentialMoves(board);
+		board.movePiece(4, 6, 4, 4);
+		board.movePiece(5, 1, 5, 2);
+		board.movePiece(4, 0, 5, 1);
+		board.movePiece(5, 1, 4, 2);
+		board.movePiece(4, 2, 4, 3);
+		List<Field> allMoves = king.getAllPotentialMoves(board, 4, 3);
 		assertEquals(7, allMoves.size());
 		assertTrue(allMoves.contains(new Field(3, 2)));
 		assertTrue(allMoves.contains(new Field(4, 2)));
@@ -64,7 +64,7 @@ public class KingTest {
 		board.setup();
 		King king = (King) board.getPiece(4, 0);
 		prepareShortCastlingForBlack(board);
-		List<Field> allMoves = king.getAllLegalMoves(board);
+		List<Field> allMoves = king.getAllLegalMoves(board, 4, 0);
 		assertTrue(allMoves.contains(new Field(6, 0)));
 	}
 	
@@ -73,8 +73,8 @@ public class KingTest {
 		Board board = new Board();
 		board.setup();
 		King king = (King) board.getPiece(4, 0);
-		board.movePiece(board.getPiece(6, 0), 7, 2);
-		List<Field> allMoves = king.getAllLegalMoves(board);
+		board.movePiece(6, 0, 7, 2);
+		List<Field> allMoves = king.getAllLegalMoves(board, 4, 0);
 		assertFalse(allMoves.contains(new Field(6, 0)));
 	}
 	
@@ -84,11 +84,10 @@ public class KingTest {
 		board.setup();
 		King king = (King) board.getPiece(4, 0);
 		prepareShortCastlingForBlack(board);
-		Knight whiteKnight = (Knight) board.getPiece(1, 7);
-		board.movePiece(whiteKnight, 2, 5);
-		board.movePiece(whiteKnight, 3, 3);
-		board.movePiece(whiteKnight, 2, 1);
-		List<Field> allMoves = king.getAllLegalMoves(board);
+		board.movePiece(1, 7, 2, 5);
+		board.movePiece(2, 5, 3, 3);
+		board.movePiece(3, 3, 2, 1);
+		List<Field> allMoves = king.getAllLegalMoves(board, 4, 0);
 		assertFalse(allMoves.contains(new Field(6, 0)));
 	}
 	
@@ -98,9 +97,9 @@ public class KingTest {
 		board.setup();
 		King king = (King) board.getPiece(4, 0);
 		prepareShortCastlingForBlack(board);
-		board.movePiece(king, 5, 0);
-		board.movePiece(king, 4, 0);
-		List<Field> allMoves = king.getAllLegalMoves(board);
+		board.movePiece(4, 0, 5, 0);
+		board.movePiece(5, 0, 4, 0);
+		List<Field> allMoves = king.getAllLegalMoves(board, 4, 0);
 		assertFalse(allMoves.contains(new Field(6, 0)));
 	}
 	
@@ -110,10 +109,9 @@ public class KingTest {
 		board.setup();
 		King king = (King) board.getPiece(4, 0);
 		prepareShortCastlingForBlack(board);
-		Rook rook = (Rook) board.getPiece(7, 0);
-		board.movePiece(rook, 6, 0);
-		board.movePiece(rook, 7, 0);
-		List<Field> allMoves = king.getAllLegalMoves(board);
+		board.movePiece(7, 0, 6, 0);
+		board.movePiece(6, 0, 7, 0);
+		List<Field> allMoves = king.getAllLegalMoves(board, 4, 0);
 		assertFalse(allMoves.contains(new Field(6, 0)));
 	}
 	
@@ -123,10 +121,10 @@ public class KingTest {
 		board.setup();
 		King king = (King) board.getPiece(4, 0);
 		prepareShortCastlingForBlack(board);
-		board.movePiece(board.getPiece(1, 6), 1, 5);
-		board.movePiece(board.getPiece(2, 7), 1, 6);
-		board.movePiece(board.getPiece(1, 6), 6, 1);
-		List<Field> allMoves = king.getAllLegalMoves(board);
+		board.movePiece(1, 6, 1, 5);
+		board.movePiece(2, 7, 1, 6);
+		board.movePiece(1, 6, 6, 1);
+		List<Field> allMoves = king.getAllLegalMoves(board, 4, 0);
 		assertFalse(allMoves.contains(new Field(6, 0)));
 	}
 	
@@ -134,9 +132,8 @@ public class KingTest {
 	public void shortCastlingMovesTheRook() {
 		Board board = new Board();
 		board.setup();
-		King king = (King) board.getPiece(4, 0);
 		prepareShortCastlingForBlack(board);
-		board.movePiece(king, 6, 0);
+		board.movePiece(4, 0, 6, 0);
 		assertTrue(board.getPiece(5, 0) instanceof Rook);
 	}
 	
@@ -146,7 +143,7 @@ public class KingTest {
 		board.setup();
 		King king = (King) board.getPiece(4, 0);
 		prepareLongCastlingForBlack(board);
-		List<Field> allMoves = king.getAllLegalMoves(board);
+		List<Field> allMoves = king.getAllLegalMoves(board, 4, 0);
 		assertTrue(allMoves.contains(new Field(2, 0)));
 	}
 	
@@ -156,8 +153,8 @@ public class KingTest {
 		board.setup();
 		King king = (King) board.getPiece(4, 0);
 		prepareLongCastlingForBlack(board);
-		board.movePiece(board.getPiece(3, 1), 3, 0);
-		List<Field> allMoves = king.getAllLegalMoves(board);
+		board.movePiece(3, 1, 3, 0);
+		List<Field> allMoves = king.getAllLegalMoves(board, 4, 0);
 		assertFalse(allMoves.contains(new Field(2, 0)));
 	}
 	
@@ -167,11 +164,10 @@ public class KingTest {
 		board.setup();
 		King king = (King) board.getPiece(4, 0);
 		prepareLongCastlingForBlack(board);
-		Knight whiteKnight = (Knight) board.getPiece(1, 7);
-		board.movePiece(whiteKnight, 2, 5);
-		board.movePiece(whiteKnight, 3, 3);
-		board.movePiece(whiteKnight, 2, 1);
-		List<Field> allMoves = king.getAllLegalMoves(board);
+		board.movePiece(1, 7, 2, 5);
+		board.movePiece(2, 5, 3, 3);
+		board.movePiece(3, 3, 2, 1);
+		List<Field> allMoves = king.getAllLegalMoves(board, 4, 0);
 		assertFalse(allMoves.contains(new Field(2, 0)));
 	}
 	
@@ -181,9 +177,9 @@ public class KingTest {
 		board.setup();
 		King king = (King) board.getPiece(4, 0);
 		prepareLongCastlingForBlack(board);
-		board.movePiece(king, 3, 0);
-		board.movePiece(king, 4, 0);
-		List<Field> allMoves = king.getAllLegalMoves(board);
+		board.movePiece(4, 0, 3, 0);
+		board.movePiece(3, 0, 4, 0);
+		List<Field> allMoves = king.getAllLegalMoves(board, 4, 0);
 		assertFalse(allMoves.contains(new Field(2, 0)));
 	}
 	
@@ -193,10 +189,9 @@ public class KingTest {
 		board.setup();
 		King king = (King) board.getPiece(4, 0);
 		prepareLongCastlingForBlack(board);
-		Rook rook = (Rook) board.getPiece(0, 0);
-		board.movePiece(rook, 2, 0);
-		board.movePiece(rook, 0, 0);
-		List<Field> allMoves = king.getAllLegalMoves(board);
+		board.movePiece(0, 0, 2, 0);
+		board.movePiece(2, 0, 0, 0);
+		List<Field> allMoves = king.getAllLegalMoves(board, 4, 0);
 		assertFalse(allMoves.contains(new Field(2, 0)));
 	}
 	
@@ -206,10 +201,10 @@ public class KingTest {
 		board.setup();
 		King king = (King) board.getPiece(4, 0);
 		prepareLongCastlingForBlack(board);
-		board.movePiece(board.getPiece(3, 6), 3, 5);
-		board.movePiece(board.getPiece(2, 7), 5, 4);
-		board.movePiece(board.getPiece(5, 4), 2, 1);
-		List<Field> allMoves = king.getAllLegalMoves(board);
+		board.movePiece(3, 6, 3, 5);
+		board.movePiece(2, 7, 5, 4);
+		board.movePiece(5, 4, 2, 1);
+		List<Field> allMoves = king.getAllLegalMoves(board, 4, 0);
 		assertFalse(allMoves.contains(new Field(2, 0)));
 	}
 	
@@ -217,24 +212,23 @@ public class KingTest {
 	public void longCastlingMovesTheRook() {
 		Board board = new Board();
 		board.setup();
-		King king = (King) board.getPiece(4, 0);
 		prepareLongCastlingForBlack(board);
-		board.movePiece(king, 2, 0);
+		board.movePiece(4, 0, 2, 0);
 		assertTrue(board.getPiece(3, 0) instanceof Rook);
 	}
 
 	private void prepareShortCastlingForBlack(Board board) {
-		board.movePiece(board.getPiece(6, 0), 7, 2);
-		board.movePiece(board.getPiece(6, 1), 6, 3);
-		board.movePiece(board.getPiece(5, 0), 6, 1);
+		board.movePiece(6, 0, 7, 2);
+		board.movePiece(6, 1, 6, 3);
+		board.movePiece(5, 0, 6, 1);
 	}
 	
 	private void prepareLongCastlingForBlack(Board board) {
-		board.movePiece(board.getPiece(1, 0), 0, 2);
-		board.movePiece(board.getPiece(1, 1), 1, 3);
-		board.movePiece(board.getPiece(2, 0), 1, 1);
-		board.movePiece(board.getPiece(3, 1), 3, 2);
-		board.movePiece(board.getPiece(3, 0), 3, 1);
+		board.movePiece(1, 0, 0, 2);
+		board.movePiece(1, 1, 1, 3);
+		board.movePiece(2, 0, 1, 1);
+		board.movePiece(3, 1, 3, 2);
+		board.movePiece(3, 0, 3, 1);
 	}
 
 }

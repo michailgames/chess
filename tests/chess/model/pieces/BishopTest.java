@@ -33,7 +33,7 @@ public class BishopTest {
 		Board board = new Board();
 		board.setup();
 		Bishop bishop = (Bishop) board.getPiece(5, 7);
-		List<Field> allMoves = bishop.getAllLegalMoves(board);
+		List<Field> allMoves = bishop.getAllLegalMoves(board, 5, 7);
 		assertTrue(allMoves.isEmpty());
 	}
 	
@@ -42,9 +42,9 @@ public class BishopTest {
 		Board board = new Board();
 		board.setup();
 		Bishop bishop = (Bishop) board.getPiece(5, 7);
-		board.movePiece(board.getPiece(4, 6), 4, 5);
-		board.movePiece(bishop, 2, 4);
-		List<Field> allMoves = bishop.getAllLegalMoves(board);
+		board.movePiece(4, 6, 4, 5);
+		board.movePiece(5, 7, 2, 4);
+		List<Field> allMoves = bishop.getAllLegalMoves(board, 2, 4);
 		assertEquals(9, allMoves.size());
 		assertTrue(allMoves.contains(new Field(1, 3)));
 		assertTrue(allMoves.contains(new Field(0, 2)));

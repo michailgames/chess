@@ -15,7 +15,7 @@ import chess.model.pieces.Piece;
 
 public class HumanPlayer extends Player {
 	
-	private Piece selectedPiece = null;
+	private Field selectedField = null;
 
 	public HumanPlayer(Color color) {
 		super(color);
@@ -25,21 +25,21 @@ public class HumanPlayer extends Player {
 	public void fieldClicked(Field field, Board board) {
 		Piece piece = board.getPiece(field);
 		if(piece != null && piece.getColor() == getColor()) {
-			selectedPiece = piece;
+			selectedField = field;
 		}
-		else if(selectedPiece != null) {
+		else if(selectedField != null) {
 			try {
-				makeMove(selectedPiece.getField(), field);
+				makeMove(selectedField, field);
 			} catch(IllegalMoveException ex) {}
 			finally {
-				selectedPiece = null;
+				selectedField = null;
 			}
 		}
 	}
 	
 	@Override
-	public Piece getSelectedPiece() {
-		return selectedPiece;
+	public Field getSelectedField() {
+		return selectedField;
 	}
 
 	@Override

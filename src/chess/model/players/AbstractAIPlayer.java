@@ -4,7 +4,6 @@ import chess.model.board.Board;
 import chess.model.board.Color;
 import chess.model.board.Field;
 import chess.model.board.Move;
-import chess.model.pieces.Piece;
 
 /**
  * Projekt: Szachy
@@ -50,7 +49,7 @@ public abstract class AbstractAIPlayer extends Player {
 	public void fieldClicked(Field field, Board board) { }
 
 	@Override
-	public Piece getSelectedPiece() {
+	public Field getSelectedField() {
 		return null;
 	}
 	

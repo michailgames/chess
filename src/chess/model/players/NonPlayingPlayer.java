@@ -10,7 +10,6 @@ package chess.model.players;
 import chess.model.board.Board;
 import chess.model.board.Color;
 import chess.model.board.Field;
-import chess.model.pieces.Piece;
 
 public class NonPlayingPlayer extends Player {
 
@@ -22,7 +21,7 @@ public class NonPlayingPlayer extends Player {
 	public void fieldClicked(Field field, Board board) { }
 
 	@Override
-	public Piece getSelectedPiece() {
+	public Field getSelectedField() {
 		return null;
 	}
 

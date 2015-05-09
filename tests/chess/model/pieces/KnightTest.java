@@ -33,7 +33,7 @@ public class KnightTest {
 		Board board = new Board();
 		board.setup();
 		Knight knight = (Knight) board.getPiece(6, 7);
-		List<Field> allMoves = knight.getAllLegalMoves(board);
+		List<Field> allMoves = knight.getAllLegalMoves(board, 6, 7);
 		assertEquals(2, allMoves.size());
 		assertTrue(allMoves.contains(new Field(5, 5)));
 		assertTrue(allMoves.contains(new Field(7, 5)));
@@ -44,9 +44,9 @@ public class KnightTest {
 		Board board = new Board();
 		board.setup();
 		Knight knight = (Knight) board.getPiece(6, 7);
-		board.movePiece(knight, 5, 5);
-		board.movePiece(knight, 4, 3);
-		List<Field> allMoves = knight.getAllLegalMoves(board);
+		board.movePiece(6, 7, 5, 5);
+		board.movePiece(5, 5, 4, 3);
+		List<Field> allMoves = knight.getAllLegalMoves(board, 4, 3);
 		assertEquals(8, allMoves.size());
 		assertTrue(allMoves.contains(new Field(5, 5)));
 		assertTrue(allMoves.contains(new Field(3, 5)));

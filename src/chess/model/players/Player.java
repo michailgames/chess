@@ -12,7 +12,6 @@ import chess.model.board.Board;
 import chess.model.board.Color;
 import chess.model.board.Field;
 import chess.model.listeners.IMoveListener;
-import chess.model.pieces.Piece;
 
 public abstract class Player {
 	
@@ -41,5 +40,5 @@ public abstract class Player {
 	
 	public abstract void startCalculatingNextMove(Board board);
 	public abstract void fieldClicked(Field field, Board board);
-	public abstract Piece getSelectedPiece();
+	public abstract Field getSelectedField();
 }
