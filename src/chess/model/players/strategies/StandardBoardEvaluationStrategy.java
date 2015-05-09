@@ -41,18 +41,31 @@ public class StandardBoardEvaluationStrategy implements
 
 	private int openPositionScore(Board board) {
 		int score = 0;
-		for(Piece piece : board.getAllPieces(representedColor)) {
-			score += getPieceValue(piece);
-		}
-		for(Piece piece : board.getAllPieces(representedColor
-				.getOppositeColor())) {
-			score -= getPieceValue(piece);
+		for(int x = 0; x < Board.BOARD_SIZE; x++) {
+			for(int y = 0; y < Board.BOARD_SIZE; y++) {
+				Piece piece = board.getPiece(x, y);
+				if(piece == null) {
+					continue;
+				} else if(piece.getColor() == representedColor) {
+					score += getPieceValue(piece, x, y);
+				} else {
+					score -= getPieceValue(piece, x, y);
+				}
+			}
 		}
 		return score;
 	}
 
-	public int getPieceValue(Piece piece) {
+	public int getPieceValue(Piece piece, int x, int y) {
 		if(piece instanceof Pawn) {
+			if(piece.getColor() == Color.WHITE && y == 2 ||
+					piece.getColor() == Color.BLACK && y == 5) {
+				return 110;
+			}
+			if(piece.getColor() == Color.WHITE && y == 1 ||
+					piece.getColor() == Color.BLACK && y == 6) {
+				return 130;
+			}
 			return 100;
 		} else if(piece instanceof Knight) {
 			return 300;

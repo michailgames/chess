@@ -32,33 +32,15 @@ public class Board {
 	public Board() { }
 	
 	public Board(Board original) {
-		copyFields(original);
-		copyState(original);
-	}
-
-	private void copyFields(Board original) {
-		fields = new Piece[BOARD_SIZE][BOARD_SIZE];
 		for(int x = 0; x < BOARD_SIZE; x++) {
 			for(int y = 0; y < BOARD_SIZE; y++) {
-				Piece piece = original.fields[x][y];
-				fields[x][y] = piece;
-				if(piece instanceof King) {
-					if(piece.getColor() == Color.WHITE) {
-						whiteKingField = new Field(x, y);
-					} else {
-						blackKingField = new Field(x, y);
-					}
-				}
+				fields[x][y] = original.fields[x][y];
 			}
 		}
-	}
-	
-	private void copyState(Board original) {
-		if(original.pawnThatJustMovedTwoSquaresField != null) {
-			int x = original.pawnThatJustMovedTwoSquaresField.getX();
-			int y = original.pawnThatJustMovedTwoSquaresField.getY();
-			pawnThatJustMovedTwoSquaresField = new Field(x, y);
-		}
+		whiteKingField = original.whiteKingField;
+		blackKingField = original.blackKingField;
+		pawnThatJustMovedTwoSquaresField =
+				original.pawnThatJustMovedTwoSquaresField;
 	}
 	
 	public Board(Board previousBoard, Field pieceField, Field targetField) {
@@ -126,8 +108,16 @@ public class Board {
 		fields[x][y] = null;
 	}
 	
+	// for tests only
 	void insertPiece(int x, int y, Piece piece) {
 		fields[x][y] = piece;
+		if(piece instanceof King) {
+			if(piece.getColor() == Color.WHITE) {
+				whiteKingField = new Field(x, y);
+			} else {
+				blackKingField = new Field(x, y);
+			}
+		}
 	}
 
 	public GameState getGameState(Color nextPlayerColor) {

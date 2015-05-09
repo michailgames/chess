@@ -12,12 +12,15 @@ public class PlayerFactory {
 	private Map<String, PlayerMaker> playerMakers =
 			new HashMap<String, PlayerFactory.PlayerMaker>();
 	
+	private List<String> availablePlayers = new ArrayList<String>();
+	
 	public void registerPlayerMaker(String name, PlayerMaker maker) {
 		playerMakers.put(name, maker);
+		availablePlayers.add(name);
 	}
 	
 	public List<String> getAvailablePlayers() {
-		return new ArrayList<String>(playerMakers.keySet());
+		return availablePlayers;
 	}
 
 	public Player makePlayer(String name, Color color) {

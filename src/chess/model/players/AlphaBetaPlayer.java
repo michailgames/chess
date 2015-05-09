@@ -8,6 +8,7 @@ import java.util.List;
 import chess.model.board.Board;
 import chess.model.board.Color;
 import chess.model.board.EvaluatedMove;
+import chess.model.board.Field;
 import chess.model.board.Move;
 import chess.model.pieces.Piece;
 import chess.model.players.strategies.IBoardEvaluationStrategy;
@@ -137,10 +138,18 @@ public class AlphaBetaPlayer extends AbstractAIPlayer {
 
 			@Override
 			public int compare(Move move1, Move move2) {
+				int x, y;
+				Field field;
+				field = move1.getSourceField();
+				x = field.getX();
+				y = field.getY();
 				int pieceValue1 = evaluationStrategy.getPieceValue(
-						board.getPiece(move1.getSourceField()));
+						board.getPiece(x, y), x, y);
+				field = move1.getSourceField();
+				x = field.getX();
+				y = field.getY();
 				int pieceValue2 = evaluationStrategy.getPieceValue(
-						board.getPiece(move2.getSourceField()));
+						board.getPiece(x, y), x, y);
 				return pieceValue1 - pieceValue2;
 			}
 		});
@@ -176,10 +185,18 @@ public class AlphaBetaPlayer extends AbstractAIPlayer {
 
 			@Override
 			public int compare(Move move1, Move move2) {
+				int x, y;
+				Field field;
+				field = move1.getTargetField();
+				x = field.getX();
+				y = field.getY();
 				int captureValue1 = evaluationStrategy.getPieceValue(
-						board.getPiece(move1.getTargetField()));
+						board.getPiece(x, y), x, y);
+				field = move1.getTargetField();
+				x = field.getX();
+				y = field.getY();
 				int captureValue2 = evaluationStrategy.getPieceValue(
-						board.getPiece(move2.getTargetField()));
+						board.getPiece(x, y), x, y);
 				return captureValue2 - captureValue1;
 			}
 		});
