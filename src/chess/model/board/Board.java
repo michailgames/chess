@@ -8,6 +8,7 @@ package chess.model.board;
  */
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import chess.model.pieces.Bishop;
@@ -24,19 +25,17 @@ public class Board {
 
 	public static int BOARD_SIZE = 8;
 	
-	private Piece[][] fields = new Piece[BOARD_SIZE][BOARD_SIZE];
+	private Piece[] fields;
 	private Field whiteKingField;
 	private Field blackKingField;
-	private Field pawnThatJustMovedTwoSquaresField = null;
+	private Field pawnThatJustMovedTwoSquaresField;
 	
-	public Board() { }
+	public Board() {
+		fields = new Piece[BOARD_SIZE * BOARD_SIZE];
+	}
 	
 	public Board(Board original) {
-		for(int x = 0; x < BOARD_SIZE; x++) {
-			for(int y = 0; y < BOARD_SIZE; y++) {
-				fields[x][y] = original.fields[x][y];
-			}
-		}
+		fields = Arrays.copyOf(original.fields, BOARD_SIZE * BOARD_SIZE);
 		whiteKingField = original.whiteKingField;
 		blackKingField = original.blackKingField;
 		pawnThatJustMovedTwoSquaresField =
@@ -49,11 +48,11 @@ public class Board {
 	}
 
 	public void setup() {
-		fields = new Piece[BOARD_SIZE][BOARD_SIZE];
+		fields = new Piece[BOARD_SIZE * BOARD_SIZE];
 		for(int x = 0; x < BOARD_SIZE; x++) {
 			setupFigures(0, Color.BLACK);
-			fields[x][1] = Pawn.getInstance(Color.BLACK);
-			fields[x][BOARD_SIZE - 2] = Pawn.getInstance(Color.WHITE);
+			fields[fieldIndex(x, 1)] = Pawn.getInstance(Color.BLACK);
+			fields[fieldIndex(x, BOARD_SIZE - 2)] = Pawn.getInstance(Color.WHITE);
 			setupFigures(BOARD_SIZE - 1, Color.WHITE);
 		}
 		whiteKingField = new Field(4, BOARD_SIZE - 1);
@@ -61,18 +60,18 @@ public class Board {
 	}
 	
 	private void setupFigures(int y, Color color) {
-		fields[0][y] = NeverMovedRook.getInstance(color);
-		fields[1][y] = Knight.getInstance(color);
-		fields[2][y] = Bishop.getInstance(color);
-		fields[3][y] = Queen.getInstance(color);
-		fields[4][y] = NeverMovedKing.getInstance(color);
-		fields[5][y] = Bishop.getInstance(color);
-		fields[6][y] = Knight.getInstance(color);
-		fields[7][y] = NeverMovedRook.getInstance(color);
+		fields[fieldIndex(0, y)] = NeverMovedRook.getInstance(color);
+		fields[fieldIndex(1, y)] = Knight.getInstance(color);
+		fields[fieldIndex(2, y)] = Bishop.getInstance(color);
+		fields[fieldIndex(3, y)] = Queen.getInstance(color);
+		fields[fieldIndex(4, y)] = NeverMovedKing.getInstance(color);
+		fields[fieldIndex(5, y)] = Bishop.getInstance(color);
+		fields[fieldIndex(6, y)] = Knight.getInstance(color);
+		fields[fieldIndex(7, y)] = NeverMovedRook.getInstance(color);
 	}
 	
 	public Piece getPiece(int x, int y) {
-		return fields[x][y];
+		return fields[fieldIndex(x, y)];
 	}
 	
 	public Piece getPiece(Field field) {
@@ -100,17 +99,17 @@ public class Board {
 				blackKingField = new Field(x2, y2);
 			}
 		}
-		fields[x1][y1] = null;
-		fields[x2][y2] = piece.move(this, x1, y1, x2, y2);
+		fields[fieldIndex(x1, y1)] = null;
+		fields[fieldIndex(x2, y2)] = piece.move(this, x1, y1, x2, y2);
 	}
 	
 	public void clearField(int x, int y) {
-		fields[x][y] = null;
+		fields[fieldIndex(x, y)] = null;
 	}
 	
 	// for tests only
 	void insertPiece(int x, int y, Piece piece) {
-		fields[x][y] = piece;
+		fields[fieldIndex(x, y)] = piece;
 		if(piece instanceof King) {
 			if(piece.getColor() == Color.WHITE) {
 				whiteKingField = new Field(x, y);
@@ -147,7 +146,7 @@ public class Board {
 		List<Piece> foundPieces = new ArrayList<Piece>();
 		for(int x = 0; x < BOARD_SIZE; x++) {
 			for(int y = 0; y < BOARD_SIZE; y++) {
-				Piece piece = fields[x][y];
+				Piece piece = fields[fieldIndex(x, y)];
 				if(piece != null && piece.getColor() == color) {
 					foundPieces.add(piece);
 				}
@@ -161,5 +160,9 @@ public class Board {
 			return false;
 		}
 		return pawnField.equals(pawnThatJustMovedTwoSquaresField);
+	}
+	
+	private final int fieldIndex(int x, int y) {
+		return y * BOARD_SIZE + x;
 	}
 }
