@@ -22,7 +22,7 @@ public class MoveUtils {
 					continue;
 				}
 				for(Field targetField : piece.getAllLegalMoves(board, x, y)) {
-					result.add(new Move(piece.getField(), targetField));
+					result.add(new Move(new Field(x, y), targetField));
 				}
 			}
 		}
@@ -38,7 +38,7 @@ public class MoveUtils {
 					continue;
 				}
 				for(Field targetField : piece.getAllPotentialMoves(board, x, y)) {
-					result.add(new Move(piece.getField(), targetField));
+					result.add(new Move(new Field(x, y), targetField));
 				}
 			}
 		}

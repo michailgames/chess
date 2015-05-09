@@ -15,9 +15,16 @@ import chess.model.board.Color;
 import chess.model.board.Field;
 
 public class Pawn extends Piece {
+	
+	private final static Pawn whitePawn = new Pawn(Color.WHITE);
+	private final static Pawn blackPawn = new Pawn(Color.BLACK);
+	
+	public static Pawn getInstance(Color color) {
+		return color == Color.WHITE ? whitePawn : blackPawn;
+	}
 
-	public Pawn(Color color, int x, int y) {
-		super(color, x, y);
+	public Pawn(Color color) {
+		super(color);
 	}
 
 	@Override
@@ -78,20 +85,14 @@ public class Pawn extends Piece {
 	}
 	
 	@Override
-	public Piece copy() {
-		return new Pawn(getColor(), getX(), getY())
-				.allowedToPerformCastling(canParticipateInCastling());
-	}
-	
-	@Override
-	public Piece move(Board board, int x, int y) {
-		if((getColor() == Color.WHITE && y == 0) ||
-				(getColor() == Color.BLACK && y == Board.BOARD_SIZE - 1)) {
-			return new Queen(getColor(), x, y);
+	public Piece move(Board board, int x1, int y1, int x2, int y2) {
+		if((getColor() == Color.WHITE && y2 == 0) ||
+				(getColor() == Color.BLACK && y2 == Board.BOARD_SIZE - 1)) {
+			return Queen.getInstance(getColor());
 		}
-		if(getX() != x && board.getPiece(x, y) == null) {
-			board.clearField(x, getY());
+		if(x1 != x2 && board.getPiece(x2, y2) == null) {
+			board.clearField(x2, y1);
 		}
-		return super.move(board, x, y);
+		return super.move(board, x1, y1, x2, y2);
 	}
 }

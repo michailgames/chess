@@ -7,26 +7,17 @@ package chess.model.pieces;
  * 2015-03-26
  */
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
 import org.junit.Test;
 
 import chess.model.board.Board;
-import chess.model.board.Color;
 import chess.model.board.Field;
 
 public class BishopTest {
-
-	@Test
-	public void testCopy() {
-		Bishop oldBishop = new Bishop(Color.BLACK, 2, 7);
-		Piece newBishop = oldBishop.copy();
-		assertTrue(newBishop instanceof Bishop &&
-				newBishop.getColor() == Color.BLACK && newBishop.getX() == 2 &&
-				newBishop.getY() == 7);
-	}
 	
 	@Test
 	public void cannotMoveAtTheBeginning() {

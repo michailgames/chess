@@ -24,59 +24,33 @@ public class PieceTest {
 
 	@Test
 	public void getColorReturnsPieceColor() {
-		Piece piece = makePiece(Color.WHITE, 0, 0);
+		Piece piece = makePiece(Color.WHITE);
 		assertTrue(piece.getColor() == Color.WHITE);
 		
 	}
 	
 	@Test
 	public void getOppositeColorReturnsOppositeColor() {
-		Piece piece = makePiece(Color.WHITE, 0, 0);
+		Piece piece = makePiece(Color.WHITE);
 		assertTrue(piece.getOppositeColor() == Color.BLACK);
 	}
 	
 	@Test
 	public void positionWithCoordinateBelowZeroIsOutsideTheBoard() {
-		Piece piece = makePiece(Color.WHITE, 0, 0);
+		Piece piece = makePiece(Color.WHITE);
 		assertFalse(piece.isPositionInsideTheBoard(-1, 0));
 	}
 	
 	@Test
 	public void positionWithTooBigCoordinateIsOutsideTheBoard() {
-		Piece piece = makePiece(Color.WHITE, 0, 0);
+		Piece piece = makePiece(Color.WHITE);
 		assertFalse(piece.isPositionInsideTheBoard(0, 8));
 	}
 	
 	@Test
 	public void positionWithSaneCoordinatesIsInsideTheBoard() {
-		Piece piece = makePiece(Color.WHITE, 0, 0);
+		Piece piece = makePiece(Color.WHITE);
 		assertTrue(piece.isPositionInsideTheBoard(4, 5));
-	}
-	
-	@Test
-	public void pieceAllowedToPerformCastlingCanPerformCastling() {
-		Piece piece = makePiece(Color.WHITE, 0, 0).allowedToPerformCastling();
-		assertTrue(piece.canParticipateInCastling());
-	}
-	
-	@Test
-	public void pieceAllowedToPerformCastlingCannotPerformCastlingOnceMoved() {
-		Piece piece = makePiece(Color.WHITE, 0, 0).allowedToPerformCastling();
-		piece.move(null, 1, 1);
-		assertFalse(piece.canParticipateInCastling());
-	}
-	
-	@Test
-	public void pieceNotAllowedToPerformCastlingCannotPerformCastling() {
-		Piece piece = makePiece(Color.WHITE, 0, 0);
-		assertFalse(piece.canParticipateInCastling());
-	}
-	
-	@Test
-	public void moveChangesPiecePosition() {
-		Piece piece = makePiece(Color.WHITE, 0, 0);
-		piece.move(null, 1, 1);
-		assertTrue(piece.getField().equals(new Field(1, 1)));
 	}
 	
 	@Test
@@ -91,8 +65,8 @@ public class PieceTest {
 		assertTrue(pawnThatWillGuardKing.getAllLegalMoves(board, 5, 1).isEmpty());
 	}
 
-	public static Piece makePiece(Color color, int x, int y) {
-		return new Piece(color, x, y) {
+	public static Piece makePiece(Color color) {
+		return new Piece(color) {
 			
 			@Override
 			public String getUnicodeString() {
@@ -102,11 +76,6 @@ public class PieceTest {
 			@Override
 			public List<Field> getAllPotentialMoves(Board board, int startX,
 					int startY) {
-				return null;
-			}
-			
-			@Override
-			public Piece copy() {
 				return null;
 			}
 		};

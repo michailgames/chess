@@ -8,7 +8,6 @@ import java.util.List;
 import org.junit.Test;
 
 import chess.model.board.Board;
-import chess.model.board.Color;
 import chess.model.board.Field;
 
 /**
@@ -19,15 +18,6 @@ import chess.model.board.Field;
  */
 
 public class RookTest {
-
-	@Test
-	public void testCopy() {
-		Rook oldRook = new Rook(Color.BLACK, 2, 7);
-		Piece newRook = oldRook.copy();
-		assertTrue(newRook instanceof Rook &&
-				newRook.getColor() == Color.BLACK && newRook.getX() == 2 &&
-				newRook.getY() == 7);
-	}
 	
 	@Test
 	public void cannotMoveAtTheBeginning() {

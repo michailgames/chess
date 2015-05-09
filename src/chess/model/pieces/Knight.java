@@ -16,6 +16,13 @@ import chess.model.board.Field;
 
 public class Knight extends Piece {
 	
+	private final static Knight whiteKnight = new Knight(Color.WHITE);
+	private final static Knight blackKnight = new Knight(Color.BLACK);
+	
+	public static Knight getInstance(Color color) {
+		return color == Color.WHITE ? whiteKnight : blackKnight;
+	}
+	
 	private final static Field[] moveOptions = {
 		new Field(-2, -1),
 		new Field(-1, -2),
@@ -27,8 +34,8 @@ public class Knight extends Piece {
 		new Field(2, -1)
 	};
 
-	public Knight(Color color, int x, int y) {
-		super(color, x, y);
+	public Knight(Color color) {
+		super(color);
 	}
 
 	@Override
@@ -51,11 +58,5 @@ public class Knight extends Piece {
 			}
 		}
 		return movesList;
-	}
-	
-	@Override
-	public Piece copy() {
-		return new Knight(getColor(), getX(), getY())
-				.allowedToPerformCastling(canParticipateInCastling());
 	}
 }

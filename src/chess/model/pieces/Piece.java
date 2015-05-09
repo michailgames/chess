@@ -17,14 +17,9 @@ import chess.model.board.Field;
 public abstract class Piece {
 	
 	private final Color color;
-	private int x;
-	private int y;
-	private boolean canPerformCastling = false;
 	
-	public Piece(Color color, int x, int y) {
+	public Piece(Color color) {
 		this.color = color;
-		this.x = x;
-		this.y = y;
 	}
 	
 	public final Color getColor() {
@@ -37,18 +32,6 @@ public abstract class Piece {
 	
 	public abstract String getUnicodeString();
 	
-	public final int getX() {
-		return x;
-	}
-	
-	public final int getY() {
-		return y;
-	}
-	
-	public final Field getField() {
-		return new Field(x, y);
-	}
-	
 	protected final boolean isPositionInsideTheBoard(int x, int y) {
 		return x >= 0 && x < Board.BOARD_SIZE && y >= 0 && y < Board.BOARD_SIZE;
 	}
@@ -58,15 +41,16 @@ public abstract class Piece {
 		List<Field> possibleMoves = getAllPotentialMoves(board, startX, startY);
 		List<Field> legalMoves = new ArrayList<Field>(possibleMoves.size());
 		for(Field move : possibleMoves) {
-			if(isMoveSafeForKing(move, board)) {
+			if(isMoveSafeForKing(startX, startY, move, board)) {
 				legalMoves.add(move);
 			}
 		}
 		return legalMoves;
 	}
 	
-	public final boolean isMoveSafeForKing(Field move, Board board) {
-		Board boardCopy = new Board(board, new Field(getX(), getY()), move);
+	public final boolean isMoveSafeForKing(int startX, int startY,
+			Field move, Board board) {
+		Board boardCopy = new Board(board, new Field(startX, startY), move);
 		return isBoardSafeForKing(boardCopy);
 	}
 
@@ -88,40 +72,21 @@ public abstract class Piece {
 
 	private List<Field> getPotentialAttackers(Board board, Field field) {
 		List<Field> potentialAttackers = new ArrayList<Field>();
-		potentialAttackers.addAll(new Queen(getColor(), field.getX(),
-				field.getY()).getAllPotentialMoves(board, field.getX(),
-						field.getY()));
-		potentialAttackers.addAll(new Knight(getColor(), field.getX(),
-				field.getY()).getAllPotentialMoves(board, field.getX(),
-						field.getY()));
+		potentialAttackers.addAll(Queen.getInstance(getColor())
+				.getAllPotentialMoves(board, field.getX(), field.getY()));
+		potentialAttackers.addAll(Knight.getInstance(getColor())
+				.getAllPotentialMoves(board, field.getX(),field.getY()));
 		return potentialAttackers;
 	}
 
 	public abstract List<Field> getAllPotentialMoves(Board board,
 			int startX, int startY);
 
-	public Piece move(Board board, int x, int y) {
-		canPerformCastling = false;
-		this.x = x;
-		this.y = y;
+	public Piece move(Board board, int x1, int y1, int x2, int y2) {
 		return this;
 	}
 	
-	public final boolean canParticipateInCastling() {
-		return canPerformCastling;
+	public boolean canParticipateInCastling() {
+		return false;
 	}
-	
-	public final Piece allowedToPerformCastling() {
-		canPerformCastling  = true;
-		return this;
-	}
-	
-	protected final Piece allowedToPerformCastling(boolean allowed) {
-		if(allowed) {
-			return allowedToPerformCastling();
-		}
-		return this;
-	}
-
-	public abstract Piece copy();
 }

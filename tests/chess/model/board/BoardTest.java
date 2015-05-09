@@ -99,8 +99,7 @@ public class BoardTest {
 			for(int y = 0; y < Board.BOARD_SIZE; y++) {
 				Piece oldPiece = board.getPiece(x, y);
 				Piece newPiece = copy.getPiece(x, y);
-				assertTrue((oldPiece == null && newPiece == null) ||
-						oldPiece.getField().equals(newPiece.getField()));
+				assertTrue(oldPiece == newPiece);
 			}
 		}
 	}
@@ -147,9 +146,9 @@ public class BoardTest {
 	@Test
 	public void stateIsStalemateWhenOneOfKingsIsStalemated() {
 		board = new Board();
-		board.insertPiece(7, 7, new King(Color.WHITE, 7, 7));
-		board.insertPiece(1, 2, new Queen(Color.WHITE, 1, 2));
-		board.insertPiece(0, 0, new King(Color.BLACK, 0, 0));
+		board.insertPiece(7, 7, King.getInstance(Color.WHITE));
+		board.insertPiece(1, 2, Queen.getInstance(Color.WHITE));
+		board.insertPiece(0, 0, King.getInstance(Color.BLACK));
 		board = new Board(board);
 		assertEquals(GameState.STALEMATE, board.getGameState(Color.BLACK));
 	}

@@ -2,7 +2,7 @@ package chess.model.pieces;
 
 /**
  * Projekt: Szachy
- * Reprezentcaja króla
+ * Reprezentacja króla
  * Micha³ Rapacz
  * 2015-03-26
  */
@@ -15,9 +15,16 @@ import chess.model.board.Color;
 import chess.model.board.Field;
 
 public class King extends Piece {
+	
+	private final static King whiteKing = new King(Color.WHITE);
+	private final static King blackKing = new King(Color.BLACK);
+	
+	public static King getInstance(Color color) {
+		return color == Color.WHITE ? whiteKing : blackKing;
+	}
 
-	public King(Color color, int x, int y) {
-		super(color, x, y);
+	public King(Color color) {
+		super(color);
 	}
 
 	@Override
@@ -52,7 +59,8 @@ public class King extends Piece {
 	
 	private void addCastlingMoves(Board board, int startX, int startY,
 			List<Field> possibleMoves) {
-		if(canParticipateInCastling() == false || isUnderAttack(board)) {
+		if(canParticipateInCastling() == false ||
+				isUnderAttack(board, startX, startY)) {
 			return;
 		}
 		
@@ -65,54 +73,45 @@ public class King extends Piece {
 		}
 	}
 
-	public boolean isQueenSideCastlingPossible(Board board,
-			int startX, int startY) {
-		Piece rook = board.getPiece(startX - 4, startY);
-		if(rook != null && canPassThroughField(board, startX - 1, startY) &&
-				board.getPiece(startX - 2, startY) == null &&
-				board.getPiece(startX - 3, startY) == null &&
+	public boolean isQueenSideCastlingPossible(Board board, int x, int y) {
+		Piece rook = board.getPiece(x - 4, y);
+		if(rook != null && canPassThroughField(board, x, y, x - 1, y) &&
+				board.getPiece(x - 2, y) == null &&
+				board.getPiece(x - 3, y) == null &&
 				rook.canParticipateInCastling()) {
 			return true;
 		}
 		return false;
 	}
 	
-	private boolean isRookSideCastlingPossible(Board board,
-			int startX, int startY) {
-		Piece rook = board.getPiece(startX + 3, startY);
-		if(rook != null && canPassThroughField(board, startX + 1, startY) &&
-				board.getPiece(startX + 2, startY) == null &&
+	private boolean isRookSideCastlingPossible(Board board, int x, int y) {
+		Piece rook = board.getPiece(x + 3, y);
+		if(rook != null && canPassThroughField(board, x, y, x + 1, y) &&
+				board.getPiece(x + 2, y) == null &&
 				rook.canParticipateInCastling()) {
 			return true;
 		}
 		return false;
 	}
 
-	public boolean isUnderAttack(Board board) {
-		return isMoveSafeForKing(getField(), board) == false;
+	public boolean isUnderAttack(Board board, int x, int y) {
+		return isMoveSafeForKing(x, y, new Field(x, y), board) == false;
 	}
 	
-	private boolean canPassThroughField(Board board, int x, int y) {
-		return board.getPiece(x, y) == null &&
-				isMoveSafeForKing(new Field(x, y), board);
-	}
-	
-	@Override
-	public Piece move(Board board, int x, int y) {
-		if(x == getX() + 2) {
-			Piece rook = board.getPiece(getX() + 3, getY());
-			board.movePiece(rook.getField(), getX() + 1, getY());
-		}
-		else if(x == getX() - 2) {
-			Piece rook = board.getPiece(getX() - 4, getY());
-			board.movePiece(rook.getField(), getX() - 1, getY());
-		}
-		return super.move(board, x, y);
+	private boolean canPassThroughField(Board board, int x1, int y1,
+			int x2, int y2) {
+		return board.getPiece(x2, y2) == null &&
+				isMoveSafeForKing(x1, y1, new Field(x2, y2), board);
 	}
 	
 	@Override
-	public Piece copy() {
-		return new King(getColor(), getX(), getY())
-				.allowedToPerformCastling(canParticipateInCastling());
+	public Piece move(Board board, int x1, int y1, int x2, int y2) {
+		if(x2 == x1 + 2) {
+			board.movePiece(x1 + 3, y1, x1 + 1, y1);
+		}
+		else if(x2 == x1 - 2) {
+			board.movePiece(x1 - 4, y1, x1 - 1, y1);
+		}
+		return super.move(board, x1, y1, x2, y2);
 	}	
 }

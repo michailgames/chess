@@ -8,7 +8,6 @@ import java.util.List;
 import org.junit.Test;
 
 import chess.model.board.Board;
-import chess.model.board.Color;
 import chess.model.board.Field;
 
 /**
@@ -19,15 +18,6 @@ import chess.model.board.Field;
  */
 
 public class QueenTest {
-
-	@Test
-	public void testCopy() {
-		Queen oldQueen = new Queen(Color.BLACK, 2, 7);
-		Piece newQueen = oldQueen.copy();
-		assertTrue(newQueen instanceof Queen &&
-				newQueen.getColor() == Color.BLACK && newQueen.getX() == 2 &&
-				newQueen.getY() == 7);
-	}
 	
 	@Test
 	public void cannotMoveAtTheBeginning() {

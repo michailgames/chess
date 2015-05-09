@@ -1,13 +1,13 @@
 package chess.model.pieces;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
 import org.junit.Test;
 
 import chess.model.board.Board;
-import chess.model.board.Color;
 import chess.model.board.Field;
 
 /**
@@ -18,15 +18,6 @@ import chess.model.board.Field;
  */
 
 public class PawnTest {
-
-	@Test
-	public void testCopy() {
-		Pawn oldPawn = new Pawn(Color.BLACK, 2, 7);
-		Piece newPawn = oldPawn.copy();
-		assertTrue(newPawn instanceof Pawn &&
-				newPawn.getColor() == Color.BLACK && newPawn.getX() == 2 &&
-				newPawn.getY() == 7);
-	}
 	
 	@Test
 	public void whitePawnCanMoveOneOrTwoFieldsInTheBeginning() {
@@ -96,9 +87,9 @@ public class PawnTest {
 		List<Field> blackMoves = blackPawn.getAllLegalMoves(board, 5, 3);
 		assertEquals(2, whiteMoves.size());
 		assertEquals(2, blackMoves.size());
-		assertTrue(whiteMoves.contains(blackPawn.getField()));
+		assertTrue(whiteMoves.contains(new Field(5, 3)));
 		assertTrue(whiteMoves.contains(new Field(4, 3)));
-		assertTrue(blackMoves.contains(whitePawn.getField()));
+		assertTrue(blackMoves.contains(new Field(4, 4)));
 		assertTrue(blackMoves.contains(new Field(5, 4)));
 	}
 	

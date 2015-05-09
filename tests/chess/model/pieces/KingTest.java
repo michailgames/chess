@@ -1,13 +1,14 @@
 package chess.model.pieces;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
 import org.junit.Test;
 
 import chess.model.board.Board;
-import chess.model.board.Color;
 import chess.model.board.Field;
 
 /**
@@ -18,15 +19,6 @@ import chess.model.board.Field;
  */
 
 public class KingTest {
-
-	@Test
-	public void testCopy() {
-		King oldKing = new King(Color.BLACK, 2, 7);
-		Piece newKing = oldKing.copy();
-		assertTrue(newKing instanceof King &&
-				newKing.getColor() == Color.BLACK && newKing.getX() == 2 &&
-				newKing.getY() == 7);
-	}
 	
 	@Test
 	public void cannotMoveAtTheBeginning() {
@@ -95,10 +87,10 @@ public class KingTest {
 	public void cannotDoShortCastlingIfHasMovedBefore() {
 		Board board = new Board();
 		board.setup();
-		King king = (King) board.getPiece(4, 0);
 		prepareShortCastlingForBlack(board);
 		board.movePiece(4, 0, 5, 0);
 		board.movePiece(5, 0, 4, 0);
+		King king = (King) board.getPiece(4, 0);
 		List<Field> allMoves = king.getAllLegalMoves(board, 4, 0);
 		assertFalse(allMoves.contains(new Field(6, 0)));
 	}
@@ -175,10 +167,10 @@ public class KingTest {
 	public void cannotDoLongCastlingIfHasMovedBefore() {
 		Board board = new Board();
 		board.setup();
-		King king = (King) board.getPiece(4, 0);
 		prepareLongCastlingForBlack(board);
 		board.movePiece(4, 0, 3, 0);
 		board.movePiece(3, 0, 4, 0);
+		King king = (King) board.getPiece(4, 0);
 		List<Field> allMoves = king.getAllLegalMoves(board, 4, 0);
 		assertFalse(allMoves.contains(new Field(2, 0)));
 	}

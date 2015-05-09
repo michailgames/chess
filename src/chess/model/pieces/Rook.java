@@ -11,6 +11,13 @@ import chess.model.board.Color;
 
 public class Rook extends AbstractStraightMovingPiece {
 	
+	private final static Rook whiteRook = new Rook(Color.WHITE);
+	private final static Rook blackRook = new Rook(Color.BLACK);
+	
+	public static Rook getInstance(Color color) {
+		return color == Color.WHITE ? whiteRook : blackRook;
+	}
+	
 	private static final Direction[] availableDirections = {
 		new Direction(-1, 0),
 		new Direction(1, 0),
@@ -18,8 +25,8 @@ public class Rook extends AbstractStraightMovingPiece {
 		new Direction(0, -1)
 	};
 
-	public Rook(Color color, int x, int y) {
-		super(color, x, y);
+	public Rook(Color color) {
+		super(color);
 	}
 
 	@Override
@@ -30,11 +37,5 @@ public class Rook extends AbstractStraightMovingPiece {
 	@Override
 	protected Direction[] getAvailableDirections() {
 		return availableDirections;
-	}
-	
-	@Override
-	public Piece copy() {
-		return new Rook(getColor(), getX(), getY())
-				.allowedToPerformCastling(canParticipateInCastling());
 	}
 }

@@ -16,8 +16,8 @@ import chess.model.board.Field;
 
 public abstract class AbstractStraightMovingPiece extends Piece {
 
-	public AbstractStraightMovingPiece(Color color, int x, int y) {
-		super(color, x, y);
+	public AbstractStraightMovingPiece(Color color) {
+		super(color);
 	}
 
 	@Override

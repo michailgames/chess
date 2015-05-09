@@ -13,10 +13,11 @@ import java.util.List;
 import chess.model.pieces.Bishop;
 import chess.model.pieces.King;
 import chess.model.pieces.Knight;
+import chess.model.pieces.NeverMovedKing;
+import chess.model.pieces.NeverMovedRook;
 import chess.model.pieces.Pawn;
 import chess.model.pieces.Piece;
 import chess.model.pieces.Queen;
-import chess.model.pieces.Rook;
 import chess.utils.MoveUtils;
 
 public class Board {
@@ -39,14 +40,10 @@ public class Board {
 		fields = new Piece[BOARD_SIZE][BOARD_SIZE];
 		for(int x = 0; x < BOARD_SIZE; x++) {
 			for(int y = 0; y < BOARD_SIZE; y++) {
-				Piece oldPiece = original.fields[x][y];
-				if(oldPiece == null) {
-					continue;
-				}
-				Piece newPiece = oldPiece.copy();
-				fields[x][y] = newPiece;
-				if(newPiece instanceof King) {
-					if(newPiece.getColor() == Color.WHITE) {
+				Piece piece = original.fields[x][y];
+				fields[x][y] = piece;
+				if(piece instanceof King) {
+					if(piece.getColor() == Color.WHITE) {
 						whiteKingField = new Field(x, y);
 					} else {
 						blackKingField = new Field(x, y);
@@ -73,8 +70,8 @@ public class Board {
 		fields = new Piece[BOARD_SIZE][BOARD_SIZE];
 		for(int x = 0; x < BOARD_SIZE; x++) {
 			setupFigures(0, Color.BLACK);
-			fields[x][1] = new Pawn(Color.BLACK, x, 1);
-			fields[x][BOARD_SIZE - 2] = new Pawn(Color.WHITE, x, BOARD_SIZE-2);
+			fields[x][1] = Pawn.getInstance(Color.BLACK);
+			fields[x][BOARD_SIZE - 2] = Pawn.getInstance(Color.WHITE);
 			setupFigures(BOARD_SIZE - 1, Color.WHITE);
 		}
 		whiteKingField = new Field(4, BOARD_SIZE - 1);
@@ -82,14 +79,14 @@ public class Board {
 	}
 	
 	private void setupFigures(int y, Color color) {
-		fields[0][y] = new Rook(color, 0, y).allowedToPerformCastling();
-		fields[1][y] = new Knight(color, 1, y);
-		fields[2][y] = new Bishop(color, 2, y);
-		fields[3][y] = new Queen(color, 3, y);
-		fields[4][y] = new King(color, 4, y).allowedToPerformCastling();
-		fields[5][y] = new Bishop(color, 5, y);
-		fields[6][y] = new Knight(color, 6, y);
-		fields[7][y] = new Rook(color, 7, y).allowedToPerformCastling();
+		fields[0][y] = NeverMovedRook.getInstance(color);
+		fields[1][y] = Knight.getInstance(color);
+		fields[2][y] = Bishop.getInstance(color);
+		fields[3][y] = Queen.getInstance(color);
+		fields[4][y] = NeverMovedKing.getInstance(color);
+		fields[5][y] = Bishop.getInstance(color);
+		fields[6][y] = Knight.getInstance(color);
+		fields[7][y] = NeverMovedRook.getInstance(color);
 	}
 	
 	public Piece getPiece(int x, int y) {
@@ -101,27 +98,28 @@ public class Board {
 	}
 
 	public void movePiece(Field sourceField, int x, int y) {
-		Piece piece = getPiece(sourceField);
-		pawnThatJustMovedTwoSquaresField = null;
-		if(piece instanceof Pawn && Math.abs(sourceField.getY() - y) == 2) {
-			pawnThatJustMovedTwoSquaresField = new Field(x, y);
-		} else if(piece instanceof King) {
-			if(piece.getColor() == Color.WHITE) {
-				whiteKingField = new Field(x, y);
-			} else {
-				blackKingField = new Field(x, y);
-			}
-		}
-		fields[sourceField.getX()][sourceField.getY()] = null;
-		fields[x][y] = piece.move(this, x, y);
+		movePiece(sourceField.getX(), sourceField.getY(), x, y);
 	}
 	
 	public void movePiece(Field sourceField, Field field) {
-		movePiece(sourceField, field.getX(), field.getY());
+		movePiece(sourceField.getX(), sourceField.getY(),
+				field.getX(), field.getY());
 	}
 	
 	public void movePiece(int x1, int y1, int x2, int y2) {
-		movePiece(new Field(x1, y1), x2, y2);
+		Piece piece = getPiece(x1, y1);
+		pawnThatJustMovedTwoSquaresField = null;
+		if(piece instanceof Pawn && Math.abs(y2 - y1) == 2) {
+			pawnThatJustMovedTwoSquaresField = new Field(x2, y2);
+		} else if(piece instanceof King) {
+			if(piece.getColor() == Color.WHITE) {
+				whiteKingField = new Field(x2, y2);
+			} else {
+				blackKingField = new Field(x2, y2);
+			}
+		}
+		fields[x1][y1] = null;
+		fields[x2][y2] = piece.move(this, x1, y1, x2, y2);
 	}
 	
 	public void clearField(int x, int y) {
@@ -136,8 +134,10 @@ public class Board {
 		if(whiteKingField == null) {
 			return GameState.NONE;
 		}
-		King king = (King) getPiece(getKingField(nextPlayerColor));
-		boolean checked = king.isUnderAttack(this);
+		Field kingfField = getKingField(nextPlayerColor);
+		King king = (King) getPiece(kingfField);
+		boolean checked = king.isUnderAttack(this,
+				kingfField.getX(), kingfField.getY());
 		boolean hasMoves = MoveUtils.hasAnyLegalMove(this, nextPlayerColor);
 		if(checked && !hasMoves) {
 			return GameState.MATE;

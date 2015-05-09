@@ -11,6 +11,13 @@ import chess.model.board.Color;
 
 public class Queen extends AbstractStraightMovingPiece {
 	
+	private final static Queen whiteQueen = new Queen(Color.WHITE);
+	private final static Queen blackQueen = new Queen(Color.BLACK);
+	
+	public static Queen getInstance(Color color) {
+		return color == Color.WHITE ? whiteQueen : blackQueen;
+	}
+	
 	private static final Direction[] availableDirections = {
 		new Direction(-1, -1),
 		new Direction(-1, 0),
@@ -22,8 +29,8 @@ public class Queen extends AbstractStraightMovingPiece {
 		new Direction(1, 1)
 	};
 
-	public Queen(Color color, int x, int y) {
-		super(color, x, y);
+	public Queen(Color color) {
+		super(color);
 	}
 
 	@Override
@@ -34,11 +41,5 @@ public class Queen extends AbstractStraightMovingPiece {
 	@Override
 	protected Direction[] getAvailableDirections() {
 		return availableDirections;
-	}
-	
-	@Override
-	public Piece copy() {
-		return new Queen(getColor(), getX(), getY())
-				.allowedToPerformCastling(canParticipateInCastling());
 	}
 }
