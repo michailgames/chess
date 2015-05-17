@@ -10,7 +10,7 @@ import chess.model.pieces.Piece;
  * Projekt: Szachy
  * Kontroler logowania stanu partii
  * Micha³ Rapacz
- * 2015-03-26
+ * 2015-05-17
  */
 
 public class LogController {

@@ -20,7 +20,7 @@ import chess.controller.LogController;
  * Projekt: Szachy
  * Panel zawieraj¹cy zapis partii
  * Micha³ Rapacz
- * 2015-03-26
+ * 2015-05-17
  */
 
 public class MovesLogPanel extends JPanel {
