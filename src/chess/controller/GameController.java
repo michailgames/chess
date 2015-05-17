@@ -49,6 +49,7 @@ public class GameController {
 		blackPlayer.registerMoveListener(getMoveListener());
 		board = new Board();
 		board.setup();
+		LogController.getInstance().clearLogs();
 		currentPlayer = whitePlayer;
 		currentPlayer.startCalculatingNextMove(getBoard());
 	}
@@ -75,6 +76,8 @@ public class GameController {
 			throw new IllegalMoveException();
 		}
 		
+		LogController.getInstance().reportMove(board.getPiece(sourceField),
+				sourceField, targetField);
 		movePiece(sourceField, targetField);
 	}
 

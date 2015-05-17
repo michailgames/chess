@@ -2,7 +2,7 @@ package chess.view;
 
 /**
  * Projekt: Szachy
- * Panel odpowiadaj¹cy za widok panelu zawieraj¹cego przebieg partii
+ * Panel odpowiadaj¹cy za widok stanu partii
  * Micha³ Rapacz
  * 2015-03-26
  */
@@ -14,6 +14,7 @@ import java.awt.Graphics;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.BevelBorder;
 
 import chess.controller.GameController;
 import chess.model.board.GameState;
@@ -26,6 +27,17 @@ public class LogPanel extends JPanel {
 	
 	public LogPanel() {
 		setLayout(new BorderLayout());
+		setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+		addGameStatePanel();
+		addMovesLogPanel();
+	}
+
+	private void addMovesLogPanel() {
+		JPanel movesLogPanel = new MovesLogPanel();
+		add(movesLogPanel, BorderLayout.CENTER);
+	}
+
+	private void addGameStatePanel() {
 		JPanel gameStatePanel = new JPanel();
 		gameStatePanel.setBackground(Color.WHITE);
 		gameStatePanel.setBorder(BorderFactory.createEtchedBorder());
@@ -73,6 +85,6 @@ public class LogPanel extends JPanel {
 	}
 	
 	public int getMinimumWidth() {
-		return 220;
+		return 240;
 	}
 }

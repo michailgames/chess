@@ -31,7 +31,7 @@ public class MainWindow extends JFrame {
 		super("Szachy");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		initUI();
-		setSize(880, 700);
+		setSize(900, 700);
 		setVisible(true);
 	}
 	
@@ -89,5 +89,9 @@ public class MainWindow extends JFrame {
 	private void startNewGame(String whiteChoice, String blackchoice) {
 		GameController.getInstance().startNewGame(whiteChoice, blackchoice);
 		ApplicationController.getInstance().refreshView();
+	}
+	
+	public void refresh() {
+		repaint();
 	}
 }

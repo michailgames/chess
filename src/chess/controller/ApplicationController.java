@@ -29,7 +29,7 @@ public class ApplicationController {
 	
 	public void refreshView() {
 		if(view != null) {
-			view.repaint();
+			view.refresh();
 		}
 	}
 }
