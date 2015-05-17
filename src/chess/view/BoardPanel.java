@@ -28,11 +28,12 @@ public class BoardPanel extends JPanel {
 	private final Color BACKGROUND_COLOR = new Color(255, 255, 255);
 	private final Color BLACK_FIELD_COLOR = new Color(192, 192, 192);
 	private final Color WHITE_FIELD_COLOR = new Color(255, 255, 255);
+	private final Color FIELD_LABEL_COLOR = new Color(0, 0, 0);
 	private final Color SELECTION_COLOR = new Color(13, 210, 198, 130);
 	public final static Color WHITE_PIECES_COLOR = new Color(135, 73, 0);
 	public final static Color BLACK_PIECES_COLOR = new Color(0, 0, 0);
 	private final Color GRID_COLOR = new Color(0, 0, 0);
-	private final int MARGIN_SIZE = 10;
+	private final int MARGIN_SIZE = 20;
 	
 	private int effectivePaintSize;
 	private int rightMargin;
@@ -57,10 +58,30 @@ public class BoardPanel extends JPanel {
 		board = GameController.getInstance().getBoard();
 		paintBackground(g);
 		paintBoard(g);
+		paintLabels(g);
 		paintSelection(g);
 		paintGrid(g);
 		paintPieces(g);
 		g.dispose();
+	}
+
+	private void paintLabels(Graphics g) {
+		g.setColor(FIELD_LABEL_COLOR);
+		g.setFont(g.getFont().deriveFont(0.8f * MARGIN_SIZE));
+		String[] rankLabels = { "a", "b", "c", "d", "e", "f", "g", "h" };
+		for(int i = 1; i <= Board.BOARD_SIZE; i++) {
+			int y1 = calculateOffset(i - 1);
+			int y2 = calculateOffset(i);
+			int fieldSize = y2 - y1;
+			g.drawString(Integer.toString(9 - i), 5, y1 +
+					(fieldSize + MARGIN_SIZE) / 2);
+			g.drawString(Integer.toString(9 - i), calculateOffset(
+					Board.BOARD_SIZE) + 5, y1 + (fieldSize + MARGIN_SIZE) / 2);
+			g.drawString(rankLabels[i - 1], y1 + fieldSize / 2 - 2,
+					MARGIN_SIZE - 5);
+			g.drawString(rankLabels[i - 1], y1 + fieldSize / 2 - 2,
+					calculateOffset(Board.BOARD_SIZE) + MARGIN_SIZE - 5);
+		}	
 	}
 
 	private void paintGrid(Graphics g) {
