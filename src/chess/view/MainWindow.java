@@ -26,6 +26,7 @@ import chess.controller.GameController;
 public class MainWindow extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	private LogPanel logPanel;
 	
 	public MainWindow() {
 		super("Szachy");
@@ -40,7 +41,7 @@ public class MainWindow extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		add(panel);
-		LogPanel logPanel = new LogPanel();
+		logPanel = new LogPanel();
 		panel.add(new BoardPanel(logPanel.getMinimumWidth()), BorderLayout.WEST);
 		panel.add(logPanel, BorderLayout.CENTER);
 	}
@@ -88,10 +89,12 @@ public class MainWindow extends JFrame {
 	
 	private void startNewGame(String whiteChoice, String blackchoice) {
 		GameController.getInstance().startNewGame(whiteChoice, blackchoice);
+		ApplicationController.getInstance().refreshLogs();
 		ApplicationController.getInstance().refreshView();
 	}
 	
-	public void refresh() {
+	public void refreshLogs() {
+		logPanel.refreshLogs();
 		repaint();
 	}
 }

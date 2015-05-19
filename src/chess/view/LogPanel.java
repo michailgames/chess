@@ -24,6 +24,8 @@ public class LogPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private JLabel gameStateLabel;
+
+	private MovesLogPanel movesLogPanel;
 	
 	public LogPanel() {
 		setLayout(new BorderLayout());
@@ -33,7 +35,7 @@ public class LogPanel extends JPanel {
 	}
 
 	private void addMovesLogPanel() {
-		JPanel movesLogPanel = new MovesLogPanel();
+		movesLogPanel = new MovesLogPanel();
 		add(movesLogPanel, BorderLayout.CENTER);
 	}
 
@@ -86,5 +88,9 @@ public class LogPanel extends JPanel {
 	
 	public int getMinimumWidth() {
 		return 240;
+	}
+	
+	public void refreshLogs() {
+		movesLogPanel.refreshLogs();
 	}
 }

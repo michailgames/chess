@@ -27,9 +27,15 @@ public class ApplicationController {
 		view = new MainWindow();
 	}
 	
+	public void refreshLogs() {
+		if(view != null) {
+			view.refreshLogs();
+		}
+	}
+	
 	public void refreshView() {
 		if(view != null) {
-			view.refresh();
+			view.repaint();
 		}
 	}
 }

@@ -19,7 +19,7 @@ import chess.model.pieces.NeverMovedRook;
 import chess.model.pieces.Pawn;
 import chess.model.pieces.Piece;
 import chess.model.pieces.Queen;
-import chess.utils.MoveUtils;
+import chess.model.utils.MoveUtils;
 
 public class Board {
 

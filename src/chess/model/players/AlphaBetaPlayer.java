@@ -12,7 +12,7 @@ import chess.model.board.Field;
 import chess.model.board.Move;
 import chess.model.pieces.Piece;
 import chess.model.players.strategies.IBoardEvaluationStrategy;
-import chess.utils.MoveUtils;
+import chess.model.utils.MoveUtils;
 
 /**
  * Projekt: Szachy

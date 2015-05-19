@@ -2,14 +2,16 @@ package chess.view;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Graphics;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -30,11 +32,13 @@ public class MovesLogPanel extends JPanel {
 	private JTable logsTable;
 	private MovesTableModel tableModel;
 
+	private JScrollPane scrollPanel;
+
 	public MovesLogPanel() {
 		setLayout(new BorderLayout());
 		setBorder(BorderFactory.createEtchedBorder());
 		addTitle();
-		JScrollPane scrollPanel = new JScrollPane();
+		scrollPanel = new JScrollPane();
 		add(scrollPanel, BorderLayout.CENTER);
 		createLogsTable();
 		scrollPanel.setViewportView(logsTable);
@@ -55,11 +59,19 @@ public class MovesLogPanel extends JPanel {
 		logsTable.setFont(logsTable.getFont().deriveFont(16f));
 		logsTable.setRowHeight(logsTable.getFontMetrics(
 				logsTable.getFont()).getHeight() + 2);
+		
+		tableModel.addTableModelListener(new TableModelListener() {
+			
+			@Override
+			public void tableChanged(TableModelEvent e) {
+				JScrollBar verticalScrollBar = scrollPanel.getVerticalScrollBar();
+				verticalScrollBar.setValue(verticalScrollBar.getMaximum());
+			}
+		});
 	}
 
 	private void addTitle() {
 		JPanel titlePanel = new JPanel();
-		//titlePanel.setBackground(Color.WHITE);
 		add(titlePanel, BorderLayout.NORTH);
 		titlePanel.add(new JLabel("Zapis partii"));
 	}
@@ -92,19 +104,13 @@ public class MovesLogPanel extends JPanel {
 		@Override
 		public int getRowCount() {
 			int moves = LogController.getInstance().getLogsNumber();
-			return moves / 2 + moves % 2;
+			return moves / 2 + moves % 2 + 1;
 		}
 
 		@Override
 		public int getColumnCount() {
 			return 3;
 		}
-	}
-	
-	@Override
-	protected void paintComponent(Graphics g) {
-		tableModel.fireTableDataChanged();
-		super.paintComponent(g);
 	}
 	
 	private final class CellRenderer extends DefaultTableCellRenderer {
@@ -128,5 +134,9 @@ public class MovesLogPanel extends JPanel {
 			}
 			return label;
 		}
+	}
+
+	public void refreshLogs() {
+		tableModel.fireTableDataChanged();
 	}
 }

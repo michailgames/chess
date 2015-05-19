@@ -15,7 +15,7 @@ import chess.model.listeners.IMoveListener;
 import chess.model.pieces.Piece;
 import chess.model.players.NonPlayingPlayer;
 import chess.model.players.Player;
-import chess.utils.MoveUtils;
+import chess.model.utils.MoveUtils;
 
 public class GameController {
 
@@ -84,6 +84,7 @@ public class GameController {
 	private void movePiece(Field sourceField, Field field) {
 		board.movePiece(sourceField, field);
 		nextTurn();
+		ApplicationController.getInstance().refreshLogs();
 		ApplicationController.getInstance().refreshView();
 	}
 

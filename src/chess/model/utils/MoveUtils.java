@@ -1,4 +1,4 @@
-package chess.utils;
+package chess.model.utils;
 
 import java.util.ArrayList;
 import java.util.List;

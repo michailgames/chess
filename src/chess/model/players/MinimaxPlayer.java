@@ -8,7 +8,7 @@ import chess.model.board.Color;
 import chess.model.board.EvaluatedMove;
 import chess.model.board.Move;
 import chess.model.players.strategies.IBoardEvaluationStrategy;
-import chess.utils.MoveUtils;
+import chess.model.utils.MoveUtils;
 
 /**
  * Projekt: Szachy
