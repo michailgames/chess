@@ -10,6 +10,8 @@ package chess.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -56,6 +58,10 @@ public class BoardPanel extends JPanel {
 	protected void paintComponent(Graphics g) {
 		effectivePaintSize = Math.min(getWidth(), getHeight());
 		board = GameController.getInstance().getBoard();
+		
+		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+		
 		paintBackground(g);
 		paintBoard(g);
 		paintLabels(g);
