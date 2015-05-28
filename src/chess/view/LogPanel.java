@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
@@ -32,6 +33,12 @@ public class LogPanel extends JPanel {
 		setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 		addGameStatePanel();
 		addMovesLogPanel();
+		addUndoButton();
+	}
+
+	private void addUndoButton() {
+		JButton undoButton = new JButton("Cofnij ruch");
+		add(undoButton, BorderLayout.SOUTH);
 	}
 
 	private void addMovesLogPanel() {

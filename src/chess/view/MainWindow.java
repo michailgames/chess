@@ -12,13 +12,16 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import chess.controller.ApplicationController;
 import chess.controller.GameController;
@@ -48,6 +51,7 @@ public class MainWindow extends JFrame {
 	
 	private void initMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
+		
 		JMenu menu = new JMenu("Gra");
 		JMenuItem item = new JMenuItem("Rozpocznij now¹ grê...");
 		item.addActionListener(new ActionListener() {
@@ -57,7 +61,27 @@ public class MainWindow extends JFrame {
 			}
 		});
 		menu.add(item);
+		item = new JMenuItem("Zakoñcz program");
+		item.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		menu.add(item);
 		menuBar.add(menu);
+		
+		menu = new JMenu("O programie");
+		item = new JMenuItem("Informacje o programie...");
+		item.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				showAboutDialog();
+			}
+		});
+		menu.add(item);
+		menuBar.add(menu);
+		
 		setJMenuBar(menuBar);
 	}
 	
@@ -83,6 +107,22 @@ public class MainWindow extends JFrame {
 			}
 		});
 		dialog.add(startButton, BorderLayout.SOUTH);
+		dialog.pack();
+		dialog.setVisible(true);
+	}
+	
+	private void showAboutDialog() {
+		JDialog dialog = new JDialog(this, "Informacje o programie", true);
+		JPanel panel = new JPanel();
+		dialog.add(panel);
+		panel.setLayout(new GridLayout(4, 1));
+		panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		panel.add(new JLabel("Program Szachowy", SwingConstants.CENTER));
+		panel.add(new JLabel("Autor: Micha³ Rapacz", SwingConstants.CENTER));
+		panel.add(new JLabel("Czerwiec 2015", SwingConstants.CENTER));
+		panel.add(new JLabel("Program powsta³ jako licencjacki projekt " +
+				"programistyczny podczas studiów na Uniwersytecie Wroc³awskim",
+				SwingConstants.CENTER));
 		dialog.pack();
 		dialog.setVisible(true);
 	}
