@@ -152,4 +152,19 @@ public class BoardTest {
 		board = new Board(board);
 		assertEquals(GameState.STALEMATE, board.getGameState(Color.BLACK));
 	}
+	
+	@Test
+	public void equalsShouldReturnTrueForEquivalentBoards() {
+		Board board2 = new Board();
+		board2.setup();
+		assertTrue(board.equals(board2));
+	}
+	
+	@Test
+	public void equalsShouldReturnFalseForDifferingBoards() {
+		Board board2 = new Board();
+		board2.setup();
+		board2.movePiece(3, 6, 3, 5);
+		assertFalse(board.equals(board2));
+	}
 }

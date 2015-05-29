@@ -2,6 +2,7 @@ package chess.controller;
 
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import chess.model.board.Color;
@@ -27,7 +28,7 @@ public class PlayerControllerTest {
 	public void availablePlayers() {
 		List<String> availablePlayers = PlayerController.getInstance()
 				.getAvailablePlayers();
-		assertEquals(9, availablePlayers.size());
+		assertEquals(8, availablePlayers.size());
 		assertTrue(availablePlayers.contains("Cz³owiek"));
 		assertTrue(availablePlayers.contains("Komputer - losowy"));
 		assertTrue(availablePlayers.contains("Komputer - zach³anny"));
@@ -36,8 +37,8 @@ public class PlayerControllerTest {
 		assertTrue(availablePlayers.contains("Komputer - alpha-beta (4)"));
 		assertTrue(availablePlayers.contains("Komputer - alpha-beta (5)"));
 		assertTrue(availablePlayers.contains("Komputer - alpha-beta (6)"));
-		assertTrue(availablePlayers.contains(
-				"Komputer - adaptacyjny alpha-beta (3-10s)"));
+//		assertTrue(availablePlayers.contains(
+//				"Komputer - adaptacyjny alpha-beta (3-10s)"));
 	}
 	
 	@Test
@@ -103,6 +104,8 @@ public class PlayerControllerTest {
 		assertTrue(player instanceof AlphaBetaPlayer
 				&& player.getColor() == Color.WHITE);
 	}
+	
+	@Ignore
 	@Test
 	public void creatingAdaptiveAlphaBeta5to10Player() {
 		Player player = PlayerController.getInstance().makePlayer(

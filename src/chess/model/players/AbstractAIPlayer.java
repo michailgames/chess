@@ -15,7 +15,7 @@ import chess.model.board.Move;
 
 public abstract class AbstractAIPlayer extends Player {
 
-	private long minimumMoveTime = 1000;
+	public static final long MINIMUM_MOVE_TIME = 1000;
 	private long lastCalculationTime = 0;
 	private boolean firstMoveMade = false;
 	private CalculatingMoveAction currentThreadAction = null;
@@ -74,7 +74,7 @@ public abstract class AbstractAIPlayer extends Player {
 			lastCalculationTime = System.currentTimeMillis() - startTime;
 			try {
 				Thread.sleep(Math.max(
-						minimumMoveTime - lastCalculationTime, 100));
+						MINIMUM_MOVE_TIME - lastCalculationTime, 100));
 			} catch (InterruptedException e) {
 				throw new RuntimeException(e);
 			}
@@ -88,7 +88,7 @@ public abstract class AbstractAIPlayer extends Player {
 			
 			ApplicationController.getInstance().refreshView();
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(MINIMUM_MOVE_TIME);
 			} catch (InterruptedException e) {
 				throw new RuntimeException(e);
 			}

@@ -35,6 +35,7 @@ public class LogController {
 	
 	public synchronized void clearLogs() {
 		loggedMoves.clear();
+		previousBoardStates.clear();
 	}
 	
 	public synchronized void reportMove(Board board, Field sourceField,

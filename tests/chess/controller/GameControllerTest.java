@@ -1,14 +1,19 @@
 package chess.controller;
 
+import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import chess.controller.GameController.IllegalMoveException;
 import chess.controller.GameController.UnauthorizedMoveException;
+import chess.model.board.Board;
 import chess.model.board.Color;
 import chess.model.board.Field;
+import chess.model.players.AbstractAIPlayer;
 import chess.model.players.NonPlayingPlayer;
 import chess.model.players.Player;
+import chess.model.players.RandomPlayer;
 
 /**
  * Projekt: Szachy
@@ -67,6 +72,60 @@ public class GameControllerTest {
 	public void doesNotAcceptMovingOpponentPieces() {
 		GameController.getInstance().reportNewMove(whitePlayer, new Field(0, 1),
 				new Field(0, 2));
+	}
+	
+	@Test
+	public void undoRestoresPreviousBoard() {
+		Board initialBoard = GameController.getInstance().getBoard();
+		
+		GameController.getInstance().reportNewMove(whitePlayer, new Field(0, 6),
+				new Field(0, 5));
+		assertEquals(GameController.getInstance().getCurrentPlayerColor(),
+				Color.BLACK);
+		assertFalse(initialBoard.equals(GameController.getInstance().getBoard()));
+		
+		GameController.getInstance().undoMove();
+		assertTrue(initialBoard.equals(GameController.getInstance().getBoard()));
+		assertEquals(GameController.getInstance().getCurrentPlayerColor(),
+				Color.WHITE);
+	}
+	
+	@Test
+	public void undo2Moves() {
+		GameController.getInstance().reportNewMove(whitePlayer, new Field(0, 6),
+				new Field(0, 5));
+		
+		Board expectedBoard = GameController.getInstance().getBoard();
+		
+		GameController.getInstance().reportNewMove(blackPlayer, new Field(0, 1),
+				new Field(0, 2));
+		GameController.getInstance().reportNewMove(whitePlayer, new Field(1, 6),
+				new Field(1, 5));
+		
+		GameController.getInstance().undoMove();
+		GameController.getInstance().undoMove();
+		
+		assertTrue(expectedBoard.equals(GameController.getInstance().getBoard()));
+		assertEquals(GameController.getInstance().getCurrentPlayerColor(),
+				Color.BLACK);
+	}
+	
+	@Test(timeout=8000)
+	public void undoStopsAIPlayerCalculation() throws InterruptedException {
+		blackPlayer = new RandomPlayer(Color.BLACK);
+		GameController.getInstance().startNewGame(whitePlayer, blackPlayer);
+		
+		Board expectedBoard = GameController.getInstance().getBoard();
+		
+		GameController.getInstance().reportNewMove(whitePlayer, new Field(0, 6),
+				new Field(0, 5));
+		while(GameController.getInstance().getSelectedPiece() == null) {
+			// wait until AI selects piece
+		}
+		GameController.getInstance().undoMove();
+		assertNull(GameController.getInstance().getSelectedPiece());
+		Thread.sleep(AbstractAIPlayer.MINIMUM_MOVE_TIME);
+		assertTrue(expectedBoard.equals(GameController.getInstance().getBoard()));
 	}
 
 }

@@ -165,4 +165,40 @@ public class Board {
 	private final int fieldIndex(int x, int y) {
 		return y * BOARD_SIZE + x;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Board == false) {
+			return false;
+		}
+		Board other = (Board) obj;
+		
+		if(whiteKingField == null) {
+			if(other.whiteKingField != null) {
+				return false;
+			}
+		} else if(whiteKingField.equals(other.whiteKingField) == false) {
+			return false;
+		}
+		
+		
+		if(blackKingField == null) {
+			if(other.blackKingField != null) {
+				return false;
+			}
+		} else if(blackKingField.equals(other.blackKingField) == false) {
+			return false;
+		}
+		
+		if(pawnThatJustMovedTwoSquaresField == null) {
+			if(other.pawnThatJustMovedTwoSquaresField != null) {
+				return false;
+			}
+		} else if(pawnThatJustMovedTwoSquaresField.equals(
+				other.pawnThatJustMovedTwoSquaresField) == false) {
+			return false;
+		}
+		
+		return Arrays.deepEquals(fields, other.fields);
+	};
 }
