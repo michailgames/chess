@@ -14,11 +14,11 @@ import chess.model.board.Move;
  */
 
 public abstract class AbstractAIPlayer extends Player {
-	
+
 	private long minimumMoveTime = 1000;
 	private long lastCalculationTime = 0;
 	private boolean firstMoveMade = false;
-	private Field selectedField = null;
+	private CalculatingMoveAction currentThreadAction = null;
 
 	public AbstractAIPlayer(Color color) {
 		super(color);
@@ -26,30 +26,8 @@ public abstract class AbstractAIPlayer extends Player {
 
 	@Override
 	public synchronized void startCalculatingNextMove(final Board board) {
-		Thread calculationThread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				long startTime = System.currentTimeMillis();
-				Move move = calculateNextMove(board);
-				lastCalculationTime = System.currentTimeMillis() - startTime;
-				try {
-					Thread.sleep(Math.max(
-							minimumMoveTime - lastCalculationTime, 100));
-				} catch (InterruptedException e) {
-					throw new RuntimeException(e);
-				}
-				selectedField = move.getSourceField();
-				ApplicationController.getInstance().refreshView();
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					throw new RuntimeException(e);
-				}
-				selectedField = null;
-				firstMoveMade = true;
-				makeMove(move.getSourceField(), move.getTargetField());
-			}
-		});
+		currentThreadAction = new CalculatingMoveAction(board);
+		Thread calculationThread = new Thread(currentThreadAction);
 		calculationThread.start();
 	}
 	
@@ -60,7 +38,15 @@ public abstract class AbstractAIPlayer extends Player {
 
 	@Override
 	public Field getSelectedField() {
-		return selectedField;
+		return currentThreadAction == null ? null :
+			currentThreadAction.getSelectedField();
+	}
+	
+	@Override
+	public synchronized void interrupt() {
+		if(currentThreadAction != null) {
+			currentThreadAction.interrupt();
+		}
 	}
 	
 	public long getLastCalculationTime() {
@@ -69,5 +55,61 @@ public abstract class AbstractAIPlayer extends Player {
 	
 	public boolean hasMadeFirstMove() {
 		return firstMoveMade;
+	}
+	
+	private final class CalculatingMoveAction implements Runnable {
+		
+		private final Board board;
+		private boolean interrupted = false;
+		private Field selectedField = null;
+
+		private CalculatingMoveAction(Board board) {
+			this.board = board;
+		}
+
+		@Override
+		public void run() {
+			long startTime = System.currentTimeMillis();
+			Move move = calculateNextMove(board);
+			lastCalculationTime = System.currentTimeMillis() - startTime;
+			try {
+				Thread.sleep(Math.max(
+						minimumMoveTime - lastCalculationTime, 100));
+			} catch (InterruptedException e) {
+				throw new RuntimeException(e);
+			}
+			
+			synchronized(this) {
+				if(interrupted) {
+					return;
+				}
+				selectedField = move.getSourceField();
+			}
+			
+			ApplicationController.getInstance().refreshView();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				throw new RuntimeException(e);
+			}
+			selectedField = null;
+			firstMoveMade = true;
+			
+			synchronized(this) {
+				if(interrupted) {
+					return;
+				}
+				makeMove(move.getSourceField(), move.getTargetField());
+			}
+		}
+		
+		public synchronized Field getSelectedField() {
+			return selectedField;
+		}
+		
+		public synchronized void interrupt() {
+			selectedField = null;
+			interrupted = true;
+		}
 	}
 }

@@ -41,4 +41,5 @@ public abstract class Player {
 	public abstract void startCalculatingNextMove(Board board);
 	public abstract void fieldClicked(Field field, Board board);
 	public abstract Field getSelectedField();
+	public abstract void interrupt();
 }

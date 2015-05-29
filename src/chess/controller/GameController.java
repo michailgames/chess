@@ -76,8 +76,7 @@ public class GameController {
 			throw new IllegalMoveException();
 		}
 		
-		LogController.getInstance().reportMove(board.getPiece(sourceField),
-				sourceField, targetField);
+		LogController.getInstance().reportMove(board, sourceField, targetField);
 		movePiece(sourceField, targetField);
 	}
 
@@ -103,8 +102,6 @@ public class GameController {
 		if(MoveUtils.hasAnyLegalMove(getBoard(), currentPlayer.getColor())) {
 			currentPlayer.startCalculatingNextMove(board);
 		} else {
-			whitePlayer = new NonPlayingPlayer(Color.WHITE);
-			blackPlayer = new NonPlayingPlayer(Color.BLACK);
 			currentPlayer = (currentPlayer.getColor() == Color.BLACK) ?
 					blackPlayer : whitePlayer;
 		}
@@ -135,5 +132,18 @@ public class GameController {
 				.reportNewMove(player, sourceField, targetField);
 			}
 		};
+	}
+
+	public synchronized void undoMove() {
+		if(LogController.getInstance().getLogsNumber() == 0) {
+			return;
+		}
+		currentPlayer.interrupt();
+		board = LogController.getInstance().getPreviousBoardState();
+		LogController.getInstance().reportUndo();
+		nextTurn();
+		
+		ApplicationController.getInstance().refreshView();
+		ApplicationController.getInstance().refreshLogs();
 	}
 }

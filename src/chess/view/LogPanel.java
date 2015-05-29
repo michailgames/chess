@@ -10,6 +10,8 @@ package chess.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -38,6 +40,13 @@ public class LogPanel extends JPanel {
 
 	private void addUndoButton() {
 		JButton undoButton = new JButton("Cofnij ruch");
+		undoButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GameController.getInstance().undoMove();
+			}
+		});
 		add(undoButton, BorderLayout.SOUTH);
 	}
 

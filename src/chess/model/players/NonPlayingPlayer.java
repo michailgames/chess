@@ -24,6 +24,9 @@ public class NonPlayingPlayer extends Player {
 	public Field getSelectedField() {
 		return null;
 	}
+	
+	@Override
+	public void interrupt() { }
 
 	@Override
 	public void startCalculatingNextMove(Board board) { }

@@ -22,7 +22,7 @@ public class HumanPlayer extends Player {
 	}
 
 	@Override
-	public void fieldClicked(Field field, Board board) {
+	public synchronized void fieldClicked(Field field, Board board) {
 		Piece piece = board.getPiece(field);
 		if(piece != null && piece.getColor() == getColor()) {
 			selectedField = field;
@@ -40,6 +40,11 @@ public class HumanPlayer extends Player {
 	@Override
 	public Field getSelectedField() {
 		return selectedField;
+	}
+	
+	@Override
+	public synchronized void interrupt() {
+		selectedField = null;
 	}
 
 	@Override
