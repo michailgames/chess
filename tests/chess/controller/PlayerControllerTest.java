@@ -34,9 +34,9 @@ public class PlayerControllerTest {
 		assertTrue(availablePlayers.contains("Komputer - zach³anny"));
 		assertTrue(availablePlayers.contains("Komputer - minimax (3)"));
 		assertTrue(availablePlayers.contains("Komputer - minimax (4)"));
-		assertTrue(availablePlayers.contains("Komputer - alpha-beta (4)"));
-		assertTrue(availablePlayers.contains("Komputer - alpha-beta (5)"));
-		assertTrue(availablePlayers.contains("Komputer - alpha-beta (6)"));
+		assertTrue(availablePlayers.contains("Komputer - alfa-beta (4)"));
+		assertTrue(availablePlayers.contains("Komputer - alfa-beta (5)"));
+		assertTrue(availablePlayers.contains("Komputer - alfa-beta (6)"));
 //		assertTrue(availablePlayers.contains(
 //				"Komputer - adaptacyjny alpha-beta (3-10s)"));
 	}
@@ -84,7 +84,7 @@ public class PlayerControllerTest {
 	@Test
 	public void creatingAlphaBeta4Player() {
 		Player player = PlayerController.getInstance()
-				.makePlayer("Komputer - alpha-beta (4)", Color.WHITE);
+				.makePlayer("Komputer - alfa-beta (4)", Color.WHITE);
 		assertTrue(player instanceof AlphaBetaPlayer
 				&& player.getColor() == Color.WHITE);
 	}
@@ -92,7 +92,7 @@ public class PlayerControllerTest {
 	@Test
 	public void creatingAlphaBeta5Player() {
 		Player player = PlayerController.getInstance()
-				.makePlayer("Komputer - alpha-beta (5)", Color.WHITE);
+				.makePlayer("Komputer - alfa-beta (5)", Color.WHITE);
 		assertTrue(player instanceof AlphaBetaPlayer
 				&& player.getColor() == Color.WHITE);
 	}
@@ -100,7 +100,7 @@ public class PlayerControllerTest {
 	@Test
 	public void creatingAlphaBeta6Player() {
 		Player player = PlayerController.getInstance()
-				.makePlayer("Komputer - alpha-beta (6)", Color.WHITE);
+				.makePlayer("Komputer - alfa-beta (6)", Color.WHITE);
 		assertTrue(player instanceof AlphaBetaPlayer
 				&& player.getColor() == Color.WHITE);
 	}
@@ -109,7 +109,7 @@ public class PlayerControllerTest {
 	@Test
 	public void creatingAdaptiveAlphaBeta5to10Player() {
 		Player player = PlayerController.getInstance().makePlayer(
-				"Komputer - adaptacyjny alpha-beta (3-10s)", Color.WHITE);
+				"Komputer - adaptacyjny alfa-beta (3-10s)", Color.WHITE);
 		assertTrue(player instanceof AdaptiveAlphaBetaPlayer
 				&& player.getColor() == Color.WHITE);
 	}

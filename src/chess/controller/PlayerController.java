@@ -67,7 +67,7 @@ public class PlayerController {
 						new StandardBoardEvaluationStrategy(color), 4);
 			}
 		});
-		playerFactory.registerPlayerMaker("Komputer - alpha-beta (4)",
+		playerFactory.registerPlayerMaker("Komputer - alfa-beta (4)",
 				new PlayerMaker() {
 			@Override
 			public Player makePlayer(Color color) {
@@ -75,7 +75,7 @@ public class PlayerController {
 						new StandardBoardEvaluationStrategy(color), 4);
 			}
 		});
-		playerFactory.registerPlayerMaker("Komputer - alpha-beta (5)",
+		playerFactory.registerPlayerMaker("Komputer - alfa-beta (5)",
 				new PlayerMaker() {
 			@Override
 			public Player makePlayer(Color color) {
@@ -83,7 +83,7 @@ public class PlayerController {
 						new StandardBoardEvaluationStrategy(color), 5);
 			}
 		});
-		playerFactory.registerPlayerMaker("Komputer - alpha-beta (6)",
+		playerFactory.registerPlayerMaker("Komputer - alfa-beta (6)",
 				new PlayerMaker() {
 			@Override
 			public Player makePlayer(Color color) {
