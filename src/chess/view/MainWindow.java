@@ -28,113 +28,113 @@ import chess.controller.GameController;
 
 public class MainWindow extends JFrame {
 
-	private static final long serialVersionUID = 1L;
-	private LogPanel logPanel;
-	
-	public MainWindow() {
-		super("Szachy");
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		initUI();
-		setSize(900, 700);
-		setVisible(true);
-	}
-	
-	private void initUI() {
-		initMenuBar();
-		JPanel panel = new JPanel();
-		panel.setLayout(new BorderLayout());
-		add(panel);
-		logPanel = new LogPanel();
-		panel.add(new BoardPanel(logPanel.getMinimumWidth()), BorderLayout.WEST);
-		panel.add(logPanel, BorderLayout.CENTER);
-	}
-	
-	private void initMenuBar() {
-		JMenuBar menuBar = new JMenuBar();
-		
-		JMenu menu = new JMenu("Gra");
-		JMenuItem item = new JMenuItem("Rozpocznij now¹ grê...");
-		item.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				showNewGameDialog();
-			}
-		});
-		menu.add(item);
-		item = new JMenuItem("Zakoñcz program");
-		item.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
-		menu.add(item);
-		menuBar.add(menu);
-		
-		menu = new JMenu("O programie");
-		item = new JMenuItem("Informacje o programie...");
-		item.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				showAboutDialog();
-			}
-		});
-		menu.add(item);
-		menuBar.add(menu);
-		
-		setJMenuBar(menuBar);
-	}
-	
-	private void showNewGameDialog() {
-		final JDialog dialog = new JDialog(this, "Rozpocznij now¹ grê", true);
-		dialog.setLayout(new BorderLayout());
-		JPanel dialogPanel = new JPanel();
-		dialog.add(dialogPanel, BorderLayout.CENTER); 
-		dialogPanel.setLayout(new GridLayout(1, 2));
-		final PlayerControllerSelectionPanel whiteSelectionPanel =
-				new PlayerControllerSelectionPanel("Bia³e");
-		final PlayerControllerSelectionPanel blackSelectionPanel =
-				new PlayerControllerSelectionPanel("Czarne");
-		dialogPanel.add(whiteSelectionPanel);
-		dialogPanel.add(blackSelectionPanel);
-		JButton startButton = new JButton("Rozpocznij");
-		startButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				startNewGame(whiteSelectionPanel.getSelection(),
-						blackSelectionPanel.getSelection());
-				dialog.dispose();
-			}
-		});
-		dialog.add(startButton, BorderLayout.SOUTH);
-		dialog.pack();
-		dialog.setVisible(true);
-	}
-	
-	private void showAboutDialog() {
-		JDialog dialog = new JDialog(this, "Informacje o programie", true);
-		JPanel panel = new JPanel();
-		dialog.add(panel);
-		panel.setLayout(new GridLayout(4, 1));
-		panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		panel.add(new JLabel("Program Szachowy", SwingConstants.CENTER));
-		panel.add(new JLabel("Autor: Micha³ Rapacz", SwingConstants.CENTER));
-		panel.add(new JLabel("Czerwiec 2015", SwingConstants.CENTER));
-		panel.add(new JLabel("Program powsta³ jako licencjacki projekt " +
-				"programistyczny podczas studiów na Uniwersytecie Wroc³awskim",
-				SwingConstants.CENTER));
-		dialog.pack();
-		dialog.setVisible(true);
-	}
-	
-	private void startNewGame(String whiteChoice, String blackchoice) {
-		GameController.getInstance().startNewGame(whiteChoice, blackchoice);
-		ApplicationController.getInstance().refreshLogs();
-		ApplicationController.getInstance().refreshView();
-	}
-	
-	public void refreshLogs() {
-		logPanel.refreshLogs();
-		repaint();
-	}
+    private static final long serialVersionUID = 1L;
+    private LogPanel logPanel;
+
+    public MainWindow() {
+        super("michailChess");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        initUI();
+        setSize(900, 700);
+        setVisible(true);
+    }
+
+    private void initUI() {
+        initMenuBar();
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        add(panel);
+        logPanel = new LogPanel();
+        panel.add(new BoardPanel(logPanel.getMinimumWidth()), BorderLayout.WEST);
+        panel.add(logPanel, BorderLayout.CENTER);
+    }
+
+    private void initMenuBar() {
+        JMenuBar menuBar = new JMenuBar();
+
+        JMenu menu = new JMenu("Game");
+        JMenuItem item = new JMenuItem("Start new game...");
+        item.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showNewGameDialog();
+            }
+        });
+        menu.add(item);
+        item = new JMenuItem("Quit");
+        item.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        menu.add(item);
+        menuBar.add(menu);
+
+        menu = new JMenu("About");
+        item = new JMenuItem("About michailChess...");
+        item.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showAboutDialog();
+            }
+        });
+        menu.add(item);
+        menuBar.add(menu);
+
+        setJMenuBar(menuBar);
+    }
+
+    private void showNewGameDialog() {
+        final JDialog dialog = new JDialog(this, "Start new game", true);
+        dialog.setLayout(new BorderLayout());
+        JPanel dialogPanel = new JPanel();
+        dialog.add(dialogPanel, BorderLayout.CENTER);
+        dialogPanel.setLayout(new GridLayout(1, 2));
+        final PlayerControllerSelectionPanel whiteSelectionPanel = new PlayerControllerSelectionPanel("White");
+        final PlayerControllerSelectionPanel blackSelectionPanel = new PlayerControllerSelectionPanel("Black");
+        dialogPanel.add(whiteSelectionPanel);
+        dialogPanel.add(blackSelectionPanel);
+        JButton startButton = new JButton("Begin");
+        startButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                startNewGame(whiteSelectionPanel.getSelection(), blackSelectionPanel.getSelection());
+                dialog.dispose();
+            }
+        });
+        dialog.add(startButton, BorderLayout.SOUTH);
+        dialog.pack();
+        dialog.setVisible(true);
+    }
+
+    private void showAboutDialog() {
+        JDialog dialog = new JDialog(this, "About michailChess", true);
+        JPanel panel = new JPanel();
+        dialog.add(panel);
+        panel.setLayout(new GridLayout(4, 1));
+        panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        panel.add(new JLabel("michailChess", SwingConstants.CENTER));
+        panel.add(new JLabel("Autor: Micha³ Rapacz", SwingConstants.CENTER));
+        panel.add(new JLabel("Czerwiec 2015", SwingConstants.CENTER));
+        panel.add(new JLabel("Program powsta³ jako licencjacki projekt "
+                + "programistyczny podczas studiów na Uniwersytecie Wroc³awskim", SwingConstants.CENTER));
+        dialog.pack();
+        dialog.setVisible(true);
+    }
+
+    private void startNewGame(String whiteChoice, String blackchoice) {
+        GameController.getInstance().startNewGame(whiteChoice, blackchoice);
+        ApplicationController.getInstance().refreshLogs();
+        ApplicationController.getInstance().refreshView();
+    }
+
+    public void refreshLogs() {
+        logPanel.refreshLogs();
+        repaint();
+    }
 }
