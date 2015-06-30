@@ -11,7 +11,6 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -37,7 +36,7 @@ public class MainWindow extends JFrame {
     public MainWindow() throws IOException {
         super("michailChess");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setIconImage(ImageIO.read(new File("resources/logo.png")));
+        setIconImage(ImageIO.read(getClass().getResource("/logo.png")));
         initUI();
         setSize(900, 700);
         setVisible(true);
