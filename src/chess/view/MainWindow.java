@@ -11,7 +11,10 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -31,9 +34,10 @@ public class MainWindow extends JFrame {
     private static final long serialVersionUID = 1L;
     private LogPanel logPanel;
 
-    public MainWindow() {
+    public MainWindow() throws IOException {
         super("michailChess");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setIconImage(ImageIO.read(new File("resources/logo.png")));
         initUI();
         setSize(900, 700);
         setVisible(true);

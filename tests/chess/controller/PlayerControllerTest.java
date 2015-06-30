@@ -1,116 +1,89 @@
 package chess.controller;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import chess.model.board.Color;
-import chess.model.players.AdaptiveAlphaBetaPlayer;
 import chess.model.players.AlphaBetaPlayer;
 import chess.model.players.GreedyPlayer;
 import chess.model.players.HumanPlayer;
-import chess.model.players.MinimaxPlayer;
 import chess.model.players.Player;
 import chess.model.players.RandomPlayer;
-import static org.junit.Assert.*;
 
 /**
- * Projekt: Szachy
- * Test kontrolera graczy
- * Micha³ Rapacz
- * 2015-04-09
+ * Projekt: Szachy Test kontrolera graczy Micha³ Rapacz 2015-04-09
  */
 
 public class PlayerControllerTest {
 
-	@Test
-	public void availablePlayers() {
-		List<String> availablePlayers = PlayerController.getInstance()
-				.getAvailablePlayers();
-		assertEquals(8, availablePlayers.size());
-		assertTrue(availablePlayers.contains("Cz³owiek"));
-		assertTrue(availablePlayers.contains("Komputer - losowy"));
-		assertTrue(availablePlayers.contains("Komputer - zach³anny"));
-		assertTrue(availablePlayers.contains("Komputer - minimax (3)"));
-		assertTrue(availablePlayers.contains("Komputer - minimax (4)"));
-		assertTrue(availablePlayers.contains("Komputer - alfa-beta (4)"));
-		assertTrue(availablePlayers.contains("Komputer - alfa-beta (5)"));
-		assertTrue(availablePlayers.contains("Komputer - alfa-beta (6)"));
-//		assertTrue(availablePlayers.contains(
-//				"Komputer - adaptacyjny alpha-beta (3-10s)"));
-	}
-	
-	@Test
-	public void creatingHumanPlayer() {
-		Player player = PlayerController.getInstance()
-				.makePlayer("Cz³owiek", Color.WHITE);
-		assertTrue(player instanceof HumanPlayer
-				&& player.getColor() == Color.WHITE);
-	}
-	
-	@Test
-	public void creatingRandomPlayer() {
-		Player player = PlayerController.getInstance()
-				.makePlayer("Komputer - losowy", Color.WHITE);
-		assertTrue(player instanceof RandomPlayer
-				&& player.getColor() == Color.WHITE);
-	}
-	
-	@Test
-	public void creatingGreedyPlayer() {
-		Player player = PlayerController.getInstance()
-				.makePlayer("Komputer - zach³anny", Color.WHITE);
-		assertTrue(player instanceof GreedyPlayer
-				&& player.getColor() == Color.WHITE);
-	}
-	
-	@Test
-	public void creatingMinimax3Player() {
-		Player player = PlayerController.getInstance()
-				.makePlayer("Komputer - minimax (3)", Color.WHITE);
-		assertTrue(player instanceof MinimaxPlayer
-				&& player.getColor() == Color.WHITE);
-	}
+    @Test
+    public void availablePlayers() {
+        List<String> availablePlayers = PlayerController.getInstance().getAvailablePlayers();
+        assertEquals(8, availablePlayers.size());
+        assertTrue(availablePlayers.contains("Human"));
+        assertTrue(availablePlayers.contains("CPU - level 0"));
+        assertTrue(availablePlayers.contains("CPU - level 1"));
+        assertTrue(availablePlayers.contains("CPU - level 2"));
+        assertTrue(availablePlayers.contains("CPU - level 3"));
+        assertTrue(availablePlayers.contains("CPU - level 4"));
+        assertTrue(availablePlayers.contains("CPU - level 5"));
+        assertTrue(availablePlayers.contains("CPU - level 6"));
+    }
 
-	@Test
-	public void creatingMinimax4Player() {
-		Player player = PlayerController.getInstance()
-				.makePlayer("Komputer - minimax (4)", Color.WHITE);
-		assertTrue(player instanceof MinimaxPlayer
-				&& player.getColor() == Color.WHITE);
-	}
-	
-	@Test
-	public void creatingAlphaBeta4Player() {
-		Player player = PlayerController.getInstance()
-				.makePlayer("Komputer - alfa-beta (4)", Color.WHITE);
-		assertTrue(player instanceof AlphaBetaPlayer
-				&& player.getColor() == Color.WHITE);
-	}
-	
-	@Test
-	public void creatingAlphaBeta5Player() {
-		Player player = PlayerController.getInstance()
-				.makePlayer("Komputer - alfa-beta (5)", Color.WHITE);
-		assertTrue(player instanceof AlphaBetaPlayer
-				&& player.getColor() == Color.WHITE);
-	}
-	
-	@Test
-	public void creatingAlphaBeta6Player() {
-		Player player = PlayerController.getInstance()
-				.makePlayer("Komputer - alfa-beta (6)", Color.WHITE);
-		assertTrue(player instanceof AlphaBetaPlayer
-				&& player.getColor() == Color.WHITE);
-	}
-	
-	@Ignore
-	@Test
-	public void creatingAdaptiveAlphaBeta5to10Player() {
-		Player player = PlayerController.getInstance().makePlayer(
-				"Komputer - adaptacyjny alfa-beta (3-10s)", Color.WHITE);
-		assertTrue(player instanceof AdaptiveAlphaBetaPlayer
-				&& player.getColor() == Color.WHITE);
-	}
+    @Test
+    public void creatingHumanPlayer() {
+        Player player = PlayerController.getInstance().makePlayer("Human", Color.WHITE);
+        assertTrue(player instanceof HumanPlayer && player.getColor() == Color.WHITE);
+    }
+
+    @Test
+    public void creatingLevel0Player() {
+        Player player = PlayerController.getInstance().makePlayer("CPU - level 0", Color.WHITE);
+        assertTrue(player instanceof RandomPlayer && player.getColor() == Color.WHITE);
+    }
+
+    @Test
+    public void creatingLevel1Player() {
+        Player player = PlayerController.getInstance().makePlayer("CPU - level 1", Color.WHITE);
+        assertTrue(player instanceof GreedyPlayer && player.getColor() == Color.WHITE);
+    }
+
+    @Test
+    public void creatingLevel2Player() {
+        Player player = PlayerController.getInstance().makePlayer("CPU - level 2", Color.WHITE);
+        assertTrue(player instanceof AlphaBetaPlayer && player.getColor() == Color.WHITE
+                && ((AlphaBetaPlayer) player).getDepth() == 2);
+    }
+
+    @Test
+    public void creatingLevel3Player() {
+        Player player = PlayerController.getInstance().makePlayer("CPU - level 3", Color.WHITE);
+        assertTrue(player instanceof AlphaBetaPlayer && player.getColor() == Color.WHITE
+                && ((AlphaBetaPlayer) player).getDepth() == 3);
+    }
+
+    @Test
+    public void creatingLevel4Player() {
+        Player player = PlayerController.getInstance().makePlayer("CPU - level 4", Color.WHITE);
+        assertTrue(player instanceof AlphaBetaPlayer && player.getColor() == Color.WHITE
+                && ((AlphaBetaPlayer) player).getDepth() == 4);
+    }
+
+    @Test
+    public void creatingLevel5Player() {
+        Player player = PlayerController.getInstance().makePlayer("CPU - level 5", Color.WHITE);
+        assertTrue(player instanceof AlphaBetaPlayer && player.getColor() == Color.WHITE
+                && ((AlphaBetaPlayer) player).getDepth() == 5);
+    }
+
+    @Test
+    public void creatingLevel6Player() {
+        Player player = PlayerController.getInstance().makePlayer("CPU - level 6", Color.WHITE);
+        assertTrue(player instanceof AlphaBetaPlayer && player.getColor() == Color.WHITE
+                && ((AlphaBetaPlayer) player).getDepth() == 6);
+    }
 }
