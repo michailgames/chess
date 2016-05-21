@@ -18,15 +18,12 @@ import javax.swing.table.TableColumn;
 
 import chess.controller.LogController;
 
-/**
- * Projekt: Szachy Panel zawieraj¹cy zapis partii Micha³ Rapacz 2015-05-17
- */
-
 public class MovesLogPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
     private JTable logsTable;
+
     private MovesTableModel tableModel;
 
     private JScrollPane scrollPanel;

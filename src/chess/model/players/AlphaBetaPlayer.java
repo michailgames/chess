@@ -14,14 +14,10 @@ import chess.model.pieces.Piece;
 import chess.model.players.strategies.IBoardEvaluationStrategy;
 import chess.model.utils.MoveUtils;
 
-/**
- * Projekt: Szachy Komputerowy gracz u¿ywaj¹cy algorytmu minimax z optymalizacj¹
- * odciêæ alpha-beta Micha³ Rapacz 2015-05-01
- */
-
 public class AlphaBetaPlayer extends AbstractAIPlayer {
 
     private IBoardEvaluationStrategy evaluationStrategy;
+
     private int depth;
 
     public AlphaBetaPlayer(Color color, IBoardEvaluationStrategy boardEvaluationStrategy, int depth) {

@@ -1,16 +1,9 @@
 package chess.model.board;
 
-/**
- * Projekt: Szachy
- * Reprezentacja koloru figury
- * Micha³ Rapacz
- * 2015-03-26
- */
-
 public enum Color {
-	WHITE, BLACK;
+    WHITE, BLACK;
 
-	public Color getOppositeColor() {
-		return (this == WHITE) ? BLACK : WHITE;
-	}
+    public Color getOppositeColor() {
+        return (this == WHITE) ? BLACK : WHITE;
+    }
 }

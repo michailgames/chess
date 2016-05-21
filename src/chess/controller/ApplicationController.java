@@ -1,12 +1,5 @@
 package chess.controller;
 
-/**
- * Projekt: Szachy
- * G³ówny kontroler aplikacji
- * Micha³ Rapacz
- * 2015-03-26
- */
-
 import java.io.IOException;
 
 import chess.view.MainWindow;
@@ -14,6 +7,7 @@ import chess.view.MainWindow;
 public class ApplicationController {
 
     private static ApplicationController instance;
+
     private MainWindow view;
 
     private ApplicationController() {};

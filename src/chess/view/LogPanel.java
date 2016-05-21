@@ -1,12 +1,5 @@
 package chess.view;
 
-/**
- * Projekt: Szachy
- * Panel odpowiadaj¹cy za widok stanu partii
- * Micha³ Rapacz
- * 2015-03-26
- */
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;

@@ -1,12 +1,5 @@
 package chess.view;
 
-/**
- * Projekt: Szachy
- * G³ówne okno programu
- * Micha³ Rapacz
- * 2015-03-26
- */
-
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -31,6 +24,7 @@ import chess.controller.GameController;
 public class MainWindow extends JFrame {
 
     private static final long serialVersionUID = 1L;
+
     private LogPanel logPanel;
 
     public MainWindow() throws IOException {
