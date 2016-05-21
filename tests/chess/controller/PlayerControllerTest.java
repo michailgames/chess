@@ -14,10 +14,6 @@ import chess.model.players.HumanPlayer;
 import chess.model.players.Player;
 import chess.model.players.RandomPlayer;
 
-/**
- * Projekt: Szachy Test kontrolera graczy Micha³ Rapacz 2015-04-09
- */
-
 public class PlayerControllerTest {
 
     @Test
