@@ -32,16 +32,16 @@ public class RookTest {
         board.movePiece(5, 5, 5, 4);
         List<Field> allMoves = rook.getAllLegalMoves(board, 5, 4);
         assertEquals(10, allMoves.size());
-        assertTrue(allMoves.contains(new Field(6, 4)));
-        assertTrue(allMoves.contains(new Field(5, 5)));
-        assertTrue(allMoves.contains(new Field(4, 4)));
-        assertTrue(allMoves.contains(new Field(3, 4)));
-        assertTrue(allMoves.contains(new Field(2, 4)));
-        assertTrue(allMoves.contains(new Field(1, 4)));
-        assertTrue(allMoves.contains(new Field(0, 4)));
-        assertTrue(allMoves.contains(new Field(5, 3)));
-        assertTrue(allMoves.contains(new Field(5, 2)));
-        assertTrue(allMoves.contains(new Field(5, 1)));
+        assertTrue(allMoves.contains(Field.get(6, 4)));
+        assertTrue(allMoves.contains(Field.get(5, 5)));
+        assertTrue(allMoves.contains(Field.get(4, 4)));
+        assertTrue(allMoves.contains(Field.get(3, 4)));
+        assertTrue(allMoves.contains(Field.get(2, 4)));
+        assertTrue(allMoves.contains(Field.get(1, 4)));
+        assertTrue(allMoves.contains(Field.get(0, 4)));
+        assertTrue(allMoves.contains(Field.get(5, 3)));
+        assertTrue(allMoves.contains(Field.get(5, 2)));
+        assertTrue(allMoves.contains(Field.get(5, 1)));
     }
 
 }

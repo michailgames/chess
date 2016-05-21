@@ -16,7 +16,7 @@ import chess.model.utils.MoveUtils;
 
 public class Board {
 
-    public static int BOARD_SIZE = 8;
+    public final static int BOARD_SIZE = 8;
 
     private Piece[] fields;
 
@@ -50,8 +50,8 @@ public class Board {
             fields[fieldIndex(x, BOARD_SIZE - 2)] = Pawn.getInstance(Color.WHITE);
             setupFigures(BOARD_SIZE - 1, Color.WHITE);
         }
-        whiteKingField = new Field(4, BOARD_SIZE - 1);
-        blackKingField = new Field(4, 0);
+        whiteKingField = Field.get(4, BOARD_SIZE - 1);
+        blackKingField = Field.get(4, 0);
     }
 
     private void setupFigures(int y, Color color) {
@@ -85,12 +85,12 @@ public class Board {
         Piece piece = getPiece(x1, y1);
         pawnThatJustMovedTwoSquaresField = null;
         if (piece instanceof Pawn && Math.abs(y2 - y1) == 2) {
-            pawnThatJustMovedTwoSquaresField = new Field(x2, y2);
+            pawnThatJustMovedTwoSquaresField = Field.get(x2, y2);
         } else if (piece instanceof King) {
             if (piece.getColor() == Color.WHITE) {
-                whiteKingField = new Field(x2, y2);
+                whiteKingField = Field.get(x2, y2);
             } else {
-                blackKingField = new Field(x2, y2);
+                blackKingField = Field.get(x2, y2);
             }
         }
         fields[fieldIndex(x1, y1)] = null;
@@ -106,9 +106,9 @@ public class Board {
         fields[fieldIndex(x, y)] = piece;
         if (piece instanceof King) {
             if (piece.getColor() == Color.WHITE) {
-                whiteKingField = new Field(x, y);
+                whiteKingField = Field.get(x, y);
             } else {
-                blackKingField = new Field(x, y);
+                blackKingField = Field.get(x, y);
             }
         }
     }

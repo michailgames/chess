@@ -101,9 +101,9 @@ public class BoardTest {
         board.movePiece(4, 1, 4, 3);
         board.movePiece(5, 4, 5, 3);
         board.movePiece(6, 1, 6, 3);
-        assertTrue(board.canPawnBeTakenEnPassant(new Field(6, 3)));
-        assertFalse(board.canPawnBeTakenEnPassant(new Field(4, 3)));
-        assertFalse(board.canPawnBeTakenEnPassant(new Field(5, 3)));
+        assertTrue(board.canPawnBeTakenEnPassant(Field.get(6, 3)));
+        assertFalse(board.canPawnBeTakenEnPassant(Field.get(4, 3)));
+        assertFalse(board.canPawnBeTakenEnPassant(Field.get(5, 3)));
     }
 
     @Test

@@ -27,11 +27,11 @@ public abstract class AbstractStraightMovingPiece extends Piece {
                 } else {
                     Piece piece = board.getPiece(x, y);
                     if (piece == null) {
-                        movesList.add(new Field(x, y));
+                        movesList.add(Field.get(x, y));
                     } else if (piece.getColor() == getColor()) {
                         canMoveFurther = false;
                     } else {
-                        movesList.add(new Field(x, y));
+                        movesList.add(Field.get(x, y));
                         canMoveFurther = false;
                     }
                 }
@@ -39,6 +39,25 @@ public abstract class AbstractStraightMovingPiece extends Piece {
             }
         }
         return movesList;
+    }
+
+    @Override
+    public boolean canAttackKing(int startX, int startY, int kingX, int kingY) {
+        int xDiff = kingX - startX;
+        int yDiff = kingY - startY;
+        if (!isStraightLine(xDiff, yDiff)) {
+            return false;
+        }
+        for (Direction direction : getAvailableDirections()) {
+            if (direction.matches(xDiff, yDiff)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isStraightLine(int xDiff, int yDiff) {
+        return Math.abs(xDiff) == Math.abs(yDiff) || xDiff * yDiff == 0;
     }
 
     protected abstract Direction[] getAvailableDirections();
@@ -60,6 +79,10 @@ public abstract class AbstractStraightMovingPiece extends Piece {
 
         public int getY() {
             return y;
+        }
+
+        public boolean matches(int xDiff, int yDiff) {
+            return Math.signum(xDiff) == Math.signum(x) && Math.signum(yDiff) == Math.signum(y);
         }
     }
 

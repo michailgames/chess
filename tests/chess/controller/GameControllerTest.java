@@ -33,41 +33,41 @@ public class GameControllerTest {
 
     @Test(expected = UnauthorizedMoveException.class)
     public void doesNotAcceptMoveFromOtherPlayer() {
-        GameController.getInstance().reportNewMove(blackPlayer, new Field(0, 1), new Field(0, 2));
+        GameController.getInstance().reportNewMove(blackPlayer, Field.get(0, 1), Field.get(0, 2));
     }
 
     @Test
     public void acceptsMoveFromCurrentPlayer() {
-        GameController.getInstance().reportNewMove(whitePlayer, new Field(0, 6), new Field(0, 5));
+        GameController.getInstance().reportNewMove(whitePlayer, Field.get(0, 6), Field.get(0, 5));
     }
 
     @Test(expected = UnauthorizedMoveException.class)
     public void doesNotAcceptTwoMovesFromOnePlayeInRow() {
-        GameController.getInstance().reportNewMove(whitePlayer, new Field(0, 6), new Field(0, 5));
-        GameController.getInstance().reportNewMove(whitePlayer, new Field(1, 6), new Field(1, 5));
+        GameController.getInstance().reportNewMove(whitePlayer, Field.get(0, 6), Field.get(0, 5));
+        GameController.getInstance().reportNewMove(whitePlayer, Field.get(1, 6), Field.get(1, 5));
     }
 
     @Test
     public void acceptsMovesFromPlayersInTurns() {
-        GameController.getInstance().reportNewMove(whitePlayer, new Field(0, 6), new Field(0, 5));
-        GameController.getInstance().reportNewMove(blackPlayer, new Field(1, 1), new Field(1, 2));
+        GameController.getInstance().reportNewMove(whitePlayer, Field.get(0, 6), Field.get(0, 5));
+        GameController.getInstance().reportNewMove(blackPlayer, Field.get(1, 1), Field.get(1, 2));
     }
 
     @Test(expected = IllegalMoveException.class)
     public void doesNotAcceptIllegalMoves() {
-        GameController.getInstance().reportNewMove(whitePlayer, new Field(0, 6), new Field(3, 5));
+        GameController.getInstance().reportNewMove(whitePlayer, Field.get(0, 6), Field.get(3, 5));
     }
 
     @Test(expected = IllegalMoveException.class)
     public void doesNotAcceptMovingOpponentPieces() {
-        GameController.getInstance().reportNewMove(whitePlayer, new Field(0, 1), new Field(0, 2));
+        GameController.getInstance().reportNewMove(whitePlayer, Field.get(0, 1), Field.get(0, 2));
     }
 
     @Test
     public void undoRestoresPreviousBoard() {
         Board initialBoard = GameController.getInstance().getBoard();
 
-        GameController.getInstance().reportNewMove(whitePlayer, new Field(0, 6), new Field(0, 5));
+        GameController.getInstance().reportNewMove(whitePlayer, Field.get(0, 6), Field.get(0, 5));
         assertEquals(GameController.getInstance().getCurrentPlayerColor(), Color.BLACK);
         assertFalse(initialBoard.equals(GameController.getInstance().getBoard()));
 
@@ -78,12 +78,12 @@ public class GameControllerTest {
 
     @Test
     public void undo2Moves() {
-        GameController.getInstance().reportNewMove(whitePlayer, new Field(0, 6), new Field(0, 5));
+        GameController.getInstance().reportNewMove(whitePlayer, Field.get(0, 6), Field.get(0, 5));
 
         Board expectedBoard = GameController.getInstance().getBoard();
 
-        GameController.getInstance().reportNewMove(blackPlayer, new Field(0, 1), new Field(0, 2));
-        GameController.getInstance().reportNewMove(whitePlayer, new Field(1, 6), new Field(1, 5));
+        GameController.getInstance().reportNewMove(blackPlayer, Field.get(0, 1), Field.get(0, 2));
+        GameController.getInstance().reportNewMove(whitePlayer, Field.get(1, 6), Field.get(1, 5));
 
         GameController.getInstance().undoMove();
         GameController.getInstance().undoMove();
@@ -99,7 +99,7 @@ public class GameControllerTest {
 
         Board expectedBoard = GameController.getInstance().getBoard();
 
-        GameController.getInstance().reportNewMove(whitePlayer, new Field(0, 6), new Field(0, 5));
+        GameController.getInstance().reportNewMove(whitePlayer, Field.get(0, 6), Field.get(0, 5));
         while (GameController.getInstance().getSelectedPiece() == null) {
             // wait until AI selects piece
         }

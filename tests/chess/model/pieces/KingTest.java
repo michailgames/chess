@@ -34,13 +34,13 @@ public class KingTest {
         board.movePiece(4, 2, 4, 3);
         List<Field> allMoves = king.getAllPotentialMoves(board, 4, 3);
         assertEquals(7, allMoves.size());
-        assertTrue(allMoves.contains(new Field(3, 2)));
-        assertTrue(allMoves.contains(new Field(4, 2)));
-        assertTrue(allMoves.contains(new Field(3, 3)));
-        assertTrue(allMoves.contains(new Field(5, 3)));
-        assertTrue(allMoves.contains(new Field(3, 4)));
-        assertTrue(allMoves.contains(new Field(4, 4)));
-        assertTrue(allMoves.contains(new Field(5, 4)));
+        assertTrue(allMoves.contains(Field.get(3, 2)));
+        assertTrue(allMoves.contains(Field.get(4, 2)));
+        assertTrue(allMoves.contains(Field.get(3, 3)));
+        assertTrue(allMoves.contains(Field.get(5, 3)));
+        assertTrue(allMoves.contains(Field.get(3, 4)));
+        assertTrue(allMoves.contains(Field.get(4, 4)));
+        assertTrue(allMoves.contains(Field.get(5, 4)));
     }
 
     @Test
@@ -50,7 +50,7 @@ public class KingTest {
         King king = (King) board.getPiece(4, 0);
         prepareShortCastlingForBlack(board);
         List<Field> allMoves = king.getAllLegalMoves(board, 4, 0);
-        assertTrue(allMoves.contains(new Field(6, 0)));
+        assertTrue(allMoves.contains(Field.get(6, 0)));
     }
 
     @Test
@@ -60,7 +60,7 @@ public class KingTest {
         King king = (King) board.getPiece(4, 0);
         board.movePiece(6, 0, 7, 2);
         List<Field> allMoves = king.getAllLegalMoves(board, 4, 0);
-        assertFalse(allMoves.contains(new Field(6, 0)));
+        assertFalse(allMoves.contains(Field.get(6, 0)));
     }
 
     @Test
@@ -73,7 +73,7 @@ public class KingTest {
         board.movePiece(2, 5, 3, 3);
         board.movePiece(3, 3, 2, 1);
         List<Field> allMoves = king.getAllLegalMoves(board, 4, 0);
-        assertFalse(allMoves.contains(new Field(6, 0)));
+        assertFalse(allMoves.contains(Field.get(6, 0)));
     }
 
     @Test
@@ -85,7 +85,7 @@ public class KingTest {
         board.movePiece(5, 0, 4, 0);
         King king = (King) board.getPiece(4, 0);
         List<Field> allMoves = king.getAllLegalMoves(board, 4, 0);
-        assertFalse(allMoves.contains(new Field(6, 0)));
+        assertFalse(allMoves.contains(Field.get(6, 0)));
     }
 
     @Test
@@ -97,7 +97,7 @@ public class KingTest {
         board.movePiece(7, 0, 6, 0);
         board.movePiece(6, 0, 7, 0);
         List<Field> allMoves = king.getAllLegalMoves(board, 4, 0);
-        assertFalse(allMoves.contains(new Field(6, 0)));
+        assertFalse(allMoves.contains(Field.get(6, 0)));
     }
 
     @Test
@@ -110,7 +110,7 @@ public class KingTest {
         board.movePiece(2, 7, 1, 6);
         board.movePiece(1, 6, 6, 1);
         List<Field> allMoves = king.getAllLegalMoves(board, 4, 0);
-        assertFalse(allMoves.contains(new Field(6, 0)));
+        assertFalse(allMoves.contains(Field.get(6, 0)));
     }
 
     @Test
@@ -129,7 +129,7 @@ public class KingTest {
         King king = (King) board.getPiece(4, 0);
         prepareLongCastlingForBlack(board);
         List<Field> allMoves = king.getAllLegalMoves(board, 4, 0);
-        assertTrue(allMoves.contains(new Field(2, 0)));
+        assertTrue(allMoves.contains(Field.get(2, 0)));
     }
 
     @Test
@@ -140,7 +140,7 @@ public class KingTest {
         prepareLongCastlingForBlack(board);
         board.movePiece(3, 1, 3, 0);
         List<Field> allMoves = king.getAllLegalMoves(board, 4, 0);
-        assertFalse(allMoves.contains(new Field(2, 0)));
+        assertFalse(allMoves.contains(Field.get(2, 0)));
     }
 
     @Test
@@ -153,7 +153,7 @@ public class KingTest {
         board.movePiece(2, 5, 3, 3);
         board.movePiece(3, 3, 2, 1);
         List<Field> allMoves = king.getAllLegalMoves(board, 4, 0);
-        assertFalse(allMoves.contains(new Field(2, 0)));
+        assertFalse(allMoves.contains(Field.get(2, 0)));
     }
 
     @Test
@@ -165,7 +165,7 @@ public class KingTest {
         board.movePiece(3, 0, 4, 0);
         King king = (King) board.getPiece(4, 0);
         List<Field> allMoves = king.getAllLegalMoves(board, 4, 0);
-        assertFalse(allMoves.contains(new Field(2, 0)));
+        assertFalse(allMoves.contains(Field.get(2, 0)));
     }
 
     @Test
@@ -177,7 +177,7 @@ public class KingTest {
         board.movePiece(0, 0, 2, 0);
         board.movePiece(2, 0, 0, 0);
         List<Field> allMoves = king.getAllLegalMoves(board, 4, 0);
-        assertFalse(allMoves.contains(new Field(2, 0)));
+        assertFalse(allMoves.contains(Field.get(2, 0)));
     }
 
     @Test
@@ -190,7 +190,7 @@ public class KingTest {
         board.movePiece(2, 7, 5, 4);
         board.movePiece(5, 4, 2, 1);
         List<Field> allMoves = king.getAllLegalMoves(board, 4, 0);
-        assertFalse(allMoves.contains(new Field(2, 0)));
+        assertFalse(allMoves.contains(Field.get(2, 0)));
     }
 
     @Test

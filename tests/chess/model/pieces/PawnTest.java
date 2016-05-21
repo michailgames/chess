@@ -19,8 +19,8 @@ public class PawnTest {
         Pawn whitePawn = (Pawn) board.getPiece(5, 6);
         List<Field> allMoves = whitePawn.getAllLegalMoves(board, 5, 6);
         assertEquals(2, allMoves.size());
-        assertTrue(allMoves.contains(new Field(5, 5)));
-        assertTrue(allMoves.contains(new Field(5, 4)));
+        assertTrue(allMoves.contains(Field.get(5, 5)));
+        assertTrue(allMoves.contains(Field.get(5, 4)));
     }
 
     @Test
@@ -30,8 +30,8 @@ public class PawnTest {
         Pawn blackPawn = (Pawn) board.getPiece(5, 1);
         List<Field> allMoves = blackPawn.getAllLegalMoves(board, 5, 1);
         assertEquals(2, allMoves.size());
-        assertTrue(allMoves.contains(new Field(5, 2)));
-        assertTrue(allMoves.contains(new Field(5, 3)));
+        assertTrue(allMoves.contains(Field.get(5, 2)));
+        assertTrue(allMoves.contains(Field.get(5, 3)));
     }
 
     @Test
@@ -42,7 +42,7 @@ public class PawnTest {
         board.movePiece(5, 6, 5, 4);
         List<Field> allMoves = whitePawn.getAllLegalMoves(board, 5, 4);
         assertEquals(1, allMoves.size());
-        assertTrue(allMoves.contains(new Field(5, 3)));
+        assertTrue(allMoves.contains(Field.get(5, 3)));
     }
 
     @Test
@@ -53,7 +53,7 @@ public class PawnTest {
         board.movePiece(5, 1, 5, 3);
         List<Field> allMoves = blackPawn.getAllLegalMoves(board, 5, 3);
         assertEquals(1, allMoves.size());
-        assertTrue(allMoves.contains(new Field(5, 4)));
+        assertTrue(allMoves.contains(Field.get(5, 4)));
     }
 
     @Test
@@ -80,10 +80,10 @@ public class PawnTest {
         List<Field> blackMoves = blackPawn.getAllLegalMoves(board, 5, 3);
         assertEquals(2, whiteMoves.size());
         assertEquals(2, blackMoves.size());
-        assertTrue(whiteMoves.contains(new Field(5, 3)));
-        assertTrue(whiteMoves.contains(new Field(4, 3)));
-        assertTrue(blackMoves.contains(new Field(4, 4)));
-        assertTrue(blackMoves.contains(new Field(5, 4)));
+        assertTrue(whiteMoves.contains(Field.get(5, 3)));
+        assertTrue(whiteMoves.contains(Field.get(4, 3)));
+        assertTrue(blackMoves.contains(Field.get(4, 4)));
+        assertTrue(blackMoves.contains(Field.get(5, 4)));
     }
 
     @Test
@@ -96,8 +96,8 @@ public class PawnTest {
         board.movePiece(5, 1, 5, 3);
         List<Field> allMoves = whitePawn.getAllLegalMoves(board, 4, 3);
         assertEquals(2, allMoves.size());
-        assertTrue(allMoves.contains(new Field(5, 2)));
-        assertTrue(allMoves.contains(new Field(4, 2)));
+        assertTrue(allMoves.contains(Field.get(5, 2)));
+        assertTrue(allMoves.contains(Field.get(4, 2)));
     }
 
     @Test
@@ -110,8 +110,8 @@ public class PawnTest {
         board.movePiece(4, 6, 4, 4);
         List<Field> allMoves = blackPawn.getAllLegalMoves(board, 5, 4);
         assertEquals(2, allMoves.size());
-        assertTrue(allMoves.contains(new Field(4, 5)));
-        assertTrue(allMoves.contains(new Field(5, 5)));
+        assertTrue(allMoves.contains(Field.get(4, 5)));
+        assertTrue(allMoves.contains(Field.get(5, 5)));
     }
 
     @Test

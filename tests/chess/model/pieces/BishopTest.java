@@ -30,15 +30,15 @@ public class BishopTest {
         board.movePiece(5, 7, 2, 4);
         List<Field> allMoves = bishop.getAllLegalMoves(board, 2, 4);
         assertEquals(9, allMoves.size());
-        assertTrue(allMoves.contains(new Field(1, 3)));
-        assertTrue(allMoves.contains(new Field(0, 2)));
-        assertTrue(allMoves.contains(new Field(1, 5)));
-        assertTrue(allMoves.contains(new Field(3, 3)));
-        assertTrue(allMoves.contains(new Field(4, 2)));
-        assertTrue(allMoves.contains(new Field(5, 1)));
-        assertTrue(allMoves.contains(new Field(3, 5)));
-        assertTrue(allMoves.contains(new Field(4, 6)));
-        assertTrue(allMoves.contains(new Field(5, 7)));
+        assertTrue(allMoves.contains(Field.get(1, 3)));
+        assertTrue(allMoves.contains(Field.get(0, 2)));
+        assertTrue(allMoves.contains(Field.get(1, 5)));
+        assertTrue(allMoves.contains(Field.get(3, 3)));
+        assertTrue(allMoves.contains(Field.get(4, 2)));
+        assertTrue(allMoves.contains(Field.get(5, 1)));
+        assertTrue(allMoves.contains(Field.get(3, 5)));
+        assertTrue(allMoves.contains(Field.get(4, 6)));
+        assertTrue(allMoves.contains(Field.get(5, 7)));
     }
 
 }

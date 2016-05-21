@@ -17,8 +17,8 @@ public class Knight extends Piece {
         return color == Color.WHITE ? whiteKnight : blackKnight;
     }
 
-    private final static Field[] moveOptions = { new Field(-2, -1), new Field(-1, -2), new Field(1, 2),
-            new Field(2, 1), new Field(-1, 2), new Field(-2, 1), new Field(1, -2), new Field(2, -1) };
+    private final static Field[] moveOptions = { Field.get(-2, -1), Field.get(-1, -2), Field.get(1, 2),
+            Field.get(2, 1), Field.get(-1, 2), Field.get(-2, 1), Field.get(1, -2), Field.get(2, -1) };
 
     public Knight(Color color) {
         super(color);
@@ -38,10 +38,22 @@ public class Knight extends Piece {
             if (isPositionInsideTheBoard(x, y)) {
                 Piece piece = board.getPiece(x, y);
                 if (piece == null || piece.getColor() != getColor()) {
-                    movesList.add(new Field(x, y));
+                    movesList.add(Field.get(x, y));
                 }
             }
         }
         return movesList;
+    }
+
+    @Override
+    public boolean canAttackKing(int startX, int startY, int kingX, int kingY) {
+        for (Field move : moveOptions) {
+            int x = startX + move.getX();
+            int y = startY + move.getY();
+            if (x == kingX && y == kingY) {
+                return true;
+            }
+        }
+        return false;
     }
 }

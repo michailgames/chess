@@ -36,6 +36,17 @@ public class Pawn extends Piece {
         return movesList;
     }
 
+    @Override
+    public boolean canAttackKing(int startX, int startY, int kingX, int kingY) {
+        int direction = (getColor() == Color.WHITE) ? -1 : 1;
+        if (startY + direction == kingY) {
+            if (startX + 1 == kingX || startX - 1 == kingX) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void addEnPassantMoves(Board board, List<Field> movesList, int startX, int startY, int direction) {
         for (int i = -1; i <= 1; i += 2) {
             if (isPositionInsideTheBoard(startX + i, startY) == false) {
@@ -43,8 +54,8 @@ public class Pawn extends Piece {
             }
             Piece piece = board.getPiece(startX + i, startY);
             if (piece instanceof Pawn) {
-                if (board.canPawnBeTakenEnPassant(new Field(startX + i, startY))) {
-                    movesList.add(new Field(startX + i, startY + direction));
+                if (board.canPawnBeTakenEnPassant(Field.get(startX + i, startY))) {
+                    movesList.add(Field.get(startX + i, startY + direction));
                 }
             }
         }
@@ -55,7 +66,7 @@ public class Pawn extends Piece {
             if (isPositionInsideTheBoard(startX + i, startY + direction)) {
                 Piece piece = board.getPiece(startX + i, startY + direction);
                 if (piece != null && piece.getColor() != getColor()) {
-                    movesList.add(new Field(startX + i, startY + direction));
+                    movesList.add(Field.get(startX + i, startY + direction));
                 }
             }
         }
@@ -63,11 +74,11 @@ public class Pawn extends Piece {
 
     private void addStraightMoves(Board board, List<Field> movesList, int startX, int startY, int direction) {
         if (board.getPiece(startX, startY + direction) == null) {
-            movesList.add(new Field(startX, startY + direction));
+            movesList.add(Field.get(startX, startY + direction));
             boolean isAtStartPosition = (getColor() == Color.WHITE && startY == 6)
                     || (getColor() == Color.BLACK && startY == 1);
             if (isAtStartPosition && board.getPiece(startX, startY + 2 * direction) == null) {
-                movesList.add(new Field(startX, startY + 2 * direction));
+                movesList.add(Field.get(startX, startY + 2 * direction));
             }
         }
     }

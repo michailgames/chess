@@ -175,7 +175,7 @@ public class BoardPanel extends JPanel {
                 }
             }
             if (x != -1 && y != -1) {
-                GameController.getInstance().clickField(new Field(x, y));
+                GameController.getInstance().clickField(Field.get(x, y));
                 ApplicationController.getInstance().refreshView();
             }
         }

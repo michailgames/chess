@@ -28,7 +28,7 @@ public class LogControllerTest {
     @Test
     public void moveIsLoggedProperly() {
         assertEquals(0, LogController.getInstance().getLogsNumber());
-        GameController.getInstance().reportNewMove(whitePlayer, new Field(6, 6), new Field(6, 4));
+        GameController.getInstance().reportNewMove(whitePlayer, Field.get(6, 6), Field.get(6, 4));
         assertEquals(1, LogController.getInstance().getLogsNumber());
         String moveLog = LogController.getInstance().getLog(0);
         assertTrue(moveLog.contains(Pawn.getInstance(Color.WHITE).getUnicodeString()));
@@ -39,20 +39,20 @@ public class LogControllerTest {
     @Test
     public void oneMoveCausesOneLog() {
         assertEquals(0, LogController.getInstance().getLogsNumber());
-        GameController.getInstance().reportNewMove(whitePlayer, new Field(6, 6), new Field(6, 4));
+        GameController.getInstance().reportNewMove(whitePlayer, Field.get(6, 6), Field.get(6, 4));
         assertEquals(1, LogController.getInstance().getLogsNumber());
-        GameController.getInstance().reportNewMove(blackPlayer, new Field(6, 0), new Field(7, 2));
+        GameController.getInstance().reportNewMove(blackPlayer, Field.get(6, 0), Field.get(7, 2));
         assertEquals(2, LogController.getInstance().getLogsNumber());
-        GameController.getInstance().reportNewMove(whitePlayer, new Field(5, 7), new Field(7, 5));
+        GameController.getInstance().reportNewMove(whitePlayer, Field.get(5, 7), Field.get(7, 5));
         assertEquals(3, LogController.getInstance().getLogsNumber());
     }
 
     @Test
     public void startingNewGameClearsLogs() {
         assertEquals(0, LogController.getInstance().getLogsNumber());
-        GameController.getInstance().reportNewMove(whitePlayer, new Field(6, 6), new Field(6, 4));
-        GameController.getInstance().reportNewMove(blackPlayer, new Field(6, 0), new Field(7, 2));
-        GameController.getInstance().reportNewMove(whitePlayer, new Field(5, 7), new Field(7, 5));
+        GameController.getInstance().reportNewMove(whitePlayer, Field.get(6, 6), Field.get(6, 4));
+        GameController.getInstance().reportNewMove(blackPlayer, Field.get(6, 0), Field.get(7, 2));
+        GameController.getInstance().reportNewMove(whitePlayer, Field.get(5, 7), Field.get(7, 5));
         assertEquals(3, LogController.getInstance().getLogsNumber());
 
         GameController.getInstance().startNewGame(whitePlayer, blackPlayer);

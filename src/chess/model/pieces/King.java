@@ -34,6 +34,11 @@ public class King extends Piece {
         return possibleMoves;
     }
 
+    @Override
+    public boolean canAttackKing(int startX, int startY, int kingX, int kingY) {
+        return Math.abs(kingX - startX) <= 1 && Math.abs(kingY - startY) <= 1;
+    }
+
     private void addNormalMoves(Board board, int startX, int startY, List<Field> possibleMoves) {
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
@@ -42,7 +47,7 @@ public class King extends Piece {
                 if ((i != 0 || j != 0) && isPositionInsideTheBoard(x, y)) {
                     Piece piece = board.getPiece(x, y);
                     if (piece == null || piece.getColor() != getColor()) {
-                        possibleMoves.add(new Field(x, y));
+                        possibleMoves.add(Field.get(x, y));
                     }
                 }
             }
@@ -55,11 +60,11 @@ public class King extends Piece {
         }
 
         if (isRookSideCastlingPossible(board, startX, startY)) {
-            possibleMoves.add(new Field(startX + 2, startY));
+            possibleMoves.add(Field.get(startX + 2, startY));
         }
 
         if (isQueenSideCastlingPossible(board, startX, startY)) {
-            possibleMoves.add(new Field(startX - 2, startY));
+            possibleMoves.add(Field.get(startX - 2, startY));
         }
     }
 
@@ -82,11 +87,11 @@ public class King extends Piece {
     }
 
     public boolean isUnderAttack(Board board, int x, int y) {
-        return isMoveSafeForKing(x, y, new Field(x, y), board) == false;
+        return isMoveSafeForKing(x, y, Field.get(x, y), board) == false;
     }
 
     private boolean canPassThroughField(Board board, int x1, int y1, int x2, int y2) {
-        return board.getPiece(x2, y2) == null && isMoveSafeForKing(x1, y1, new Field(x2, y2), board);
+        return board.getPiece(x2, y2) == null && isMoveSafeForKing(x1, y1, Field.get(x2, y2), board);
     }
 
     @Override

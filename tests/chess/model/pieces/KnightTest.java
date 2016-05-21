@@ -19,8 +19,8 @@ public class KnightTest {
         Knight knight = (Knight) board.getPiece(6, 7);
         List<Field> allMoves = knight.getAllLegalMoves(board, 6, 7);
         assertEquals(2, allMoves.size());
-        assertTrue(allMoves.contains(new Field(5, 5)));
-        assertTrue(allMoves.contains(new Field(7, 5)));
+        assertTrue(allMoves.contains(Field.get(5, 5)));
+        assertTrue(allMoves.contains(Field.get(7, 5)));
     }
 
     @Test
@@ -32,13 +32,13 @@ public class KnightTest {
         board.movePiece(5, 5, 4, 3);
         List<Field> allMoves = knight.getAllLegalMoves(board, 4, 3);
         assertEquals(8, allMoves.size());
-        assertTrue(allMoves.contains(new Field(5, 5)));
-        assertTrue(allMoves.contains(new Field(3, 5)));
-        assertTrue(allMoves.contains(new Field(2, 4)));
-        assertTrue(allMoves.contains(new Field(2, 2)));
-        assertTrue(allMoves.contains(new Field(3, 1)));
-        assertTrue(allMoves.contains(new Field(5, 1)));
-        assertTrue(allMoves.contains(new Field(6, 2)));
-        assertTrue(allMoves.contains(new Field(6, 4)));
+        assertTrue(allMoves.contains(Field.get(5, 5)));
+        assertTrue(allMoves.contains(Field.get(3, 5)));
+        assertTrue(allMoves.contains(Field.get(2, 4)));
+        assertTrue(allMoves.contains(Field.get(2, 2)));
+        assertTrue(allMoves.contains(Field.get(3, 1)));
+        assertTrue(allMoves.contains(Field.get(5, 1)));
+        assertTrue(allMoves.contains(Field.get(6, 2)));
+        assertTrue(allMoves.contains(Field.get(6, 4)));
     }
 }

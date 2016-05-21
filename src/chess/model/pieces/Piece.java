@@ -41,7 +41,7 @@ public abstract class Piece {
     }
 
     public final boolean isMoveSafeForKing(int startX, int startY, Field move, Board board) {
-        Board boardCopy = new Board(board, new Field(startX, startY), move);
+        Board boardCopy = new Board(board, Field.get(startX, startY), move);
         return isBoardSafeForKing(boardCopy);
     }
 
@@ -54,7 +54,7 @@ public abstract class Piece {
         for (Field field : potentialAttackers) {
             Piece attacker = board.getPiece(field);
             if (attacker != null
-                    && attacker.getAllPotentialMoves(board, field.getX(), field.getY()).contains(kingField)) {
+                    && attacker.canAttackKing(field.getX(), field.getY(), kingField.getX(), kingField.getY())) {
                 return false;
             }
         }
@@ -71,6 +71,13 @@ public abstract class Piece {
     }
 
     public abstract List<Field> getAllPotentialMoves(Board board, int startX, int startY);
+
+    /*
+     * This method assumes: 1. there's nothing between king and the piece 2. the
+     * piece's and king's field are in straight line or in range of knight's
+     * move
+     */
+    public abstract boolean canAttackKing(int startX, int startY, int kingX, int kingY);
 
     public Piece move(Board board, int x1, int y1, int x2, int y2) {
         return this;

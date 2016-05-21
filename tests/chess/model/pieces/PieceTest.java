@@ -68,6 +68,11 @@ public class PieceTest {
             public List<Field> getAllPotentialMoves(Board board, int startX, int startY) {
                 return null;
             }
+
+            @Override
+            public boolean canAttackKing(int startX, int startY, int kingX, int kingY) {
+                return false;
+            }
         };
     }
 }

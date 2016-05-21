@@ -85,6 +85,24 @@ public class PlayerController {
                 return new AlphaBetaPlayer(color, new StandardBoardEvaluationStrategy(color), 6);
             }
         });
+        // playerFactory.registerPlayerMaker("CPU - level 7", new PlayerMaker()
+        // {
+        //
+        // @Override
+        // public Player makePlayer(Color color) {
+        // return new AlphaBetaPlayer(color, new
+        // StandardBoardEvaluationStrategy(color), 7);
+        // }
+        // });
+        // playerFactory.registerPlayerMaker("CPU - level 8", new PlayerMaker()
+        // {
+        //
+        // @Override
+        // public Player makePlayer(Color color) {
+        // return new AlphaBetaPlayer(color, new
+        // StandardBoardEvaluationStrategy(color), 8);
+        // }
+        // });
         // playerFactory.registerPlayerMaker(
         // "CPU - adaptive alpha-beta (3-10s)", new PlayerMaker() {
         // @Override
