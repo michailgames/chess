@@ -92,7 +92,7 @@ public class GameController {
     private void nextTurn() {
         currentPlayer = (currentPlayer == whitePlayer) ? blackPlayer : whitePlayer;
         if (MoveUtils.hasAnyLegalMove(getBoard(), currentPlayer.getColor())) {
-            currentPlayer.startCalculatingNextMove(board);
+            currentPlayer.startCalculatingNextMove(getBoard());
         } else {
             currentPlayer = (currentPlayer.getColor() == Color.BLACK) ? blackPlayer : whitePlayer;
         }
